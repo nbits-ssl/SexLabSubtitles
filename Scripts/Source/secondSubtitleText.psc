@@ -108,133 +108,134 @@ EndFunction
 	SexLab用イベント
 /;
 
-	Function registerEvent()
-		RegisterForModEvent("AnimationStart", "startAnim")
-		RegisterForModEvent("AnimationEnd", "endAnim")
-		RegisterForModEvent("StageStart", "startStage")
-		RegisterForModEvent("AnimationChange", "startStage")
-		RegisterForModEvent("StageEnd", "endStage")
-		RegisterForModEvent("OrgasmStart", "startStage")
-		RegisterForModEvent("OrgasmEnd", "endStage")
-	EndFunction
-	Function unregisterEvent()
-		UnregisterForModEvent("AnimationStart")
-		UnregisterForModEvent("AnimationChange")
-		UnregisterForModEvent("AnimationEnd")
-		UnregisterForModEvent("StageStart")
-		UnregisterForModEvent("StageEnd")
-		UnregisterForModEvent("OrgasmStart")
-		UnregisterForModEvent("OrgasmEnd")
-	EndFunction
+Function registerEvent()
+	RegisterForModEvent("AnimationStart", "startAnim")
+	RegisterForModEvent("AnimationEnd", "endAnim")
+	RegisterForModEvent("StageStart", "startStage")
+	RegisterForModEvent("AnimationChange", "startStage")
+	RegisterForModEvent("StageEnd", "endStage")
+	RegisterForModEvent("OrgasmStart", "startStage")
+	RegisterForModEvent("OrgasmEnd", "endStage")
+EndFunction
+Function unregisterEvent()
+	UnregisterForModEvent("AnimationStart")
+	UnregisterForModEvent("AnimationChange")
+	UnregisterForModEvent("AnimationEnd")
+	UnregisterForModEvent("StageStart")
+	UnregisterForModEvent("StageEnd")
+	UnregisterForModEvent("OrgasmStart")
+	UnregisterForModEvent("OrgasmEnd")
+EndFunction
 
-	;SexLabアニメ開始時の処理 -------------------------------------
-	event startAnim(string eventName, string argString, float argNum, form sender)
-		sslThreadController controller = SexLab.HookController(argString)
-		bool hasplayer = controller.HasPlayer
+;SexLabアニメ開始時の処理 -------------------------------------
+event startAnim(string eventName, string argString, float argNum, form sender)
+	sslThreadController controller = SexLab.HookController(argString)
+	bool hasplayer = controller.HasPlayer
 
-		If hasplayer && SS.SMode ; プレイヤーがからんでいて、かつ汎用字幕システムが有効の場合
-			isRunningSubtitle = true
-			IsAggressive = controller.IsAggressive
-			_temp = 0
-			situation = 12
-			sexlabID = argString
-			Actor[] member = controller.Positions
-			If (member.length == 1)
-				Uke = member[0]
-				Seme = member[0]
-			else
-				Uke = member[0]
-				Seme = member[1]
-			endIf
-
-			; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
-			name_Uke = self._getDisplayName(Uke)
-			name_Seme = self._getDisplayName(Seme)
-			
-			; 性別の取得
-			_samesex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
-			; debug.trace("# SexLab Subtitles - アニメ開始 - スレッドID : " + sexlabID)
-		endif
-	endEvent
-
-	; ステージ毎の開始時の処理
-	event startStage(string eventName, string argString, float argNum, form sender)
-		If (argString == sexlabID) && SS.SMode
-			currentStage = SexLab.HookStage(argString)
-			sslBaseAnimation animation = SexLab.HookAnimation(argString)
-			maxStage = animation.StageCount
-			string animname = animation.name
-			bool isCreture = animation.IsCreature
-			; debug.trace("# SexLab Subtitles - スレッド:" + sexlabID + "ステージ" + currentStage + "スタート")
-			; debug.trace("# 【" + animname + "】再生中 - 最終ステージは" + maxStage + "、クリーチャーは" + isCreture)
-
-			; v2.3 Animation Info
-			SS.pr_currentAnimName = animname
-			SS.pr_stageInfo = currentStage + " / " + maxStage
-
-			string [] tags = animation.getTags()
-			string tagInfo = ""
-			int clen = 0
-			while (clen < tags.length)
-				If !(tags[clen] == "")
-					tagInfo = tagInfo + tags[clen]
-					If !(clen == (tags.length - 1))
-						tagInfo += ", "
-					endIf
-				endIf
-				clen += 1
-			endwhile
-			SS.pr_tags = tagInfo
-
-			string currentTag = self._getCurrentTag(animation)
-			; debug.trace("# 現在のアニメーションのタグ分類は" + currentTag)
-
-			; セリフの表示番号をリセットするかどうかの判定
-			float now = utility.getcurrentrealtime()
-			If (now - stageChangeTime) < (SS.interval * 1.2)
-				; debug.trace("# 前回から" + ((now - stageChangeTime) as int) + "秒しか経っていないためセリフをリセットしません")
-			else
-				_temp = 0
-			endIf
-			stageChangeTime = now ; 時刻の更新
-
-			; 現在のシチュエーションをsituationにセット
-			getSituation(animname, currentTag, IsAggressive, isCreture)
-
-			If SSetting.isCSdisable(situation) ; 字幕が非表示の場合
-				repeatUpdate = false
-				; debug.trace("# 字幕を表示しません")
-			else
-				int ssstage = getSubtitleStageNow()
-				_sset = SSetting.getCSsetBySituation(situation, ssstage)
-				repeatUpdate = true
-				ShowSubtitlesAuto()
-			endif
+	If hasplayer && SS.SMode ; プレイヤーがからんでいて、かつ汎用字幕システムが有効の場合
+		isRunningSubtitle = true
+		IsAggressive = controller.IsAggressive
+		_temp = 0
+		situation = 12
+		sexlabID = argString
+		Actor[] member = controller.Positions
+		If (member.length == 1)
+			Uke = member[0]
+			Seme = member[0]
+		else
+			Uke = member[0]
+			Seme = member[1]
 		endIf
-	endEvent
 
-	; ステージ終了時の処理
-	event endStage(string eventName, string argString, float argNum, form sender)
-		If (argString == sexlabID)
-			repeatUpdate = false
-		endif
-	endEvent
-	
-	;SexLabアニメ全体完了時の処理
-	event endAnim(string eventName, string argString, float argNum, form sender)
-		If (argString == sexlabID)
-			repeatUpdate = false
+		; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
+		name_Uke = self._getDisplayName(Uke)
+		name_Seme = self._getDisplayName(Seme)
+		
+		; 性別の取得
+		_samesex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
+		; debug.trace("# SexLab Subtitles - アニメ開始 - スレッドID : " + sexlabID)
+	endif
+endEvent
+
+; ステージ毎の開始時の処理
+event startStage(string eventName, string argString, float argNum, form sender)
+	If (argString == sexlabID) && SS.SMode
+		currentStage = SexLab.HookStage(argString)
+		sslBaseAnimation animation = SexLab.HookAnimation(argString)
+		maxStage = animation.StageCount
+		string animname = animation.name
+		bool isCreture = animation.IsCreature
+		; debug.trace("# SexLab Subtitles - スレッド:" + sexlabID + "ステージ" + currentStage + "スタート")
+		; debug.trace("# 【" + animname + "】再生中 - 最終ステージは" + maxStage + "、クリーチャーは" + isCreture)
+
+		; v2.3 Animation Info
+		SS.pr_currentAnimName = animname
+		SS.pr_stageInfo = currentStage + " / " + maxStage
+
+		string [] tags = animation.getTags()
+		string tagInfo = ""
+		int clen = 0
+		while (clen < tags.length)
+			If !(tags[clen] == "")
+				tagInfo = tagInfo + tags[clen]
+				If !(clen == (tags.length - 1))
+					tagInfo += ", "
+				endIf
+			endIf
+			clen += 1
+		endwhile
+		SS.pr_tags = tagInfo
+
+		string currentTag = self._getCurrentTag(animation)
+		; debug.trace("# 現在のアニメーションのタグ分類は" + currentTag)
+
+		; セリフの表示番号をリセットするかどうかの判定
+		float now = utility.getcurrentrealtime()
+		If (now - stageChangeTime) < (SS.interval * 1.2)
+			; debug.trace("# 前回から" + ((now - stageChangeTime) as int) + "秒しか経っていないためセリフをリセットしません")
+		else
 			_temp = 0
-			sexlabID = ""
-			situation = 12
-			Uke = none
-			Seme = none
-			name_Uke = ""
-			name_Seme = ""
-			isRunningSubtitle = false
-			_samesex = false
+		endIf
+		stageChangeTime = now ; 時刻の更新
+
+		; 現在のシチュエーションをsituationにセット
+		getSituation(animname, currentTag, IsAggressive, isCreture)
+
+		If SSetting.isCSdisable(situation) ; 字幕が非表示の場合
+			repeatUpdate = false
+			; debug.trace("# 字幕を表示しません")
+		else
+			int ssstage = getSubtitleStageNow()
+			_sset = SSetting.getCSsetBySituation(situation, ssstage)
+			repeatUpdate = true
+			ShowSubtitlesAuto()
 		endif
-	endEvent
+	endIf
+endEvent
+
+; ステージ終了時の処理
+event endStage(string eventName, string argString, float argNum, form sender)
+	If (argString == sexlabID)
+		repeatUpdate = false
+	endif
+endEvent
+
+;SexLabアニメ全体完了時の処理
+event endAnim(string eventName, string argString, float argNum, form sender)
+	If (argString == sexlabID)
+		repeatUpdate = false
+		_temp = 0
+		sexlabID = ""
+		situation = 12
+		Uke = none
+		Seme = none
+		name_Uke = ""
+		name_Seme = ""
+		isRunningSubtitle = false
+		_samesex = false
+	endif
+endEvent
+
 
 string Function _getDisplayName(Actor act)
 	string dn_act = ""
