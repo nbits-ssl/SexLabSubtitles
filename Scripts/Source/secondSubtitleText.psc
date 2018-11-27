@@ -107,6 +107,7 @@ EndFunction
 ;/======================================================
 	SexLab用イベント
 /;
+
 	Function registerEvent()
 		RegisterForModEvent("AnimationStart", "startAnim")
 		RegisterForModEvent("AnimationEnd", "endAnim")
@@ -145,49 +146,13 @@ EndFunction
 				Uke = member[0]
 				Seme = member[1]
 			endIf
+
 			; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
-			string dn_Uke = ""
-			string dn_Seme = ""
-			string n_Uke = ""
-			string n_Seme = ""
-			If Uke == Player
-				name_Uke = Uke.getactorbase().getName()
-			else
-				dn_Uke = (Uke as objectreference).GetDisplayName()
-				n_Uke = Uke.getactorbase().getName()
-				If !(dn_Uke == "")
-					name_Uke = dn_Uke
-				else
-					If !(n_Uke == "")
-						name_Uke = n_Uke
-					else
-						name_Uke = "$unknown"
-					endIf
-				endif
-			endif
-			If Seme == Player
-				name_Seme = Seme.getactorbase().getName()
-			else
-				dn_Seme = (Seme as objectreference).GetDisplayName()
-				n_Seme = Seme.getactorbase().getName()
-				If !(dn_Seme == "")
-					name_Seme = dn_Seme
-				else
-					If !(n_Seme == "")
-						name_Seme = n_Seme
-					else
-						name_Seme = "$unknown"
-					endIf
-				endif
-			endif
+			name_Uke = self._getDisplayName(Uke)
+			name_Seme = self._getDisplayName(Seme)
+			
 			; 性別の取得
-			If  (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
-				_samesex = true
-				; Debug.Trace("# 攻と受は同性です")
-			else
-				_samesex = false
-				; Debug.Trace("# 攻と受は異性です")
-			endIf
+			_samesex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
 			; debug.trace("# SexLab Subtitles - アニメ開始 - スレッドID : " + sexlabID)
 		endif
 	endEvent
@@ -221,28 +186,7 @@ EndFunction
 			endwhile
 			SS.pr_tags = tagInfo
 
-			string currentTag
-			If animation.HasTag("Handjob")
-				currentTag = "Handjob"
-			elseIf animation.HasTag("Footjob")
-				currentTag = "Footjob"
-			elseIf animation.HasTag("Boobjob")
-				currentTag = "Boobjob"
-			elseIf animation.HasTag("Masturbation")
-				currentTag = "Masturbation"
-			elseIf animation.HasTag("Fisting")
-				currentTag = "Fisting"
-			elseIf animation.HasTag("Cowgirl")
-				currentTag = "Cowgirl"
-			elseIf animation.HasTag("Foreplay")
-				currentTag = "Foreplay"
-			elseIf animation.HasTag("Oral")
-				currentTag = "Oral"
-			elseIf animation.HasTag("Anal")
-				currentTag = "Anal"
-			else
-				currentTag = ""
-			endif
+			string currentTag = self._getCurrentTag(animation)
 			; debug.trace("# 現在のアニメーションのタグ分類は" + currentTag)
 
 			; セリフの表示番号をリセットするかどうかの判定
@@ -275,6 +219,7 @@ EndFunction
 			repeatUpdate = false
 		endif
 	endEvent
+	
 	;SexLabアニメ全体完了時の処理
 	event endAnim(string eventName, string argString, float argNum, form sender)
 		If (argString == sexlabID)
@@ -290,6 +235,51 @@ EndFunction
 			_samesex = false
 		endif
 	endEvent
+
+string Function _getDisplayName(Actor act)
+	string dn_act = ""
+	string n_act = ""
+	
+	If act == Player
+		return act.getactorbase().getName()
+	else
+		dn_act = (act as objectreference).GetDisplayName()
+		n_act = act.getactorbase().getName()
+		If !(dn_act == "")
+			return dn_act
+		else
+			If !(n_act == "")
+				return n_act
+			else
+				return "$unknown"
+			endIf
+		endif
+	endif
+EndFunction
+
+string Function _getCurrentTag(sslBaseAnimation animation)
+	If animation.HasTag("Handjob")
+		return "Handjob"
+	elseIf animation.HasTag("Footjob")
+		return "Footjob"
+	elseIf animation.HasTag("Boobjob")
+		return "Boobjob"
+	elseIf animation.HasTag("Masturbation")
+		return "Masturbation"
+	elseIf animation.HasTag("Fisting")
+		return "Fisting"
+	elseIf animation.HasTag("Cowgirl")
+		return "Cowgirl"
+	elseIf animation.HasTag("Foreplay")
+		return "Foreplay"
+	elseIf animation.HasTag("Oral")
+		return "Oral"
+	elseIf animation.HasTag("Anal")
+		return "Anal"
+	endIf
+	
+	return ""
+EndFunction
 
 ;/======================================================
 	字幕表示関連の処理
