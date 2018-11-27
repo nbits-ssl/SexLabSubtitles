@@ -42,6 +42,7 @@ Function SetMenuInit() ; メニューリストの登録
 	endIf
 EndFunction
 
+;/
 ; 字幕メニューリストが表示された時の処理
 Event OnKeyDown(Int KeyCode)
 	If KeyCode == menuKey
@@ -99,6 +100,7 @@ Event OnKeyDown(Int KeyCode)
 		endif
 	EndIf
 EndEvent
+/;
 
 ; 汎用字幕表示コントロールクエストの終了（Modのアンインストール用）
 Function stopSubtitleControl()

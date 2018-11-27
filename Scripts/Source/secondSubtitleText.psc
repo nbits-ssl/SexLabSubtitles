@@ -53,6 +53,9 @@ int Property iSSLversion auto
 int Property HUDversion auto
 string Property HUDstringVersion auto
 
+; forked
+int RegistDistance = 1750
+
 ;/======================================================/;
 
 Function Initialize() ; ゲームがロードされるたびに呼び出し
@@ -127,68 +130,36 @@ Function unregisterEvent()
 	UnregisterForModEvent("OrgasmEnd")
 EndFunction
 
+bool Function _isPlayerNear(sslThreadController controller)
+	return (controller.Positions[0].GetDistance(Player) < RegistDistance)
+EndFunction
+
 ;SexLabアニメ開始時の処理 -------------------------------------
 event startAnim(string eventName, string argString, float argNum, form sender)
 	sslThreadController controller = SexLab.HookController(argString)
-	bool hasplayer = controller.HasPlayer
 
-	If hasplayer && SS.SMode ; プレイヤーがからんでいて、かつ汎用字幕システムが有効の場合
-		isRunningSubtitle = true
-		IsAggressive = controller.IsAggressive
-		_temp = 0
+	If (SS.SMode && self._isPlayerNear(controller)) ; 汎用字幕システムが有効の場合
+		; isRunningSubtitle = true
+		_temp = 0 ; order subtitle's current number
 		situation = 12
 		sexlabID = argString
-		Actor[] member = controller.Positions
-		If (member.length == 1)
-			Uke = member[0]
-			Seme = member[0]
-		else
-			Uke = member[0]
-			Seme = member[1]
-		endIf
-
-		; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
-		name_Uke = self._getDisplayName(Uke)
-		name_Seme = self._getDisplayName(Seme)
 		
-		; 性別の取得
-		_samesex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
 		; debug.trace("# SexLab Subtitles - アニメ開始 - スレッドID : " + sexlabID)
 	endif
 endEvent
 
 ; ステージ毎の開始時の処理
 event startStage(string eventName, string argString, float argNum, form sender)
-	If (argString == sexlabID) && SS.SMode
-		currentStage = SexLab.HookStage(argString)
-		sslBaseAnimation animation = SexLab.HookAnimation(argString)
+	sslThreadController controller = SexLab.HookController(argString)
+	; debug.trace("SexLabSubtitles: Stage start")
+
+	If (SS.SMode && self._isPlayerNear(controller))
+		; debug.trace("SexLabSubtitles: Stage start, success")
+		sexlabID = argString
+		currentStage = controller.Stage
+		sslBaseAnimation animation = controller.Animation
 		maxStage = animation.StageCount
-		string animname = animation.name
-		bool isCreture = animation.IsCreature
-		; debug.trace("# SexLab Subtitles - スレッド:" + sexlabID + "ステージ" + currentStage + "スタート")
-		; debug.trace("# 【" + animname + "】再生中 - 最終ステージは" + maxStage + "、クリーチャーは" + isCreture)
-
-		; v2.3 Animation Info
-		SS.pr_currentAnimName = animname
-		SS.pr_stageInfo = currentStage + " / " + maxStage
-
-		string [] tags = animation.getTags()
-		string tagInfo = ""
-		int clen = 0
-		while (clen < tags.length)
-			If !(tags[clen] == "")
-				tagInfo = tagInfo + tags[clen]
-				If !(clen == (tags.length - 1))
-					tagInfo += ", "
-				endIf
-			endIf
-			clen += 1
-		endwhile
-		SS.pr_tags = tagInfo
-
-		string currentTag = self._getCurrentTag(animation)
-		; debug.trace("# 現在のアニメーションのタグ分類は" + currentTag)
-
+		
 		; セリフの表示番号をリセットするかどうかの判定
 		float now = utility.getcurrentrealtime()
 		If (now - stageChangeTime) < (SS.interval * 1.2)
@@ -197,18 +168,29 @@ event startStage(string eventName, string argString, float argNum, form sender)
 			_temp = 0
 		endIf
 		stageChangeTime = now ; 時刻の更新
-
-		; 現在のシチュエーションをsituationにセット
-		getSituation(animname, currentTag, IsAggressive, isCreture)
-
+		
+		Actor[] member = controller.Positions
+		If (member.length == 1)
+			Uke = member[0]
+			Seme = member[0]
+		else
+			Uke = member[0]
+			Seme = member[1]
+		endIf
+		
+		string currentTag = self._getCurrentTag(animation)
+		bool isSameSex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
+		
+		getSituation(animation.name, currentTag, controller.IsAggressive, animation.IsCreature, isSameSex)
+		
 		If SSetting.isCSdisable(situation) ; 字幕が非表示の場合
 			repeatUpdate = false
-			; debug.trace("# 字幕を表示しません")
 		else
-			int ssstage = getSubtitleStageNow()
-			_sset = SSetting.getCSsetBySituation(situation, ssstage)
-			repeatUpdate = true
-			ShowSubtitlesAuto()
+			_sset = SSetting.getCSsetBySituation(situation, getSubtitleStageNow())
+			if !(repeatUpdate)
+				repeatUpdate = true
+				ShowSubtitlesAuto()
+			endif
 		endif
 	endIf
 endEvent
@@ -229,10 +211,10 @@ event endAnim(string eventName, string argString, float argNum, form sender)
 		situation = 12
 		Uke = none
 		Seme = none
-		name_Uke = ""
-		name_Seme = ""
-		isRunningSubtitle = false
-		_samesex = false
+		; name_Uke = ""
+		; name_Seme = ""
+		; isRunningSubtitle = false
+		; _samesex = false
 	endif
 endEvent
 
@@ -287,7 +269,7 @@ EndFunction
 /;
 
 ; アニメ名、タグ名からシチュエーション番号を割り出し、situationプロパティにセットする
-Function getSituation(string animname, string tagname, bool aggressivesex, bool creaturesex)
+Function getSituation(string animname, string tagname, bool aggressivesex, bool creaturesex, bool isSameSex)
 	If creaturesex
 		situation = 0
 	elseIf animname == "Arrok 69"
@@ -306,7 +288,7 @@ Function getSituation(string animname, string tagname, bool aggressivesex, bool 
 		situation = 7
 	elseIf tagname == "Foreplay"
 		situation = 8
-	elseIf (tagname == "Oral") && (_samesex)
+	elseIf (tagname == "Oral") && (isSameSex)
 		If aggressivesex
 			situation = 15
 		else
@@ -318,7 +300,7 @@ Function getSituation(string animname, string tagname, bool aggressivesex, bool 
 		else
 			situation = 10
 		endIf
-	elseIf (tagname == "Anal") && (_samesex)
+	elseIf (tagname == "Anal") && (isSameSex)
 		If aggressivesex
 			situation = 17
 		else
@@ -330,7 +312,7 @@ Function getSituation(string animname, string tagname, bool aggressivesex, bool 
 		else
 			situation = 14
 		endIf
-	elseIf (_samesex)
+	elseIf (isSameSex)
 		If aggressivesex
 			situation = 19
 		else
@@ -360,6 +342,13 @@ int Function getSubtitleStageNow()
 	endif
 EndFunction
 
+Event OnUpdate()
+	If repeatUpdate
+		; debug.trace("SexLabSubtitles: OnUpdate")
+		ShowSubtitles(_sset)
+	endif
+EndEvent
+
 ; 字幕表示に使う関数
 Function ShowSuper(String n_uke, String n_seme, String asMessage)
 	SS.ShowSubtitleSuper(n_uke, n_seme, asMessage)
@@ -373,7 +362,16 @@ EndFunction
 Function ShowSubtitles(string[] subtitleSet)
 	; debug.trace("# ShowSubtitles処理開始")
 	int len = subtitleSet.length
-
+	
+	if !(Uke && Seme)
+		repeatUpdate = false
+		return ; the end, safe function
+	endif
+	
+	; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
+	name_Uke = self._getDisplayName(Uke)
+	name_Seme = self._getDisplayName(Seme)
+	
 	If repeatRandom ; ランダムモード
 		If len == 1
 			ShowSuper(name_Uke, name_Seme, subtitleSet[0])
@@ -562,12 +560,6 @@ Function ShowSubtitles(string[] subtitleSet)
 		endIf
 	endif
 EndFunction
-
-Event OnUpdate()
-	If repeatUpdate
-		ShowSubtitles(_sset)
-	endif
-EndEvent
 
 ; ランダムで同じ数を二回続けて出さないようにする
 int Function getRandomDifferent(int min, int max, int before)
