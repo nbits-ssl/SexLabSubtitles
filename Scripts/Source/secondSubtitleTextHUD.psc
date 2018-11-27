@@ -1,54 +1,56 @@
-ScriptName secondSubtitleTextHUD Extends Quest
-{ SexLab—p Žš–‹•ƒƒjƒ…[HUD }
+ï»¿ScriptName secondSubtitleTextHUD Extends Quest
+{ SexLabç”¨ å­—å¹•ï¼†ãƒ¡ãƒ‹ãƒ¥ãƒ¼HUD }
 
-Quest Property SubtitletextControl auto ; ”Ä—pŽš–‹ƒNƒGƒXƒg
-secondSubtitleText SSC ; ”Ä—pŽš–‹ƒRƒ“ƒgƒ[ƒ‹ƒXƒNƒŠƒvƒg
-SubtitleSetSetting SSetting ; Žš–‹ƒZƒbƒg‚ÌÝ’è
+Quest Property SubtitletextControl auto ; æ±Žç”¨å­—å¹•ã‚¯ã‚¨ã‚¹ãƒˆ
+secondSubtitleText SSC ; æ±Žç”¨å­—å¹•ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+SubtitleSetSetting SSetting ; å­—å¹•ã‚»ãƒƒãƒˆã®è¨­å®š
 
-float Property interval = 6.0 auto ; ”Ä—pŽš–‹•\Ž¦‚ÌŠÔŠu
-int Property menuKey = 48 auto ; ƒƒjƒ…[‚ÌŒÄ‚Ño‚µƒL[@ƒfƒtƒHƒ‹ƒguBv
-string[] Property SetMenu auto ; Žš–‹‚ÌƒZƒbƒg–¼‚ÌƒŠƒXƒg
-bool Property isControlFin = false auto ; ”Ä—pŽš–‹ƒNƒGƒXƒg‚ðŠ®‘SI—¹‚³‚¹‚½ê‡AON‚É‚·‚é
+float Property interval = 6.0 auto ; æ±Žç”¨å­—å¹•è¡¨ç¤ºã®é–“éš”
+int Property menuKey = 48 auto ; ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‘¼ã³å‡ºã—ã‚­ãƒ¼ã€€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã€ŒBã€
+string[] Property SetMenu auto ; å­—å¹•ã®ã‚»ãƒƒãƒˆåã®ãƒªã‚¹ãƒˆ
+bool Property isControlFin = false auto ; æ±Žç”¨å­—å¹•ã‚¯ã‚¨ã‚¹ãƒˆã‚’å®Œå…¨çµ‚äº†ã•ã›ãŸå ´åˆã€ONã«ã™ã‚‹
 
 string Property pr_currentAnimName auto
 string Property pr_stageInfo auto
 string Property pr_tags auto
 
-Function SetMenuInit() ; ƒƒjƒ…[ƒŠƒXƒg‚Ì“o˜^
-	; debug.trace("# SetMenuInitŠJŽn")
+Function SetMenuInit() ; ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªã‚¹ãƒˆã®ç™»éŒ²
+	; debug.trace("# SetMenuInité–‹å§‹")
 	SSetting = SubtitletextControl as SubtitleSetSetting
 	SSC = SubtitletextControl as secondSubtitleText
 	string[] emptySet
 	SetMenu = emptySet
 	int len
 	If (SSetting.IS_name) == emptySet
-		; debug.trace("# ƒCƒ“ƒ|[ƒg—p‚ÌŽš–‹ƒtƒ@ƒCƒ‹‚ª‘¶Ý‚µ‚Ü‚¹‚ñ")
+		; debug.trace("# ã‚¤ãƒ³ãƒãƒ¼ãƒˆç”¨ã®å­—å¹•ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¾ã›ã‚“")
 		len = 0
 	else
 		len = (SSetting.IS_name).length
-		; debug.trace("# ƒCƒ“ƒ|[ƒg‚µ‚½Žš–‹ƒtƒ@ƒCƒ‹‚Ì”‚Í" + len)
+		; debug.trace("# ã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ãŸå­—å¹•ãƒ•ã‚¡ã‚¤ãƒ«ã®æ•°ã¯" + len)
 	endif
-	SetMenu =	PapyrusUtil.StringArray(len + 1)
-	SetMenu[0]  = "$SMENU_disble" ; Žš–‹‚ð•\Ž¦‚µ‚È‚¢
+	; SetMenu =	PapyrusUtil.StringArray(len + 1)
+	SetMenu =	Utility.CreateStringArray(len + 1) ; v2.4 fix
+
+	SetMenu[0]  = "$SMENU_disble" ; å­—å¹•ã‚’è¡¨ç¤ºã—ãªã„
 	If len > 0
 		int i = 1
 		while (i < (len + 1))
 			SetMenu[i] = SSetting.IS_name[ i - 1]
-			; debug.trace("# SetMenu[" + i + "]‚Í" + SetMenu[i] + "‚Å‚·")
+			; debug.trace("# SetMenu[" + i + "]ã¯" + SetMenu[i] + "ã§ã™")
 			i += 1
 		endwhile
 	endIf
 EndFunction
 
-; Žš–‹ƒƒjƒ…[ƒŠƒXƒg‚ª•\Ž¦‚³‚ê‚½Žž‚Ìˆ—
+; å­—å¹•ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªã‚¹ãƒˆãŒè¡¨ç¤ºã•ã‚ŒãŸæ™‚ã®å‡¦ç†
 Event OnKeyDown(Int KeyCode)
 	If KeyCode == menuKey
-;		debug.trace("# Subtitle HUD - OnKeyDown - ƒƒjƒ…[—p‚ÌƒL[‚ª‰Ÿ‚³‚ê‚Ü‚µ‚½I")
+;		debug.trace("# Subtitle HUD - OnKeyDown - ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ã®ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¾ã—ãŸï¼")
 		If (!Utility.isinmenumode()) && SSC.isRunningSubtitle
-			int situation = SSC.situation ; ‰Ò“­’†‚ÌSEX‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“
-			string currentsetname = SSetting.getNameCSname(situation) ; Œ»Ý“K—p‚³‚ê‚Ä‚¢‚éŽš–‹ƒZƒbƒg–¼
+			int situation = SSC.situation ; ç¨¼åƒä¸­ã®SEXã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³
+			string currentsetname = SSetting.getNameCSname(situation) ; ç¾åœ¨é©ç”¨ã•ã‚Œã¦ã„ã‚‹å­—å¹•ã‚»ãƒƒãƒˆå
 			int currentnum = SetMenu.find(currentsetname)
-			string currentSituation = SSetting.common_situation[situation] ; Œ»Ý‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚Ì”Ä—p–¼
+			string currentSituation = SSetting.common_situation[situation] ; ç¾åœ¨ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®æ±Žç”¨å
 			string title = "$SMENU_title"
 			string info = "$SMENU_info"
 			string shead = "$SMENU_SHead"
@@ -59,31 +61,34 @@ Event OnKeyDown(Int KeyCode)
 			string pr_headTag = "$menu_headTag"
 
 			int choice = ShowMenuList(info, title, shead, currentSituation, chead, SetMenu, currentnum, 0, pr_animTitle, pr_headAnim, pr_currentAnimName, pr_headStage, pr_stageInfo, pr_headTag, pr_tags)
-			; debug.trace("# choice‚Í" + choice)
+			; debug.trace("# choiceã¯" + choice)
 			If choice == 0
-				SSC.repeatUpdate = false
-				SSetting.setNameCSname(situation, "$SMENU_disble")
-				SSetting.intoCSempty(situation)
-				SSetting.intoCSindex(situation, 0)
+				; 2016/1fix =====================================
+				; åˆ¥modã®ã‚«ã‚¹ã‚¿ãƒ ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¨åŒæ™‚ã«é–‹ãã¨ã‚­ãƒ£ãƒ³ã‚»ãƒ«æ‰±ã„ã«ãªã‚‹ãŸã‚
+				; å­—å¹•ã‚ªãƒ•ã«ãªã‚‹ã®ã§ã¯ãªãç¾çŠ¶ç¶­æŒã¨ãªã‚‹ã‚ˆã†ã€å‡¦ç†ã‚’å‰Šé™¤
+				; SSC.repeatUpdate = false
+				; SSetting.setNameCSname(situation, "$SMENU_disble")
+				; SSetting.intoCSempty(situation)
+				; SSetting.intoCSindex(situation, 0)
 			else
-				choice = choice - 1 ; ŽÀÛ‚Ì‘I‘ð‚Í”ñ•\Ž¦‚Ì‘I‘ðŽˆ‚Ì•ª‚ð”²‚¢‚½”‚É‚È‚é
-				string setname = SSetting.IS_name[choice] ;‘I‘ð‚µ‚½ƒZƒbƒg–¼
-				; debug.trace("# setname‚Í" + setname)
-				;‘I‘ð‚µ‚½ƒZƒbƒg
+				choice = choice - 1 ; å®Ÿéš›ã®é¸æŠžã¯éžè¡¨ç¤ºã®é¸æŠžè‚¢ã®åˆ†ã‚’æŠœã„ãŸæ•°ã«ãªã‚‹
+				string setname = SSetting.IS_name[choice] ;é¸æŠžã—ãŸã‚»ãƒƒãƒˆå
+				; debug.trace("# setnameã¯" + setname)
+				;é¸æŠžã—ãŸã‚»ãƒƒãƒˆ
 				string[] set1 = SSetting.getSSetByIndex(choice, 1)
 				string[] set2 = SSetting.getSSetByIndex(choice, 2)
 				string[] set3 = SSetting.getSSetByIndex(choice, 3)
 				string[] set4 = SSetting.getSSetByIndex(choice, 4)
 				string[] set5 = SSetting.getSSetByIndex(choice, 5)
-				;‘I‘ð‚µ‚½ƒZƒbƒg‚ðŒ»Ý‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚Ì”Ä—pŽš–‹‚Æ‚µ‚ÄƒZƒbƒg
+				;é¸æŠžã—ãŸã‚»ãƒƒãƒˆã‚’ç¾åœ¨ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®æ±Žç”¨å­—å¹•ã¨ã—ã¦ã‚»ãƒƒãƒˆ
 				 SSetting.intoSSetToCS(situation, set1, set2, set3, set4, set5)
-				;‘I‘ð‚µ‚½ƒZƒbƒg‚ÌƒCƒ“ƒ|[ƒgŒ³”Ô†‚ð•ÛŠÇiver2.1j
+				;é¸æŠžã—ãŸã‚»ãƒƒãƒˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒç•ªå·ã‚’ä¿ç®¡ï¼ˆver2.1ï¼‰
 				 SSetting.intoCSindex(situation, SSetting.IS_index[choice])
-				 ; debug.trace("# " + SSetting.common_situation[situation] + "‚ÉimportSet" + SSetting.IS_index[choice] +"‚Ì" + setname +"‚ðƒZƒbƒg‚µ‚Ü‚µ‚½")
-				 ;‘I‘ð‚µ‚½ƒZƒbƒg‚Ì–¼‘O‚ðŒ»Ý‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚ÌŽš–‹–¼‚Æ‚µ‚ÄƒZƒbƒg
+				 ; debug.trace("# " + SSetting.common_situation[situation] + "ã«importSet" + SSetting.IS_index[choice] +"ã®" + setname +"ã‚’ã‚»ãƒƒãƒˆã—ã¾ã—ãŸ")
+				 ;é¸æŠžã—ãŸã‚»ãƒƒãƒˆã®åå‰ã‚’ç¾åœ¨ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®å­—å¹•åã¨ã—ã¦ã‚»ãƒƒãƒˆ
 				 SSetting.setNameCSname(situation, setname)
 
-				 ;Žš–‹•\Ž¦‚ÌXV
+				 ;å­—å¹•è¡¨ç¤ºã®æ›´æ–°
 				int ssstage = SSC.getSubtitleStageNow()
 				string[] SSet = SSetting.getCSsetBySituation(situation, ssstage)
 				SSC.SSet = SSet
@@ -95,26 +100,26 @@ Event OnKeyDown(Int KeyCode)
 	EndIf
 EndEvent
 
-; ”Ä—pŽš–‹•\Ž¦ƒRƒ“ƒgƒ[ƒ‹ƒNƒGƒXƒg‚ÌI—¹iMod‚ÌƒAƒ“ƒCƒ“ƒXƒg[ƒ‹—pj
+; æ±Žç”¨å­—å¹•è¡¨ç¤ºã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¯ã‚¨ã‚¹ãƒˆã®çµ‚äº†ï¼ˆModã®ã‚¢ãƒ³ã‚¤ãƒ³ã‚¹ãƒˆãƒ¼ãƒ«ç”¨ï¼‰
 Function stopSubtitleControl()
 	_sMode = false
 	isControlFin = true
 	SubtitletextControl.stop()
-	; debug.trace("# SubtitlesHUD - ”Ä—pŽš–‹ˆ—ƒNƒGƒXƒg‚ðŠ®‘SI—¹‚³‚¹‚Ü‚µ‚½")
+	; debug.trace("# SubtitlesHUD - æ±Žç”¨å­—å¹•å‡¦ç†ã‚¯ã‚¨ã‚¹ãƒˆã‚’å®Œå…¨çµ‚äº†ã•ã›ã¾ã—ãŸ")
 EndFunction
 
-; ”Ä—pŽš–‹•\Ž¦ŠÖ˜A‚ÌƒŠƒZƒbƒg
+; æ±Žç”¨å­—å¹•è¡¨ç¤ºé–¢é€£ã®ãƒªã‚»ãƒƒãƒˆ
 Function resetSubtitleControl()
 	_sMode = true
 	isControlFin = false
 	SubtitletextControl.start()
 	; If (SubtitletextControl as Quest).isrunning()
-	; 	; debug.trace("# SubtitlesHUD - ”Ä—pŽš–‹ˆ—ƒNƒGƒXƒg‚ðÄŠJ‚µ‚Ü‚µ‚½")
+	; 	; debug.trace("# SubtitlesHUD - æ±Žç”¨å­—å¹•å‡¦ç†ã‚¯ã‚¨ã‚¹ãƒˆã‚’å†é–‹ã—ã¾ã—ãŸ")
 	; endif
 EndFunction
 
 ; ---------------------------------------------------------------------------------
-bool _sMode = true ; SubtitlesMod‚ÌŽš–‹•\Ž¦‚ÌƒIƒ“ƒIƒtiŠO•”Mod—pj
+bool _sMode = true ; SubtitlesModã®å­—å¹•è¡¨ç¤ºã®ã‚ªãƒ³ã‚ªãƒ•ï¼ˆå¤–éƒ¨Modç”¨ï¼‰
 bool Property SMode
 	bool function get()
 		return _sMode
@@ -123,7 +128,7 @@ bool Property SMode
 		If !a_val
 			If SubtitletextControl.isrunning()
 				(SubtitletextControl as secondSubtitleText).repeatUpdate = false
-				; debug.trace("# SubtitlesHUD - ”Ä—pŽš–‹ˆ—‚ðƒIƒt‚É‚µ‚Ü‚µ‚½")
+				; debug.trace("# SubtitlesHUD - æ±Žç”¨å­—å¹•å‡¦ç†ã‚’ã‚ªãƒ•ã«ã—ã¾ã—ãŸ")
 			endif
 			UnregisterForKey(menuKey)
 		else
@@ -132,7 +137,7 @@ bool Property SMode
 		_sMode = a_val
 	endFunction
 endProperty
-; Žš–‹ƒGƒŠƒA‚Ì•\Ž¦E”ñ•\Ž¦
+; å­—å¹•ã‚¨ãƒªã‚¢ã®è¡¨ç¤ºãƒ»éžè¡¨ç¤º
 bool _visible	 = true
 bool Property Visible
 	bool function get()
@@ -140,10 +145,10 @@ bool Property Visible
 	endFunction
 	function set(bool a_val)
 		_visible = a_val
-		UI.SetBool("HUD Menu", "_root.HUDMovieBaseInstance.SS.SsubtitleTextArea._visible", _visible)
+		UI.SetBool("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.SubtitleHUD._visible", _visible)
 	endFunction
 endProperty
-Int _iMode = 0 ; v2.0ˆÈ~•sŽg—p
+Int _iMode = 0 ; v2.0ä»¥é™ä¸ä½¿ç”¨
 Int Property IMode
 	int function get()
 		return _iMode
@@ -154,7 +159,7 @@ Int Property IMode
 endProperty
 
 ;/ ===============================================
-	Žš–‹ƒZƒbƒg‚Ì‘I‘ðƒƒjƒ…[‚Ìˆ—
+	å­—å¹•ã‚»ãƒƒãƒˆã®é¸æŠžãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‡¦ç†
 /;
 Bool bMenuOpen
 String sTitle
@@ -176,7 +181,7 @@ String sStage
 String headTag
 String sTag
 
-; ƒƒjƒ…[ƒŠƒXƒg‚Ì•\Ž¦
+; ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªã‚¹ãƒˆã®è¡¨ç¤º
 Int Function ShowMenuList(String asInfo, String asTitle, String asSituHead, String asSitu, String asCommonHead, String[] asOptions, Int aiStartIndex, Int aiDefaultIndex, String asAnimTitle, String asHeadAnim, String asAnim, String asHeadStage,String asStage,String asHeadTag,String asTag)
 	If(bMenuOpen)
 		Return -1
@@ -210,7 +215,7 @@ Function SubtitleMenuList_Open(Form akClient) Global
 	akClient.RegisterForModEvent("SubtitleMenuList_Open", "OnSubtitleMenuListOpen")
 	akClient.RegisterForModEvent("SubtitleMenuList_Close", "OnSubtitleMenuListClose")
 	; UI.OpenCustomMenu("exported/Widgets/obachan/SubtitleMenuList")
-	; ver1.1 C³
+	; ver1.1 ä¿®æ­£
 	UI.OpenCustomMenu("skyui/SubtitleMenuList")
 EndFunction
 
@@ -256,66 +261,16 @@ Event OnSubtitleMenuListClose(String asEventName, String asStringArg, Float afIn
 EndEvent
 
 ;/ ==============================================
-	Žš–‹ƒGƒŠƒAHUD ‚Ìˆ—
+	å­—å¹•ã‚¨ãƒªã‚¢HUD ã®å‡¦ç†
 /;
-; ƒGƒŠƒA1@ƒeƒLƒXƒg‚Ì‚Ý•\Ž¦i‚¨’m‚ç‚¹—““I‚ÉŽg‚¤j
-Function ShowSubtitle(String asMessage, String asColor = "#FFFFFF")
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitle")
-	If(iHandle)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.PushString(iHandle, asColor)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; ƒGƒŠƒA1@Žš–‹•\Ž¦il•¨‚Ì–¼‘O“ü‚èj
-Function ShowSubtitleWithName(String asName, String asMessage)
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitleWithName")
-	If(iHandle)
-		UICallback.PushString(iHandle, asName)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; ƒGƒŠƒA‚Qi‰º’ij‚ÌƒeƒLƒXƒg‚Ì‚Ý•\Ž¦
-Function ShowSubtitle2(String asMessage, String asColor = "#FFFFFF")
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitle2")
-	If(iHandle)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.PushString(iHandle, asColor)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; ƒGƒŠƒA‚Qi‰º’ij‚ÌŽš–‹•\Ž¦
-Function ShowSubtitleWithName2(String asName, String asMessage)
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitleWithName2")
-	If(iHandle)
-		UICallback.PushString(iHandle, asName)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; ƒGƒŠƒA1ƒX[ƒp[@ƒeƒLƒXƒgæ“ª‚Ì#uA#s‚Å–¼‘O‚ðŽ©“®”»•Ê
+; ã‚¨ãƒªã‚¢1ã‚¹ãƒ¼ãƒ‘ãƒ¼ã€€ãƒ†ã‚­ã‚¹ãƒˆå…ˆé ­ã®#uã€#sã§åå‰ã‚’è‡ªå‹•åˆ¤åˆ¥
 Function ShowSubtitleSuper(String asName1, String asName2, String asMessage)
+	; Debug.Trace("# ShowSubtitleSuper - 1." + asName1 + " , 2. " +asName2 + " , " + asMessage)
 	If(!Subtitle_Prepare())
+		; Debug.Trace(" ShowSubtitleSuper - Not Prepare")
 		Return
 	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitleSuper")
+	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.SubtitleHUD.ShowSubtitleSuper")
 	If(iHandle)
 		UICallback.PushString(iHandle, asName1)
 		UICallback.PushString(iHandle, asName2)
@@ -324,116 +279,67 @@ Function ShowSubtitleSuper(String asName1, String asName2, String asMessage)
 	EndIf
 EndFunction
 
-; ƒGƒŠƒA2ƒX[ƒp[@ƒeƒLƒXƒgæ“ª‚Ì#uA#s‚Å–¼‘O‚ðŽ©“®”»•Ê
-Function ShowSubtitleSuper2(String asName1, String asName2, String asMessage)
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitleSuper2")
-	If(iHandle)
-		UICallback.PushString(iHandle, asName1)
-		UICallback.PushString(iHandle, asName2)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; ƒGƒŠƒA3i‰æ–Ê’†‰›j‚ÌƒeƒLƒXƒg‚Ì‚Ý•\Ž¦
-Function ShowSubtitle3(String asMessage, String asColor = "#FFFFFF")
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitle3")
-	If(iHandle)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.PushString(iHandle, asColor)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; ƒGƒŠƒA3i‰æ–Ê’†‰›j‚ÌŽš–‹•\Ž¦
-Function ShowSubtitleWithName3(String asName, String asMessage)
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitleWithName3")
-	If(iHandle)
-		UICallback.PushString(iHandle, asName)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; ƒGƒŠƒA3ƒX[ƒp[@ƒeƒLƒXƒgæ“ª‚Ì#uA#s‚Å–¼‘O‚ðŽ©“®”»•Ê
-Function ShowSubtitleSuper3(String asName1, String asName2, String asMessage)
-	If(!Subtitle_Prepare())
-		Return
-	EndIf
-	Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SsubtitleTextArea.ShowSubtitleSuper3")
-	If(iHandle)
-		UICallback.PushString(iHandle, asName1)
-		UICallback.PushString(iHandle, asName2)
-		UICallback.PushString(iHandle, asMessage)
-		UICallback.Send(iHandle)
-	EndIf
-EndFunction
-
-; Žš–‹•\Ž¦‚Ì€”õ
+; å­—å¹•è¡¨ç¤ºã®æº–å‚™
 Bool Function Subtitle_Prepare() global
-	Int iVersion = UI.GetInt("HUD Menu", "_global.oba.SsubtitleTextArea.SS_VERSION")
+	Int iVersion = UI.GetInt("HUD Menu", "_global.oba.SubtitleHUD.SubtitleHUD_VERSION")
 	If(iVersion == 0)
 		Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.createEmptyMovieClip")
 		If(!iHandle)
 			Return False
 		EndIf
-		UICallback.PushString(iHandle, "ss_container")
-		UICallback.PushInt(iHandle, -16380)
+		UICallback.PushString(iHandle, "SubtitleHUD_container")
+		UICallback.PushInt(iHandle, -998)
 		If(!UICallback.Send(iHandle))
 			Return False
 		EndIf
-		UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.loadMovie", "obachan/SsubtitleTextArea.swf")
+		UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.loadMovie", "obachan/SubtitleHUD.swf")
 		Utility.Wait(0.5)
-		iVersion = UI.GetInt("HUD Menu", "_global.oba.SsubtitleTextArea.SS_VERSION")
+		iVersion = UI.GetInt("HUD Menu", "_global.oba.SubtitleHUD.SubtitleHUD_VERSION")
 		If(iVersion == 0)
-			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.loadMovie", "exported/obachan/SsubtitleTextArea.swf")
+			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.loadMovie", "exported/obachan/SubtitleHUD.swf")
 			Utility.Wait(0.5)
-			iVersion = UI.GetInt("HUD Menu", "_global.oba.SsubtitleTextArea.SS_VERSION")
+			iVersion = UI.GetInt("HUD Menu", "_global.oba.SubtitleHUD.SubtitleHUD_VERSION")
 			If(iVersion == 0)
-				Debug.Trace("@ SSubtitleText - HUD‚Ì•Öæ‚ÉŽ¸”s‚µ‚Ü‚µ‚½")
+				Debug.Trace("@ SubtitleHUD - HUDã®å‰²ã‚Šè¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ")
 				Return False
 			EndIf
-			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SetRootPath", "exported/")
+			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.SetRootPath", "exported/")
 		EndIf
 	EndIf
 	Return True
 EndFunction
 
-; Žš–‹•\Ž¦—pswf‚Ìƒo[ƒWƒ‡ƒ“ƒWƒFƒbƒN
+; å­—å¹•è¡¨ç¤ºç”¨swfã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚¸ã‚§ãƒƒã‚¯
 int Function Subtitle_GetVersion() global
-	Int iVersion = UI.GetInt("HUD Menu", "_global.oba.SsubtitleTextArea.SS_VERSION")
+	Int iVersion = 0
+	iVersion = UI.GetInt("HUD Menu", "_global.oba.SubtitleHUD.SubtitleHUD_VERSION")
 	If(iVersion == 0)
 		Int iHandle = UICallback.Create("HUD Menu", "_root.HUDMovieBaseInstance.createEmptyMovieClip")
 		If(!iHandle)
-			Return -1
+			Return iVersion
 		EndIf
-		UICallback.PushString(iHandle, "ss_container")
-		UICallback.PushInt(iHandle, -16380)
+		UICallback.PushString(iHandle, "SubtitleHUD_container")
+		UICallback.PushInt(iHandle, -998)
 		If(!UICallback.Send(iHandle))
-			Return -1
+			Return iVersion
 		EndIf
-		UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.loadMovie", "obachan/SsubtitleTextArea.swf")
+		UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.loadMovie", "obachan/SubtitleHUD.swf")
 		Utility.Wait(0.5)
-		iVersion = UI.GetInt("HUD Menu", "_global.oba.SsubtitleTextArea.SS_VERSION")
+		iVersion = UI.GetInt("HUD Menu", "_global.oba.SubtitleHUD.SubtitleHUD_VERSION")
 		If(iVersion == 0)
-			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.loadMovie", "exported/obachan/SsubtitleTextArea.swf")
+			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.loadMovie", "exported/obachan/SubtitleHUD.swf")
 			Utility.Wait(0.5)
-			iVersion = UI.GetInt("HUD Menu", "_global.oba.SsubtitleTextArea.SS_VERSION")
+			iVersion = UI.GetInt("HUD Menu", "_global.oba.SubtitleHUD.SubtitleHUD_VERSION")
 			If(iVersion == 0)
-				Debug.Trace("@ SSubtitleText - HUD‚Ì•Öæ‚ÉŽ¸”s‚µ‚Ü‚µ‚½")
-				Return 0
+				Debug.Trace("@ SubtitleHUD - HUDã®å‰²ã‚Šè¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ")
+			Return iVersion
 			EndIf
-			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.ss_container.SetRootPath", "exported/")
+			UI.InvokeString("HUD Menu", "_root.HUDMovieBaseInstance.SubtitleHUD_container.SetRootPath", "exported/")
+			Return iVersion
+		else
+			Return iVersion
 		EndIf
+	else
+		Return iVersion
 	EndIf
-	Return iVersion
 EndFunction

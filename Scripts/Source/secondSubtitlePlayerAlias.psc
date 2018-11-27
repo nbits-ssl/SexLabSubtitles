@@ -1,4 +1,4 @@
-Scriptname secondSubtitlePlayerAlias extends ReferenceAlias
+ï»¿Scriptname secondSubtitlePlayerAlias extends ReferenceAlias
 
 bool InitOnce = false
 bool Init_v20_Once = false
@@ -16,5 +16,5 @@ Event OnPlayerLoadGame()
 		SSC.CommonSetInit()
 	endIf
 
-	; debug.trace("# Subtitle PlayerAlias - OnPlayerLoadGame ˆ—Š®—¹")
+	; debug.trace("# Subtitle PlayerAlias - OnPlayerLoadGame å‡¦ç†å®Œäº†")
 endEvent

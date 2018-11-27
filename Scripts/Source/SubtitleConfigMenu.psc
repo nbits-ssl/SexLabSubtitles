@@ -1,11 +1,11 @@
-Scriptname SubtitleConfigMenu extends SKI_ConfigBase
-; SexLab Subtitles MCMƒRƒ“ƒtƒBƒOƒƒjƒ…[
+ï»¿Scriptname SubtitleConfigMenu extends SKI_ConfigBase
+; SexLab Subtitles MCMã‚³ãƒ³ãƒ•ã‚£ã‚°ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 
-secondSubtitleTextHUD property ssHUD auto ; š–‹•ƒƒjƒ…[HUD
-secondSubtitleText property SSC auto ; š–‹‚ÌƒRƒ“ƒgƒ[ƒ‹
-SubtitleSetSetting property SSetting auto ; š–‹‚ÌƒZƒbƒeƒBƒ“ƒO
+secondSubtitleTextHUD property ssHUD auto ; å­—å¹•ï¼†ãƒ¡ãƒ‹ãƒ¥ãƒ¼HUD
+secondSubtitleText property SSC auto ; å­—å¹•ã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«
+SubtitleSetSetting property SSetting auto ; å­—å¹•ã®ã‚»ãƒƒãƒ†ã‚£ãƒ³ã‚°
 
-int _csdefault = 0 ; ƒfƒtƒHƒ‹ƒgƒ{ƒ^ƒ“‚Å‘I‘ğ‚³‚ê‚éš–‹ƒZƒbƒgi‰Šú’luš–‹‚ğ•\¦‚µ‚È‚¢vj
+int _csdefault = 0 ; ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒœã‚¿ãƒ³ã§é¸æŠã•ã‚Œã‚‹å­—å¹•ã‚»ãƒƒãƒˆï¼ˆåˆæœŸå€¤ã€Œå­—å¹•ã‚’è¡¨ç¤ºã—ãªã„ã€ï¼‰
 
 Event OnConfigInit()
 	ModName = "$MCM_modName"
@@ -31,34 +31,34 @@ endFunction
 Event OnVersionUpdate(int a_version)
 	debug.trace("# [SexLab Subtitles] - Update - ver." + CurrentVersion + " >> ver." + a_version)
 	If CurrentVersion > 0 && CurrentVersion < 20
-		; debug.trace("# ver1.1ˆÈ‰º‚©‚ç‚ÌƒAƒbƒvƒf[ƒgˆ—")
+		; debug.trace("# ver1.1ä»¥ä¸‹ã‹ã‚‰ã®ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆå‡¦ç†")
 		ModName = "$MCM_modName"
 		Pages     = new string[2]
 		Pages[0]  = "$MCM_page1_subtitleSetting"
 		Pages[1]  = "$MCM_page2_commonSubtitleSetting"
 	elseIf CurrentVersion == 20
-		; debug.trace("# ver2.0¨ver2.1ƒAƒbƒvƒf[ƒgˆ—")
+		; debug.trace("# ver2.0â†’ver2.1ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆå‡¦ç†")
 		SSC.CommonSetInit()
 	elseIf CurrentVersion == 21
-		; debug.trace("# v2.1¨v2.2ƒAƒbƒvƒf[ƒgˆ—")
+		; debug.trace("# v2.1â†’v2.2ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆå‡¦ç†")
 		SSC.CommonSetInitUpdate22()
 	endIf
 EndEvent
 
 ; ==============================================
 event OnPageReset(string page)
-	; •\†
+	; è¡¨ç´™
 	if page == ""
 		SetTitleText("$MCM_modCatchCopy")
 		LoadCustomContent("exported/obachan/S_Subtitles_Logo.swf", 95, 30)
 		return
 	endIf
 	UnloadCustomContent()
-	; 1ƒy[ƒW–Ú
+	; 1ãƒšãƒ¼ã‚¸ç›®
 	if page == "$MCM_page1_subtitleSetting"
 		Page1Settings()
 	endif
-	; 2ƒy[ƒW–Ú
+	; 2ãƒšãƒ¼ã‚¸ç›®
 	if page == "$MCM_page2_commonSubtitleSetting"
 		Page2Settings()
 	endif
@@ -67,19 +67,19 @@ endEvent
 Event OnConfigOpen()
 endEvent
 Event OnConfigClose()
-	; š–‹SEX‚ª‰Ò“­’†‚È‚çš–‹‚ğXV‚·‚é
-	If SSC.isRunningSubtitle ;š–‹sex‰Ò“­’†‚Ìê‡
-		; debug.trace("# [Subtitles MCM] - š–‹‰Ò“­’† -MCM‚Ì•ÏX‚ğ“K—p‚µ‚Ü‚·...")
+	; å­—å¹•SEXãŒç¨¼åƒä¸­ãªã‚‰å­—å¹•ã‚’æ›´æ–°ã™ã‚‹
+	If SSC.isRunningSubtitle ;å­—å¹•sexç¨¼åƒä¸­ã®å ´åˆ
+		; debug.trace("# [Subtitles MCM] - å­—å¹•ç¨¼åƒä¸­ -MCMã®å¤‰æ›´ã‚’é©ç”¨ã—ã¾ã™...")
 		int situation = SSC.situation
 		int sstage = SSC.getSubtitleStageNow()
-		string[] SSet = SSetting.getCSsetBySituation(situation, sstage) ; •ÏXŒã‚Ìš–‹
+		string[] SSet = SSetting.getCSsetBySituation(situation, sstage) ; å¤‰æ›´å¾Œã®å­—å¹•
 		string sname = SSetting.getNameCSname(situation)
 
-		If sname == "$SMENU_disble" ; š–‹”ñ•\¦‚ğ‘I‚ñ‚Å‚¢‚½ê‡
+		If sname == "$SMENU_disble" ; å­—å¹•éè¡¨ç¤ºã‚’é¸ã‚“ã§ã„ãŸå ´åˆ
 			SSC.repeatUpdate = false
 		else
-			If SSC.SSet == SSet ; Às’†‚Ìš–‹‚Æ•ÏXŒã‚Ìš–‹‚ª“¯‚¶ê‡
-				; debug.trace("# [MCM]  - Œ»İÀs’†‚Ìš–‹‚É•ÏX‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½")
+			If SSC.SSet == SSet ; å®Ÿè¡Œä¸­ã®å­—å¹•ã¨å¤‰æ›´å¾Œã®å­—å¹•ãŒåŒã˜å ´åˆ
+				; debug.trace("# [MCM]  - ç¾åœ¨å®Ÿè¡Œä¸­ã®å­—å¹•ã«å¤‰æ›´ã¯ã‚ã‚Šã¾ã›ã‚“ã§ã—ãŸ")
 			else
 				SSC.SSet = SSet
 				SSC.Temp = 0
@@ -91,7 +91,7 @@ Event OnConfigClose()
 EndEvent
 
 ;/---------------------------------------------------------------------------
-	1ƒy[ƒW–Ú‚Ìİ’èiš–‹Mod‘S‘Ì‚Ìİ’èj
+	1ãƒšãƒ¼ã‚¸ç›®ã®è¨­å®šï¼ˆå­—å¹•Modå…¨ä½“ã®è¨­å®šï¼‰
 /;
 	Function Page1Settings()
 		SetTitleText("$MCM_page1info")
@@ -130,7 +130,7 @@ EndEvent
 
 	EndFunction
 	; ----------------------------------------------------------------------
-	; š–‹ƒZƒbƒg•ÏXƒƒjƒ…[‚ÌŒÄ‚Ño‚µƒL[
+	; å­—å¹•ã‚»ãƒƒãƒˆå¤‰æ›´ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‘¼ã³å‡ºã—ã‚­ãƒ¼
 	state keymap_menuKey
 		event OnHighlightST()
 			SetInfoText("$MCM_page1menukeyInfo")
@@ -145,12 +145,12 @@ EndEvent
 		endEvent
 		event OnDefaultST()
 			ssHUD.UnregisterForKey(ssHUD.menuKey)
-			ssHUD.menuKey = 48 ; ƒfƒtƒHƒ‹ƒguBv
+			ssHUD.menuKey = 48 ; ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã€ŒBã€
 			ssHUD.RegisterForKey(ssHUD.menuKey)
 			SetKeyMapOptionValueST(ssHUD.menuKey)
 		endEvent
 	endState
-	; ƒL[‚ªƒJƒu‚Á‚½‚Ìˆ—
+	; ã‚­ãƒ¼ãŒã‚«ãƒ–ã£ãŸæ™‚ã®å‡¦ç†
 	bool function KeyConflict(int newKeyCode, string conflictControl, string conflictName)
 		bool continue = true
 		if (conflictControl != "")
@@ -164,14 +164,14 @@ EndEvent
 		endIf
 		return !continue
 	endFunction
-	; Š„‚è“–‚Ä‚½ƒL[‚ğMCM‚É“o˜^i‹£‡ƒƒbƒZ[ƒW—pj
+	; å‰²ã‚Šå½“ã¦ãŸã‚­ãƒ¼ã‚’MCMã«ç™»éŒ²ï¼ˆç«¶åˆãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç”¨ï¼‰
 	String Function GetCustomControl(int keyCode)
 		if(keyCode == ssHUD.menuKey)
 			return "$MCM_page1menukeyMessage"
 		endIf
 	EndFunction
 	; ----------------------------------------------------------------------
-	; š–‹•\¦‚ÌŠÔŠu‚Ì’²®
+	; å­—å¹•è¡¨ç¤ºã®é–“éš”ã®èª¿æ•´
 	state slider_interval
 		event OnHighlightST()
 			SetInfoText("$MCM_page1intervalInfo")
@@ -192,7 +192,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; š–‹‹@”\‘S‘Ì‚ÌƒIƒ“EƒIƒt
+	; å­—å¹•æ©Ÿèƒ½å…¨ä½“ã®ã‚ªãƒ³ãƒ»ã‚ªãƒ•
 	state toggle_smode
 		event OnHighlightST()
 			SetInfoText("$MCM_page1smodeInfo")
@@ -207,7 +207,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; š–‹ƒ‰ƒ“ƒ_ƒ€•\¦‚ÌƒIƒ“EƒIƒt
+	; å­—å¹•ãƒ©ãƒ³ãƒ€ãƒ è¡¨ç¤ºã®ã‚ªãƒ³ãƒ»ã‚ªãƒ•
 	state toggle_randommode
 		event OnHighlightST()
 			SetInfoText("$MCM_page1randommodeInfo")
@@ -222,7 +222,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; Mod‚ğŠO‚·ê‡
+	; Modã‚’å¤–ã™å ´åˆ
 	state text_uninstall
 		event OnHighlightST()
 			SetInfoText("$MCM_page1shutdownInfo")
@@ -233,7 +233,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; Mod‚Ìè“®ƒŠƒZƒbƒg
+	; Modã®æ‰‹å‹•ãƒªã‚»ãƒƒãƒˆ
 	state text_reset
 		event OnHighlightST()
 			SetInfoText("$MCM_page1resetInfo")
@@ -244,19 +244,19 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; š–‹‚ÌƒCƒ“ƒ|[ƒg
+	; å­—å¹•ã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 	state text_importAgain
 		event OnHighlightST()
 			SetInfoText("$MCM_page1importAgainInfo")
 		endEvent
 		event OnSelectST()
-			bool importOK = SSetting.importSubtitleSetInit() ; š–‹ƒZƒbƒg‚Ì€”õ‚ÆƒCƒ“ƒ|[ƒg
+			bool importOK = SSetting.importSubtitleSetInit() ; å­—å¹•ã‚»ãƒƒãƒˆã®æº–å‚™ã¨ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 			int i = 0
 			while !(importOK) && (i < 10)
 				utility.wait(0.1)
 				i += 1
 			endwhile
-			ssHUD.SetMenuInit() ; HUDƒƒjƒ…[‚Ì€”õiƒZƒbƒg–¼‚Ì“o˜^j
+			ssHUD.SetMenuInit() ; HUDãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®æº–å‚™ï¼ˆã‚»ãƒƒãƒˆåã®ç™»éŒ²ï¼‰
 			int len = (SSetting.IS_name).length
 			ShowMessage("$MCM_page1importMessage{" + len + "}", false, "$Yes")
 			SSetting.CSetAgain()
@@ -264,7 +264,7 @@ EndEvent
 		endEvent
 	endState
 ;/---------------------------------------------------------------------------
-	2ƒy[ƒW–Ú‚Ìİ’èi”Ä—pš–‹‚ÌŠ„‚è“–‚Äj
+	2ãƒšãƒ¼ã‚¸ç›®ã®è¨­å®šï¼ˆæ±ç”¨å­—å¹•ã®å‰²ã‚Šå½“ã¦ï¼‰
 /;
 	Function Page2Settings()
 		SetTitleText("$MCM_page2info")
@@ -316,7 +316,7 @@ EndEvent
 		AddMenuOptionST("menu_cmode20", "$CMODE_20", SSetting.common_setname[20], flags)
 	EndFunction
 	; ----------------------------------------------------------------------
-	; ƒfƒtƒHƒ‹ƒg‚Ìš–‹ƒZƒbƒg‚Ìİ’è
+	; ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å­—å¹•ã‚»ãƒƒãƒˆã®è¨­å®š
 	state menu_cmode_default
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode_default_info")
@@ -334,7 +334,7 @@ EndEvent
 				If _csdefault == 0
 					SetMenuOptionValueST("$SMENU_disble")
 				else
-					debug.trace("# setname‚Í" + SSetting.IS_name)
+					; debug.trace("# setnameã¯" + SSetting.IS_name)
 					string changename = SSetting.IS_name[_csdefault - 1]
 					SetMenuOptionValueST(changename)
 				endif
@@ -345,7 +345,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; ƒfƒtƒHƒ‹ƒg‚Ìš–‹‚ğ‘S‚Ä‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚É“K—p‚·‚é
+	; ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å­—å¹•ã‚’å…¨ã¦ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã«é©ç”¨ã™ã‚‹
 	state text_forcedAll
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode_farcedall_info")
@@ -353,21 +353,21 @@ EndEvent
 		event OnSelectST()
 			If _csdefault == 0
 				int num = 0
-				while (num < 13)
+				while (num < 21) ; v2.4Fix
 					SSetting.setNameCSname(num, "$SMENU_disble")
 					num += 1
 				endwhile
 			else
-				int choicemode = _csdefault - 1 ; ÀÛ‚Ì‘I‘ğ‚Í”ñ•\¦‚Ì•ª‚ğ”²‚¢‚½”
-				string setname = SSetting.IS_name[choicemode] ;‘I‘ğ‚µ‚½ƒZƒbƒg–¼
-				int setindex = SSetting.IS_index[choicemode] ;‘I‘ğ‚µ‚½ƒZƒbƒg‚ÌƒCƒ“ƒ|[ƒgŒ³iver2.1j
-				;‘I‘ğ‚µ‚½ƒZƒbƒg
+				int choicemode = _csdefault - 1 ; å®Ÿéš›ã®é¸æŠã¯éè¡¨ç¤ºã®åˆ†ã‚’æŠœã„ãŸæ•°
+				string setname = SSetting.IS_name[choicemode] ;é¸æŠã—ãŸã‚»ãƒƒãƒˆå
+				int setindex = SSetting.IS_index[choicemode] ;é¸æŠã—ãŸã‚»ãƒƒãƒˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒï¼ˆver2.1ï¼‰
+				;é¸æŠã—ãŸã‚»ãƒƒãƒˆ
 				string[] set1 = SSetting.getSSetByIndex(choicemode, 1)
 				string[] set2 = SSetting.getSSetByIndex(choicemode, 2)
 				string[] set3 = SSetting.getSSetByIndex(choicemode, 3)
 				string[] set4 = SSetting.getSSetByIndex(choicemode, 4)
 				string[] set5 = SSetting.getSSetByIndex(choicemode, 5)
-				;‘I‘ğ‚µ‚½ƒZƒbƒg‚ğ‘S‚Ä‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚Ì”Ä—pš–‹‚Æ‚µ‚ÄƒZƒbƒg
+				;é¸æŠã—ãŸã‚»ãƒƒãƒˆã‚’å…¨ã¦ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®æ±ç”¨å­—å¹•ã¨ã—ã¦ã‚»ãƒƒãƒˆ
 				int num2 = 0
 				while (num2 < 21)
 					 SSetting.intoSSetToCS(num2, set1, set2, set3, set4, set5)
@@ -380,42 +380,42 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; ‘I‘ğ‚µ‚½š–‹‚É•ÏX‚·‚éˆ—ichoice‚Í‘I‘ğ‚µ‚½š–‹‚Ìƒƒjƒ…[‡Acmode‚Í”Ä—pš–‹ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“”Ô†j
+	; é¸æŠã—ãŸå­—å¹•ã«å¤‰æ›´ã™ã‚‹å‡¦ç†ï¼ˆchoiceã¯é¸æŠã—ãŸå­—å¹•ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼é †ã€cmodeã¯æ±ç”¨å­—å¹•ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·ï¼‰
 	Function changeCmode(int choice, int cmode)
-		; debug.trace("# ƒƒjƒ…[ƒIƒvƒVƒ‡ƒ“" + ssHUD.SetMenu[choice] + "‚ª‘I‚Î‚ê‚Ü‚µ‚½")
+		; debug.trace("# ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚ªãƒ—ã‚·ãƒ§ãƒ³" + ssHUD.SetMenu[choice] + "ãŒé¸ã°ã‚Œã¾ã—ãŸ")
 		string sname
-		If choice < 1 ; š–‹”ñ•\¦‚Ìê‡
+		If choice < 1 ; å­—å¹•éè¡¨ç¤ºã®å ´åˆ
 			sname = "$SMENU_disble"
 			SSetting.intoCSempty(cmode)
 			SSetting.intoCSindex(cmode, 0)
 		else
-			int choicemode = choice - 1 ; ÀÛ‚Ì‘I‘ğ‚Í”ñ•\¦‚Ì•ª‚ğ”²‚¢‚½”‚É‚È‚é
-			sname = SSetting.IS_name[choicemode] ;‘I‘ğ‚µ‚½ƒZƒbƒg–¼
-			int setindex = SSetting.IS_index[choicemode] ;‘I‘ğ‚µ‚½ƒZƒbƒg‚ÌƒCƒ“ƒ|[ƒgŒ³iver2.1j
-			;‘I‘ğ‚µ‚½ƒZƒbƒg
+			int choicemode = choice - 1 ; å®Ÿéš›ã®é¸æŠã¯éè¡¨ç¤ºã®åˆ†ã‚’æŠœã„ãŸæ•°ã«ãªã‚‹
+			sname = SSetting.IS_name[choicemode] ;é¸æŠã—ãŸã‚»ãƒƒãƒˆå
+			int setindex = SSetting.IS_index[choicemode] ;é¸æŠã—ãŸã‚»ãƒƒãƒˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒï¼ˆver2.1ï¼‰
+			;é¸æŠã—ãŸã‚»ãƒƒãƒˆ
 			string[] set1 = SSetting.getSSetByIndex(choicemode, 1)
 			string[] set2 = SSetting.getSSetByIndex(choicemode, 2)
 			string[] set3 = SSetting.getSSetByIndex(choicemode, 3)
 			string[] set4 = SSetting.getSSetByIndex(choicemode, 4)
 			string[] set5 = SSetting.getSSetByIndex(choicemode, 5)
-			;‘I‘ğ‚µ‚½ƒZƒbƒg‚ğŒ»İ‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚Ì”Ä—pš–‹‚Æ‚µ‚ÄƒZƒbƒg
+			;é¸æŠã—ãŸã‚»ãƒƒãƒˆã‚’ç¾åœ¨ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®æ±ç”¨å­—å¹•ã¨ã—ã¦ã‚»ãƒƒãƒˆ
 			 SSetting.intoSSetToCS(cmode, set1, set2, set3, set4, set5)
 			 SSetting.intoCSindex(cmode, setindex)
 		endIf
-		;‘I‘ğ‚µ‚½ƒZƒbƒg‚Ì–¼‘O‚ğŒ»İ‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚Ìš–‹–¼‚Æ‚µ‚ÄƒZƒbƒg
+		;é¸æŠã—ãŸã‚»ãƒƒãƒˆã®åå‰ã‚’ç¾åœ¨ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®å­—å¹•åã¨ã—ã¦ã‚»ãƒƒãƒˆ
 		SSetting.setNameCSname(cmode, sname)
-		SetMenuOptionValueST(sname) ; ƒƒjƒ…[‚É”½‰f
+		SetMenuOptionValueST(sname) ; ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã«åæ˜ 
 	EndFunction
 	; ----------------------------------------------------------------------
-	; cmode0 ƒNƒŠ[ƒ`ƒƒ[—p
+	; cmode0 ã‚¯ãƒªãƒ¼ãƒãƒ£ãƒ¼ç”¨
 	state menu_cmode0
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode0_info")
 		endEvent
 		event OnMenuOpenST()
-			SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.common_setname[0])) ;Œ»İ‚Ì‘I‘ğˆ
-			SetMenuDialogDefaultIndex(_csdefault) ; ƒfƒtƒHƒ‹ƒg‚Ì‘I‘ğˆ‚Ì‡”Ô
-			SetMenuDialogOptions(ssHUD.SetMenu) ;•\¦‚·‚é‘I‘ğˆ‚Ì”z—ñ
+			SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.common_setname[0])) ;ç¾åœ¨ã®é¸æŠè‚¢
+			SetMenuDialogDefaultIndex(_csdefault) ; ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®é¸æŠè‚¢ã®é †ç•ª
+			SetMenuDialogOptions(ssHUD.SetMenu) ;è¡¨ç¤ºã™ã‚‹é¸æŠè‚¢ã®é…åˆ—
 		endEvent
 		event OnMenuAcceptST(int i)
 			if i < 0
@@ -425,11 +425,11 @@ EndEvent
 			endIf
 		endEvent
 		event OnDefaultST()
-			changeCmode(_csdefault, 0) ; ƒfƒtƒHƒ‹ƒg‚ğ‘I‚ñ‚¾ê‡
+			changeCmode(_csdefault, 0) ; ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’é¸ã‚“ã å ´åˆ
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode1 ƒVƒbƒNƒXƒiƒCƒ“
+	; cmode1 ã‚·ãƒƒã‚¯ã‚¹ãƒŠã‚¤ãƒ³
 	state menu_cmode1
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode1_info")
@@ -450,7 +450,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode2 è‚Åˆ¤•
+	; cmode2 æ‰‹ã§æ„›æ’«
 	state menu_cmode2
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode2_info")
@@ -471,7 +471,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode3 ‘«‚Åˆ¤•
+	; cmode3 è¶³ã§æ„›æ’«
 	state menu_cmode3
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode3_info")
@@ -492,7 +492,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode4 ‹¹‚Åˆ¤•
+	; cmode4 èƒ¸ã§æ„›æ’«
 	state menu_cmode4
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode4_info")
@@ -513,7 +513,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode5 ƒ}ƒXƒ^[ƒx[ƒVƒ‡ƒ“
+	; cmode5 ãƒã‚¹ã‚¿ãƒ¼ãƒ™ãƒ¼ã‚·ãƒ§ãƒ³
 	state menu_cmode5
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode5_info")
@@ -534,7 +534,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode6 ƒtƒBƒXƒgƒtƒ@ƒbƒN
+	; cmode6 ãƒ•ã‚£ã‚¹ãƒˆãƒ•ã‚¡ãƒƒã‚¯
 	state menu_cmode6
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode6_info")
@@ -555,7 +555,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode7 ‹RæˆÊ
+	; cmode7 é¨ä¹—ä½
 	state menu_cmode7
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode7_info")
@@ -576,7 +576,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode8 ‘O‹Y
+	; cmode8 å‰æˆ¯
 	state menu_cmode8
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode8_info")
@@ -597,7 +597,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode9 ‹­Š­‚ÌƒtƒFƒ‰ƒ`ƒI
+	; cmode9 å¼·å§¦ã®ãƒ•ã‚§ãƒ©ãƒã‚ª
 	state menu_cmode9
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode9_info")
@@ -618,7 +618,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode10 ƒtƒFƒ‰ƒ`ƒI
+	; cmode10 ãƒ•ã‚§ãƒ©ãƒã‚ª
 	state menu_cmode10
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode10_info")
@@ -639,7 +639,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode11 ‹­Š­
+	; cmode11 å¼·å§¦
 	state menu_cmode11
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode11_info")
@@ -660,7 +660,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode12 ˆê”Ê
+	; cmode12 ä¸€èˆ¬
 	state menu_cmode12
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode12_info")
@@ -681,7 +681,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode13 ‹­Š­ƒAƒiƒ‹
+	; cmode13 å¼·å§¦ã‚¢ãƒŠãƒ«
 	state menu_cmode13
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode13_info")
@@ -702,7 +702,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode14 ƒAƒiƒ‹
+	; cmode14 ã‚¢ãƒŠãƒ«
 	state menu_cmode14
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode14_info")
@@ -723,7 +723,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode15 “¯«-‹­Š­ƒI[ƒ‰ƒ‹
+	; cmode15 åŒæ€§-å¼·å§¦ã‚ªãƒ¼ãƒ©ãƒ«
 	state menu_cmode15
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode15_info")
@@ -744,7 +744,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode16 “¯«-ƒI[ƒ‰ƒ‹
+	; cmode16 åŒæ€§-ã‚ªãƒ¼ãƒ©ãƒ«
 	state menu_cmode16
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode16_info")
@@ -765,7 +765,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode17 “¯«-‹­Š­ƒAƒiƒ‹
+	; cmode17 åŒæ€§-å¼·å§¦ã‚¢ãƒŠãƒ«
 	state menu_cmode17
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode17_info")
@@ -786,7 +786,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode18 “¯«-ƒAƒiƒ‹
+	; cmode18 åŒæ€§-ã‚¢ãƒŠãƒ«
 	state menu_cmode18
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode18_info")
@@ -807,7 +807,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode19 “¯«-‹­Š­
+	; cmode19 åŒæ€§-å¼·å§¦
 	state menu_cmode19
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode19_info")
@@ -828,7 +828,7 @@ EndEvent
 		endEvent
 	endState
 	; ----------------------------------------------------------------------
-	; cmode20 “¯«-ˆê”Ê
+	; cmode20 åŒæ€§-ä¸€èˆ¬
 	state menu_cmode20
 		event OnHighlightST()
 			SetInfoText("$MCM_cmode20_info")

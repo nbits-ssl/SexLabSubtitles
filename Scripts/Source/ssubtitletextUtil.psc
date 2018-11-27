@@ -1,8 +1,10 @@
-Scriptname ssubtitletextUtil hidden
-{ ŠO•”‚ÌMod‚©‚çš–‹‚âƒƒjƒ…[ƒŠƒXƒg‚ğg‚¤‚½‚ß‚Ìƒ†[ƒeƒBƒŠƒeƒB }
+ï»¿Scriptname ssubtitletextUtil hidden
+{ å¤–éƒ¨ã®Modã‹ã‚‰å­—å¹•ã‚„ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªã‚¹ãƒˆã‚’ä½¿ã†ãŸã‚ã®ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ }
 
 int function GetVersion() global
-	return 23 ; 2015.1.11 ver 2.3
+	return 25 ; 2016.1.31 ver 2.5
+	return 24 ; 2015.8.25 ver 2.4
+	; return 23 ; 2015.1.11 ver 2.3
 	; return 22 ; 2015.1.11 ver 2.2
 	; return 21 ; 2014.12.28 ver 2.1
 	; return 20 ; 2014.12.15 ver 2.0
@@ -11,7 +13,7 @@ int function GetVersion() global
 endFunction
 
 string function GetVersionString() global
-	return "v2.3"
+	return "v2.5"
 endFunction
 
 bool function IsActiveSubtitle() global

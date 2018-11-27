@@ -1,29 +1,29 @@
-Scriptname secondSubtitleText extends Quest
-{sexLab—p ”Ä—pš–‹ƒRƒ“ƒgƒ[ƒ‹ƒXƒNƒŠƒvƒg}
+ï»¿Scriptname secondSubtitleText extends Quest
+{sexLabç”¨ æ±ç”¨å­—å¹•ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¹ã‚¯ãƒªãƒ—ãƒˆ}
 
-SexLabFramework Property SexLab auto ; SexLab—l
-secondSubtitleTextHUD Property SS auto ; š–‹HUD
-SubtitleSetSetting Property SSetting auto ; š–‹ƒZƒbƒg‚ÌƒCƒ“ƒ|[ƒgA”Ä—pš–‹‚Ìİ’è‚È‚Ç
+SexLabFramework Property SexLab auto ; SexLabæ§˜
+secondSubtitleTextHUD Property SS auto ; å­—å¹•HUD
+SubtitleSetSetting Property SSetting auto ; å­—å¹•ã‚»ãƒƒãƒˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆã€æ±ç”¨å­—å¹•ã®è¨­å®šãªã©
 
-; ”Ä—pš–‹•\¦‚Ìó‘ÔƒvƒƒpƒeƒBiŠO•”‚©‚ç‚ÌƒAƒNƒZƒX—pj
-bool Property isRunningSubtitle auto; š–‹•\¦‚µ‚Ä‚¢‚éSexƒV[ƒ“‚ªŒ»İ‰Ò“­’†‚©‚Ç‚¤‚©
-int Property currentStage auto; Œ»İ‰Ò“­’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒXƒe[ƒW
-int Property maxStage auto; Œ»İ‰Ò“­’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‘ƒXƒe[ƒW”
-int Property situation = 12 auto ; Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìš–‹‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“
+; æ±ç”¨å­—å¹•è¡¨ç¤ºã®çŠ¶æ…‹ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ï¼ˆå¤–éƒ¨ã‹ã‚‰ã®ã‚¢ã‚¯ã‚»ã‚¹ç”¨ï¼‰
+bool Property isRunningSubtitle auto; å­—å¹•è¡¨ç¤ºã—ã¦ã„ã‚‹Sexã‚·ãƒ¼ãƒ³ãŒç¾åœ¨ç¨¼åƒä¸­ã‹ã©ã†ã‹
+int Property currentStage auto; ç¾åœ¨ç¨¼åƒä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¹ãƒ†ãƒ¼ã‚¸
+int Property maxStage auto; ç¾åœ¨ç¨¼åƒä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ç·ã‚¹ãƒ†ãƒ¼ã‚¸æ•°
+int Property situation = 12 auto ; ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å­—å¹•ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³
 
-string sexlabID ; Œ»İ‰Ò“­’†‚ÌSexƒV[ƒ“‚ÌID
-bool IsAggressive ; ‹­Š­‚©‚Ç‚¤‚©
+string sexlabID ; ç¾åœ¨ç¨¼åƒä¸­ã®Sexã‚·ãƒ¼ãƒ³ã®ID
+bool IsAggressive ; å¼·å§¦ã‹ã©ã†ã‹
 
-Actor Player ; ƒvƒŒƒCƒ„[
-Actor Uke ; ó–ğ‚ÌƒAƒNƒ^[
-Actor Seme ; U–ğ‚ÌƒAƒNƒ^[
-string name_Uke ; ó‚Ì–¼‘O
-string name_Seme ; U‚Ì–¼‘O
-bool _samesex ; ó‚ÆU‚ª“¯«‚©‚Ç‚¤‚©iv2.2j
-int _temp_r ; ƒ‰ƒ“ƒ_ƒ€•\¦‚ÌÄ¶”Ô†iv2.2j
+Actor Player ; ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+Actor Uke ; å—å½¹ã®ã‚¢ã‚¯ã‚¿ãƒ¼
+Actor Seme ; æ”»å½¹ã®ã‚¢ã‚¯ã‚¿ãƒ¼
+string name_Uke ; å—ã®åå‰
+string name_Seme ; æ”»ã®åå‰
+bool _samesex ; å—ã¨æ”»ãŒåŒæ€§ã‹ã©ã†ã‹ï¼ˆv2.2ï¼‰
+int _temp_r ; ãƒ©ãƒ³ãƒ€ãƒ è¡¨ç¤ºã®å†ç”Ÿç•ªå·ï¼ˆv2.2ï¼‰
 
-int _temp = 0 ; š–‹•\¦‚Ì‡”Ô‚ğ‹L‰¯‚µ‚Ä‚¨‚­
-int Property Temp ; ŠO•”ƒAƒNƒZƒX—p
+int _temp = 0 ; å­—å¹•è¡¨ç¤ºã®é †ç•ªã‚’è¨˜æ†¶ã—ã¦ãŠã
+int Property Temp ; å¤–éƒ¨ã‚¢ã‚¯ã‚»ã‚¹ç”¨
 	int function get()
 		return _temp
 	endFunction
@@ -32,9 +32,9 @@ int Property Temp ; ŠO•”ƒAƒNƒZƒX—p
 	endFunction
 endProperty
 
-float stageChangeTime = 0.0 ; ‘O‰ñƒXƒe[ƒW‚ªØ‚è‘Ö‚í‚Á‚½ŠÔ
-string[] _sset ; •\¦‚³‚¹‚éš–‹ƒZƒbƒg
-string[] Property SSet ; ŠO•”ƒAƒNƒZƒX—p
+float stageChangeTime = 0.0 ; å‰å›ã‚¹ãƒ†ãƒ¼ã‚¸ãŒåˆ‡ã‚Šæ›¿ã‚ã£ãŸæ™‚é–“
+string[] _sset ; è¡¨ç¤ºã•ã›ã‚‹å­—å¹•ã‚»ãƒƒãƒˆ
+string[] Property SSet ; å¤–éƒ¨ã‚¢ã‚¯ã‚»ã‚¹ç”¨
 	string[] function get()
 		return _sset
 	endFunction
@@ -43,8 +43,8 @@ string[] Property SSet ; ŠO•”ƒAƒNƒZƒX—p
 	endFunction
 endProperty
 
-bool property repeatUpdate = false auto ; true’†‚Ì‚İOnUpdate‚µš–‹‚ğ•\¦‚·‚é
-bool property repeatRandom = false auto ; true’†‚Íƒ‰ƒ“ƒ_ƒ€‚Åš–‹•\¦ (v2.2)
+bool property repeatUpdate = false auto ; trueä¸­ã®ã¿OnUpdateã—å­—å¹•ã‚’è¡¨ç¤ºã™ã‚‹
+bool property repeatRandom = false auto ; trueä¸­ã¯ãƒ©ãƒ³ãƒ€ãƒ ã§å­—å¹•è¡¨ç¤º (v2.2)
 
 ; v2.3 Version check
 string Property ModVersion auto
@@ -55,7 +55,7 @@ string Property HUDstringVersion auto
 
 ;/======================================================/;
 
-Function Initialize() ; ƒQ[ƒ€‚ªƒ[ƒh‚³‚ê‚é‚½‚Ñ‚ÉŒÄ‚Ño‚µ
+Function Initialize() ; ã‚²ãƒ¼ãƒ ãŒãƒ­ãƒ¼ãƒ‰ã•ã‚Œã‚‹ãŸã³ã«å‘¼ã³å‡ºã—
 	sexlabID = ""
 	Player = Game.GetPlayer()
 	SSetting = (self as Quest) as SubtitleSetSetting
@@ -67,45 +67,45 @@ Function Initialize() ; ƒQ[ƒ€‚ªƒ[ƒh‚³‚ê‚é‚½‚Ñ‚ÉŒÄ‚Ño‚µ
 	If HUDversion == 0
 		HUDstringVersion = "$VersionFail"
 	else
-		HUDstringVersion = "v1." + HUDversion
+		HUDstringVersion = "v" + (HUDversion * 0.1)
 	endIf
 EndFunction
 
-Function CommonSetInit() ; ”Ä—pš–‹‚Ì€”õiMod“±“ü‰‰ñ•XVj
-	SSetting.commonSetInit() ; ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚ÌƒZƒbƒg
-	bool importOK = SSetting.importSubtitleSetInit() ; š–‹ƒZƒbƒg‚Ì€”õ‚ÆƒCƒ“ƒ|[ƒg
+Function CommonSetInit() ; æ±ç”¨å­—å¹•ã®æº–å‚™ï¼ˆModå°å…¥åˆå›ï¼†æ›´æ–°æ™‚ï¼‰
+	SSetting.commonSetInit() ; ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚»ãƒƒãƒˆ
+	bool importOK = SSetting.importSubtitleSetInit() ; å­—å¹•ã‚»ãƒƒãƒˆã®æº–å‚™ã¨ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 	int i = 0
 	while !(importOK) && (i < 10)
 		utility.wait(0.1)
 		i += 1
 	endwhile
-	SSetting.defaultSSet() ; ‰‰ñŒÀ’èİ’è
-	SS.SetMenuInit() ; HUDƒƒjƒ…[‚Ì€”õiƒZƒbƒg–¼‚Ì“o˜^j
+	SSetting.defaultSSet() ; åˆå›é™å®šè¨­å®š
+	SS.SetMenuInit() ; HUDãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®æº–å‚™ï¼ˆã‚»ãƒƒãƒˆåã®ç™»éŒ²ï¼‰
 EndFunction
 
-Function CommonSetInitUpdate22() ; ”Ä—pš–‹‚Ì€”õiv2.1¨v2.2XV—pj
-	SSetting.commonSetInitUpdate22() ; ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚Ì’Ç‰Á
-	bool importOK = SSetting.importSubtitleSetInit() ; š–‹ƒZƒbƒg‚Ì€”õ‚ÆƒCƒ“ƒ|[ƒg
+Function CommonSetInitUpdate22() ; æ±ç”¨å­—å¹•ã®æº–å‚™ï¼ˆv2.1â†’v2.2æ›´æ–°ç”¨ï¼‰
+	SSetting.commonSetInitUpdate22() ; ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã®è¿½åŠ 
+	bool importOK = SSetting.importSubtitleSetInit() ; å­—å¹•ã‚»ãƒƒãƒˆã®æº–å‚™ã¨ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 	int i = 0
 	while !(importOK) && (i < 10)
 		utility.wait(0.1)
 		i += 1
 	endwhile
-	SSetting.defaultSSetUpdate22() ; v2.1¨v2.2XVŒÀ’èİ’è
-	SS.SetMenuInit() ; HUDƒƒjƒ…[‚Ì€”õiƒZƒbƒg–¼‚Ì“o˜^j
+	SSetting.defaultSSetUpdate22() ; v2.1â†’v2.2æ›´æ–°é™å®šè¨­å®š
+	SS.SetMenuInit() ; HUDãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®æº–å‚™ï¼ˆã‚»ãƒƒãƒˆåã®ç™»éŒ²ï¼‰
 EndFunction
 
-Function RegisterMenukey() ; š–‹ƒƒjƒ…[ƒŠƒXƒgŒÄ‚Ño‚µƒL[‚Ì“o˜^
+Function RegisterMenukey() ; å­—å¹•ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒªã‚¹ãƒˆå‘¼ã³å‡ºã—ã‚­ãƒ¼ã®ç™»éŒ²
 	SS.Registerforkey(SS.menuKey)
 EndFunction
 
-Function UnregisterSubtitles() ; ŠÖ˜Aˆ—‚Ì“o˜^‚ğíœ
+Function UnregisterSubtitles() ; é–¢é€£å‡¦ç†ã®ç™»éŒ²ã‚’å‰Šé™¤
 	unregisterEvent()
 	SS.Unregisterforkey(SS.menuKey)
 EndFunction
 
 ;/======================================================
-	SexLab—pƒCƒxƒ“ƒg
+	SexLabç”¨ã‚¤ãƒ™ãƒ³ãƒˆ
 /;
 	Function registerEvent()
 		RegisterForModEvent("AnimationStart", "startAnim")
@@ -126,12 +126,12 @@ EndFunction
 		UnregisterForModEvent("OrgasmEnd")
 	EndFunction
 
-	;SexLabƒAƒjƒŠJn‚Ìˆ— -------------------------------------
+	;SexLabã‚¢ãƒ‹ãƒ¡é–‹å§‹æ™‚ã®å‡¦ç† -------------------------------------
 	event startAnim(string eventName, string argString, float argNum, form sender)
 		sslThreadController controller = SexLab.HookController(argString)
 		bool hasplayer = controller.HasPlayer
 
-		If hasplayer && SS.SMode ; ƒvƒŒƒCƒ„[‚ª‚©‚ç‚ñ‚Å‚¢‚ÄA‚©‚Â”Ä—pš–‹ƒVƒXƒeƒ€‚ª—LŒø‚Ìê‡
+		If hasplayer && SS.SMode ; ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‹ã‚‰ã‚“ã§ã„ã¦ã€ã‹ã¤æ±ç”¨å­—å¹•ã‚·ã‚¹ãƒ†ãƒ ãŒæœ‰åŠ¹ã®å ´åˆ
 			isRunningSubtitle = true
 			IsAggressive = controller.IsAggressive
 			_temp = 0
@@ -145,7 +145,7 @@ EndFunction
 				Uke = member[0]
 				Seme = member[1]
 			endIf
-			; ver2.2 ƒfƒBƒXƒvƒŒƒCƒl[ƒ€‚ğ—Dæ“I‚Éæ“¾iNPC‚Ì‚İj
+			; ver2.2 ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ãƒãƒ¼ãƒ ã‚’å„ªå…ˆçš„ã«å–å¾—ï¼ˆNPCã®ã¿ï¼‰
 			string dn_Uke = ""
 			string dn_Seme = ""
 			string n_Uke = ""
@@ -180,19 +180,19 @@ EndFunction
 					endIf
 				endif
 			endif
-			; «•Ê‚Ìæ“¾
+			; æ€§åˆ¥ã®å–å¾—
 			If  (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
 				_samesex = true
-				; Debug.Trace("# U‚Æó‚Í“¯«‚Å‚·")
+				; Debug.Trace("# æ”»ã¨å—ã¯åŒæ€§ã§ã™")
 			else
 				_samesex = false
-				; Debug.Trace("# U‚Æó‚ÍˆÙ«‚Å‚·")
+				; Debug.Trace("# æ”»ã¨å—ã¯ç•°æ€§ã§ã™")
 			endIf
-			; debug.trace("# SexLab Subtitles - ƒAƒjƒŠJn - ƒXƒŒƒbƒhID : " + sexlabID)
+			; debug.trace("# SexLab Subtitles - ã‚¢ãƒ‹ãƒ¡é–‹å§‹ - ã‚¹ãƒ¬ãƒƒãƒ‰ID : " + sexlabID)
 		endif
 	endEvent
 
-	; ƒXƒe[ƒW–ˆ‚ÌŠJn‚Ìˆ—
+	; ã‚¹ãƒ†ãƒ¼ã‚¸æ¯ã®é–‹å§‹æ™‚ã®å‡¦ç†
 	event startStage(string eventName, string argString, float argNum, form sender)
 		If (argString == sexlabID) && SS.SMode
 			currentStage = SexLab.HookStage(argString)
@@ -200,8 +200,8 @@ EndFunction
 			maxStage = animation.StageCount
 			string animname = animation.name
 			bool isCreture = animation.IsCreature
-			; debug.trace("# SexLab Subtitles - ƒXƒŒƒbƒh:" + sexlabID + "ƒXƒe[ƒW" + currentStage + "ƒXƒ^[ƒg")
-			; debug.trace("# y" + animname + "zÄ¶’† - ÅIƒXƒe[ƒW‚Í" + maxStage + "AƒNƒŠ[ƒ`ƒƒ[‚Í" + isCreture)
+			; debug.trace("# SexLab Subtitles - ã‚¹ãƒ¬ãƒƒãƒ‰:" + sexlabID + "ã‚¹ãƒ†ãƒ¼ã‚¸" + currentStage + "ã‚¹ã‚¿ãƒ¼ãƒˆ")
+			; debug.trace("# ã€" + animname + "ã€‘å†ç”Ÿä¸­ - æœ€çµ‚ã‚¹ãƒ†ãƒ¼ã‚¸ã¯" + maxStage + "ã€ã‚¯ãƒªãƒ¼ãƒãƒ£ãƒ¼ã¯" + isCreture)
 
 			; v2.3 Animation Info
 			SS.pr_currentAnimName = animname
@@ -243,23 +243,23 @@ EndFunction
 			else
 				currentTag = ""
 			endif
-			; debug.trace("# Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒ^ƒO•ª—Ş‚Í" + currentTag)
+			; debug.trace("# ç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚¿ã‚°åˆ†é¡ã¯" + currentTag)
 
-			; ƒZƒŠƒt‚Ì•\¦”Ô†‚ğƒŠƒZƒbƒg‚·‚é‚©‚Ç‚¤‚©‚Ì”»’è
+			; ã‚»ãƒªãƒ•ã®è¡¨ç¤ºç•ªå·ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹ã‹ã©ã†ã‹ã®åˆ¤å®š
 			float now = utility.getcurrentrealtime()
 			If (now - stageChangeTime) < (SS.interval * 1.2)
-				; debug.trace("# ‘O‰ñ‚©‚ç" + ((now - stageChangeTime) as int) + "•b‚µ‚©Œo‚Á‚Ä‚¢‚È‚¢‚½‚ßƒZƒŠƒt‚ğƒŠƒZƒbƒg‚µ‚Ü‚¹‚ñ")
+				; debug.trace("# å‰å›ã‹ã‚‰" + ((now - stageChangeTime) as int) + "ç§’ã—ã‹çµŒã£ã¦ã„ãªã„ãŸã‚ã‚»ãƒªãƒ•ã‚’ãƒªã‚»ãƒƒãƒˆã—ã¾ã›ã‚“")
 			else
 				_temp = 0
 			endIf
-			stageChangeTime = now ; ‚ÌXV
+			stageChangeTime = now ; æ™‚åˆ»ã®æ›´æ–°
 
-			; Œ»İ‚ÌƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚ğsituation‚ÉƒZƒbƒg
+			; ç¾åœ¨ã®ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã‚’situationã«ã‚»ãƒƒãƒˆ
 			getSituation(animname, currentTag, IsAggressive, isCreture)
 
-			If SSetting.isCSdisable(situation) ; š–‹‚ª”ñ•\¦‚Ìê‡
+			If SSetting.isCSdisable(situation) ; å­—å¹•ãŒéè¡¨ç¤ºã®å ´åˆ
 				repeatUpdate = false
-				; debug.trace("# š–‹‚ğ•\¦‚µ‚Ü‚¹‚ñ")
+				; debug.trace("# å­—å¹•ã‚’è¡¨ç¤ºã—ã¾ã›ã‚“")
 			else
 				int ssstage = getSubtitleStageNow()
 				_sset = SSetting.getCSsetBySituation(situation, ssstage)
@@ -269,13 +269,13 @@ EndFunction
 		endIf
 	endEvent
 
-	; ƒXƒe[ƒWI—¹‚Ìˆ—
+	; ã‚¹ãƒ†ãƒ¼ã‚¸çµ‚äº†æ™‚ã®å‡¦ç†
 	event endStage(string eventName, string argString, float argNum, form sender)
 		If (argString == sexlabID)
 			repeatUpdate = false
 		endif
 	endEvent
-	;SexLabƒAƒjƒ‘S‘ÌŠ®—¹‚Ìˆ—
+	;SexLabã‚¢ãƒ‹ãƒ¡å…¨ä½“å®Œäº†æ™‚ã®å‡¦ç†
 	event endAnim(string eventName, string argString, float argNum, form sender)
 		If (argString == sexlabID)
 			repeatUpdate = false
@@ -292,10 +292,10 @@ EndFunction
 	endEvent
 
 ;/======================================================
-	š–‹•\¦ŠÖ˜A‚Ìˆ—
+	å­—å¹•è¡¨ç¤ºé–¢é€£ã®å‡¦ç†
 /;
 
-; ƒAƒjƒ–¼Aƒ^ƒO–¼‚©‚çƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“”Ô†‚ğŠ„‚èo‚µAsituationƒvƒƒpƒeƒB‚ÉƒZƒbƒg‚·‚é
+; ã‚¢ãƒ‹ãƒ¡åã€ã‚¿ã‚°åã‹ã‚‰ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·ã‚’å‰²ã‚Šå‡ºã—ã€situationãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã«ã‚»ãƒƒãƒˆã™ã‚‹
 Function getSituation(string animname, string tagname, bool aggressivesex, bool creaturesex)
 	If creaturesex
 		situation = 0
@@ -354,7 +354,7 @@ Function getSituation(string animname, string tagname, bool aggressivesex, bool 
 	endif
 EndFunction
 
-; Œ»İ‚ÌƒXƒe[ƒW‚©‚ç“K—p‚·‚éš–‹‚ÌƒXƒe[ƒW‚ğ•Ô‚·i5ƒXƒe[ƒWˆÈã‚ ‚éƒAƒjƒ[ƒVƒ‡ƒ“‘Î‰j
+; ç¾åœ¨ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‹ã‚‰é©ç”¨ã™ã‚‹å­—å¹•ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’è¿”ã™ï¼ˆ5ã‚¹ãƒ†ãƒ¼ã‚¸ä»¥ä¸Šã‚ã‚‹ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å¯¾å¿œï¼‰
 int Function getSubtitleStageNow()
 	If currentStage == 1
 		return 1
@@ -369,21 +369,21 @@ int Function getSubtitleStageNow()
 	endif
 EndFunction
 
-; š–‹•\¦‚Ég‚¤ŠÖ”
+; å­—å¹•è¡¨ç¤ºã«ä½¿ã†é–¢æ•°
 Function ShowSuper(String n_uke, String n_seme, String asMessage)
 	SS.ShowSubtitleSuper(n_uke, n_seme, asMessage)
 EndFunction
 
-; š–‹ƒZƒbƒg‚Ì•\¦
+; å­—å¹•ã‚»ãƒƒãƒˆã®è¡¨ç¤º
 Function ShowSubtitlesAuto()
 	ShowSubtitles(_sset)
 EndFunction
 
 Function ShowSubtitles(string[] subtitleSet)
-	; debug.trace("# ShowSubtitlesˆ—ŠJn")
+	; debug.trace("# ShowSubtitleså‡¦ç†é–‹å§‹")
 	int len = subtitleSet.length
 
-	If repeatRandom ; ƒ‰ƒ“ƒ_ƒ€ƒ‚[ƒh
+	If repeatRandom ; ãƒ©ãƒ³ãƒ€ãƒ ãƒ¢ãƒ¼ãƒ‰
 		If len == 1
 			ShowSuper(name_Uke, name_Seme, subtitleSet[0])
 			_temp_r = 0
@@ -392,7 +392,7 @@ Function ShowSubtitles(string[] subtitleSet)
 			endIf
 		else
 			int choice = getRandomDifferent(0, (len - 1), _temp_r)
-			; Debug.Trace("# ƒ‰ƒ“ƒ_ƒ€ƒ‚[ƒhF‘O‰ñ‚Í" +_temp_r + " Œ‹‰Ê‚Í" + choice)
+			; Debug.Trace("# ãƒ©ãƒ³ãƒ€ãƒ ãƒ¢ãƒ¼ãƒ‰ï¼šå‰å›ã¯" +_temp_r + " çµæœã¯" + choice)
 			If (choice == 0) && (subtitleSet.length > 0)
 				ShowSuper(name_Uke, name_Seme, subtitleSet[0])
 				_temp_r = choice
@@ -513,15 +513,15 @@ Function ShowSubtitles(string[] subtitleSet)
 				If repeatUpdate
 					registerforsingleupdate(SS.interval)
 				endIf
-			else	 ; ƒ‰ƒ“ƒ_ƒ€‚ÌŒ‹‰Ê‚Æš–‹‚ÌŒÂ”‚ªˆê’v‚µ‚È‚¢ê‡
+			else	 ; ãƒ©ãƒ³ãƒ€ãƒ ã®çµæœã¨å­—å¹•ã®å€‹æ•°ãŒä¸€è‡´ã—ãªã„å ´åˆ
 				If repeatUpdate
 					registerforsingleupdate(0.1)
 				endIf
 			endIf
 		endif
-	else ; ƒŠƒs[ƒgƒ‚[ƒh
-		; debug.trace("# ƒŠƒs[ƒgƒ‚[ƒh ‘O‰ñ_temp‚Í" + _temp)
-		If temp >= subtitleSet.length ; •\¦‰ñ”‚ªƒZƒŠƒt”‚ğ‰z‚¦‚½‚ç0‚É–ß‚·
+	else ; ãƒªãƒ”ãƒ¼ãƒˆãƒ¢ãƒ¼ãƒ‰
+		; debug.trace("# ãƒªãƒ”ãƒ¼ãƒˆãƒ¢ãƒ¼ãƒ‰ å‰å›_tempã¯" + _temp)
+		If temp >= subtitleSet.length ; è¡¨ç¤ºå›æ•°ãŒã‚»ãƒªãƒ•æ•°ã‚’è¶ŠãˆãŸã‚‰0ã«æˆ»ã™
 			_temp = 0
 		endif
 		If (_temp == 0)
@@ -578,7 +578,7 @@ Event OnUpdate()
 	endif
 EndEvent
 
-; ƒ‰ƒ“ƒ_ƒ€‚Å“¯‚¶”‚ğ“ñ‰ñ‘±‚¯‚Äo‚³‚È‚¢‚æ‚¤‚É‚·‚é
+; ãƒ©ãƒ³ãƒ€ãƒ ã§åŒã˜æ•°ã‚’äºŒå›ç¶šã‘ã¦å‡ºã•ãªã„ã‚ˆã†ã«ã™ã‚‹
 int Function getRandomDifferent(int min, int max, int before)
 	int n = Utility.randomInt(min, max)
 	while ( n == before)

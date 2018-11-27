@@ -1,15 +1,15 @@
-Scriptname SubtitleSetSetting extends Quest
-{sexLab—p š–‹ƒZƒbƒg‚ÌƒCƒ“ƒ|[ƒgE”Ä—pš–‹‚Ìİ’è}
+ï»¿Scriptname SubtitleSetSetting extends Quest
+{sexLabç”¨ å­—å¹•ã‚»ãƒƒãƒˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆãƒ»æ±ç”¨å­—å¹•ã®è¨­å®š}
 
-string endcode = "#ssend" ; I—¹ƒ^ƒO
-string[] Property common_setname auto;ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚É“K—p‚³‚ê‚Ä‚¢‚éƒZƒbƒg–¼
-string[] Property common_situation auto; ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“–¼
-int[] Property CS_index auto ; ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“‚É“K—p‚³‚ê‚Ä‚¢‚éƒZƒbƒg‚ÌƒCƒ“ƒ|[ƒgŒ³”Ô†
+string endcode = "#ssend" ; çµ‚äº†ã‚¿ã‚°
+string[] Property common_setname auto;ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã«é©ç”¨ã•ã‚Œã¦ã„ã‚‹ã‚»ãƒƒãƒˆå
+string[] Property common_situation auto; ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³å
+int[] Property CS_index auto ; ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ã«é©ç”¨ã•ã‚Œã¦ã„ã‚‹ã‚»ãƒƒãƒˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒç•ªå·
 
-string[] Property IS_name auto ; ƒCƒ“ƒ|[ƒg‚µ‚½š–‹‚ÌƒZƒbƒg–¼
-int[] Property IS_index auto ; ƒCƒ“ƒ|[ƒg‚µ‚½š–‹‚Ìƒtƒ@ƒCƒ‹”Ô†
+string[] Property IS_name auto ; ã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ãŸå­—å¹•ã®ã‚»ãƒƒãƒˆå
+int[] Property IS_index auto ; ã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ãŸå­—å¹•ã®ãƒ•ã‚¡ã‚¤ãƒ«ç•ªå·
 
-; ”Ä—pš–‹ƒtƒ@ƒCƒ‹‚Ì‰Šú‰» for v2.2update 13í‚É8ƒVƒ`ƒ…’Ç‰Á
+; æ±ç”¨å­—å¹•ãƒ•ã‚¡ã‚¤ãƒ«ã®åˆæœŸåŒ– for v2.2update 13ç¨®ã«8ã‚·ãƒãƒ¥è¿½åŠ 
 Function commonSetInitUpdate22()
 	string[] common_setname_add
 	string[] common_situation_add
@@ -38,12 +38,12 @@ Function commonSetInitUpdate22()
 		intoCSempty(num)
 		num2 += 1
 	endwhile
-	; Debug.Trace("# common_setname‚Í" + common_setname)
+	; Debug.Trace("# common_setnameã¯" + common_setname)
 	; Debug.Trace("# common_situation" + common_situation)
-	; Debug.Trace("# CS_index‚Í" + CS_index.length)
+	; Debug.Trace("# CS_indexã¯" + CS_index.length)
 EndFunction
 
-; ”Ä—pš–‹ƒtƒ@ƒCƒ‹‚Ì‰Šú‰»
+; æ±ç”¨å­—å¹•ãƒ•ã‚¡ã‚¤ãƒ«ã®åˆæœŸåŒ–
 Function commonSetInit()
 	common_setname = sslUtility.EmptyStringArray()
 	common_situation = sslUtility.EmptyStringArray()
@@ -82,15 +82,18 @@ Function commonSetInit()
 	endwhile
 EndFunction
 
-; š–‹ƒZƒbƒg‚Ì€”õ
+; å­—å¹•ã‚»ãƒƒãƒˆã®æº–å‚™
 bool Function importSubtitleSetInit()
 	int filecount = importJSONfileCount(1, 30, "../sexlabSubtitles/importSet")
-	; debug.trace("# ƒCƒ“ƒ|[ƒg‚·‚éJSONƒtƒ@ƒCƒ‹‚Í‡Œv" + filecount + "ŒÂ‘¶İ‚µ‚Ä‚¢‚Ü‚·")
+	; debug.trace("# ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹JSONãƒ•ã‚¡ã‚¤ãƒ«ã¯åˆè¨ˆ" + filecount + "å€‹å­˜åœ¨ã—ã¦ã„ã¾ã™")
 	IS_name = sslUtility.EmptyStringArray()
 	IS_index = sslUtility.EmptyIntArray()
 	If filecount > 0
-		IS_name =	PapyrusUtil.StringArray(filecount)
-		IS_index =	PapyrusUtil.IntArray(filecount)
+		; IS_name =	PapyrusUtil.StringArray(filecount)
+		; IS_index =	PapyrusUtil.IntArray(filecount)
+		IS_name =	Utility.CreateStringArray(filecount)
+		IS_index =	Utility.CreateIntArray(filecount)
+
 	endif
 	importSSetToNameAndIndex(1, 30, "../sexlabSubtitles/importSet", IS_name, IS_index)
 	bool importFin = setImportSSet()
@@ -101,17 +104,17 @@ bool Function importSubtitleSetInit()
 	endIf
 EndFunction
 
-;ƒfƒtƒHƒ‹ƒgš–‹‚ÌƒZƒbƒgiMod“±“ü‰‰ñ‚Ì‚İj
+;ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå­—å¹•ã®ã‚»ãƒƒãƒˆï¼ˆModå°å…¥åˆå›æ™‚ã®ã¿ï¼‰
 Function defaultSSet()
-	; debug.trace("# defaultSSetŠJn")
-	int startset1 = IS_name.find("”Ä—p˜aŠ­’j—")
-	int startset2 = IS_name.find("”Ä—pƒI[ƒ‰ƒ‹ó")
-	int startset3 = IS_name.find("”Ä—pšb‚¬—«‚Ì‚İ")
-	int startset4 = IS_name.find("šb‚¬—«ƒn[ƒh")
-	int startset5 = IS_name.find("’jšb‚¬E—«Ï‹É“I")
-	int startset6 = IS_name.find("ó‹µ•`ÊE——")
+	; debug.trace("# defaultSSeté–‹å§‹")
+	int startset1 = IS_name.find("æ±ç”¨å’Œå§¦ç”·å¥³")
+	int startset2 = IS_name.find("æ±ç”¨ã‚ªãƒ¼ãƒ©ãƒ«å—")
+	int startset3 = IS_name.find("æ±ç”¨å–˜ãå¥³æ€§ã®ã¿")
+	int startset4 = IS_name.find("å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰")
+	int startset5 = IS_name.find("ç”·å–˜ããƒ»å¥³æ€§ç©æ¥µçš„")
+	int startset6 = IS_name.find("çŠ¶æ³æå†™ãƒ»å¥³å¥³")
 
-	; ƒCƒ“ƒ|[ƒgŒ³‚Ìƒtƒ@ƒCƒ‹”Ô†
+	; ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒã®ãƒ•ã‚¡ã‚¤ãƒ«ç•ªå·
 	int startindex1
 	int startindex2
 	int startindex3
@@ -149,12 +152,12 @@ Function defaultSSet()
 		startindex6 = IS_index[startset6]
 	endif
 
-	; debug.trace("# y”Ä—p˜aŠ­’j—z‚ÍimportSet" + startindex1)
-	; debug.trace("# y”Ä—pƒI[ƒ‰ƒ‹óz‚ÍimportSet" + startindex2)
-	; debug.trace("# y”Ä—pšb‚¬—«‚Ì‚İz‚ÍimportSet" + startindex3)
-	; debug.trace("# yšb‚¬—«ƒn[ƒhz‚ÍimportSet" + startindex4)
-	; debug.trace("# y’jšb‚¬E—«Ï‹É“Iz‚ÍimportSet" + startindex5)
-	; debug.trace("# yó‹µ•`ÊE——z‚ÍimportSet" + startindex6)
+	; debug.trace("# ã€æ±ç”¨å’Œå§¦ç”·å¥³ã€‘ã¯importSet" + startindex1)
+	; debug.trace("# ã€æ±ç”¨ã‚ªãƒ¼ãƒ©ãƒ«å—ã€‘ã¯importSet" + startindex2)
+	; debug.trace("# ã€æ±ç”¨å–˜ãå¥³æ€§ã®ã¿ã€‘ã¯importSet" + startindex3)
+	; debug.trace("# ã€å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰ã€‘ã¯importSet" + startindex4)
+	; debug.trace("# ã€ç”·å–˜ããƒ»å¥³æ€§ç©æ¥µçš„ã€‘ã¯importSet" + startindex5)
+	; debug.trace("# ã€çŠ¶æ³æå†™ãƒ»å¥³å¥³ã€‘ã¯importSet" + startindex6)
 
 	If startset1 >= 0
 		string[] set1 = getSSetByIndex(startset1, 1)
@@ -164,10 +167,10 @@ Function defaultSSet()
 		string[] set5 = getSSetByIndex(startset1, 5)
 		intoSSetToCS(12, set1, set2, set3, set4, set5)
 		intoCSindex(12, startindex1)
-		setNameCSname(12, "”Ä—p˜aŠ­’j—")
+		setNameCSname(12, "æ±ç”¨å’Œå§¦ç”·å¥³")
 		intoSSetToCS(14, set1, set2, set3, set4, set5)
 		intoCSindex(14, startindex1)
-		setNameCSname(14, "”Ä—p˜aŠ­’j—")
+		setNameCSname(14, "æ±ç”¨å’Œå§¦ç”·å¥³")
 	endif
 	If startset2 >= 0
 		string[] set1 = getSSetByIndex(startset2, 1)
@@ -179,8 +182,8 @@ Function defaultSSet()
 		intoSSetToCS(10, set1, set2, set3, set4, set5)
 		intoCSindex(9, startindex2)
 		intoCSindex(10, startindex2)
-		setNameCSname(9, "”Ä—pƒI[ƒ‰ƒ‹ó")
-		setNameCSname(10, "”Ä—pƒI[ƒ‰ƒ‹ó")
+		setNameCSname(9, "æ±ç”¨ã‚ªãƒ¼ãƒ©ãƒ«å—")
+		setNameCSname(10, "æ±ç”¨ã‚ªãƒ¼ãƒ©ãƒ«å—")
 	endif
 	If startset3 >= 0
 		string[] set1 = getSSetByIndex(startset3, 1)
@@ -192,8 +195,8 @@ Function defaultSSet()
 		intoSSetToCS(5, set1, set2, set3, set4, set5)
 		intoCSindex(1, startindex3)
 		intoCSindex(5, startindex3)
-		setNameCSname(1, "”Ä—pšb‚¬—«‚Ì‚İ")
-		setNameCSname(5, "”Ä—pšb‚¬—«‚Ì‚İ")
+		setNameCSname(1, "æ±ç”¨å–˜ãå¥³æ€§ã®ã¿")
+		setNameCSname(5, "æ±ç”¨å–˜ãå¥³æ€§ã®ã¿")
 	endif
 	If startset4 >= 0
 		string[] set1 = getSSetByIndex(startset4, 1)
@@ -209,10 +212,10 @@ Function defaultSSet()
 		intoCSindex(6, startindex4)
 		intoCSindex(11, startindex4)
 		intoCSindex(13, startindex4)
-		setNameCSname(0, "šb‚¬—«ƒn[ƒh")
-		setNameCSname(6, "šb‚¬—«ƒn[ƒh")
-		setNameCSname(11, "šb‚¬—«ƒn[ƒh")
-		setNameCSname(13, "šb‚¬—«ƒn[ƒh")
+		setNameCSname(0, "å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰")
+		setNameCSname(6, "å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰")
+		setNameCSname(11, "å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰")
+		setNameCSname(13, "å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰")
 	endif
 	If startset5 >= 0
 		string[] set1 = getSSetByIndex(startset5, 1)
@@ -230,11 +233,11 @@ Function defaultSSet()
 		intoCSindex(4, startindex5)
 		intoCSindex(7, startindex5)
 		intoCSindex(8, startindex5)
-		setNameCSname(2, "’jšb‚¬E—«Ï‹É“I")
-		setNameCSname(3, "’jšb‚¬E—«Ï‹É“I")
-		setNameCSname(4, "’jšb‚¬E—«Ï‹É“I")
-		setNameCSname(7, "’jšb‚¬E—«Ï‹É“I")
-		setNameCSname(8, "’jšb‚¬E—«Ï‹É“I")
+		setNameCSname(2, "ç”·å–˜ããƒ»å¥³æ€§ç©æ¥µçš„")
+		setNameCSname(3, "ç”·å–˜ããƒ»å¥³æ€§ç©æ¥µçš„")
+		setNameCSname(4, "ç”·å–˜ããƒ»å¥³æ€§ç©æ¥µçš„")
+		setNameCSname(7, "ç”·å–˜ããƒ»å¥³æ€§ç©æ¥µçš„")
+		setNameCSname(8, "ç”·å–˜ããƒ»å¥³æ€§ç©æ¥µçš„")
 	endif
 	If startset6 >= 0
 		string[] set1 = getSSetByIndex(startset6, 1)
@@ -254,23 +257,23 @@ Function defaultSSet()
 		intoCSindex(18, startindex6)
 		intoCSindex(19, startindex6)
 		intoCSindex(20, startindex6)
-		setNameCSname(15, "ó‹µ•`ÊE——")
-		setNameCSname(16, "ó‹µ•`ÊE——")
-		setNameCSname(17, "ó‹µ•`ÊE——")
-		setNameCSname(18, "ó‹µ•`ÊE——")
-		setNameCSname(19, "ó‹µ•`ÊE——")
-		setNameCSname(20, "ó‹µ•`ÊE——")
+		setNameCSname(15, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(16, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(17, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(18, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(19, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(20, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
 	endif
 EndFunction
 
-;ƒfƒtƒHƒ‹ƒgš–‹‚ÌƒZƒbƒgiv2.1¨v2.2j
+;ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå­—å¹•ã®ã‚»ãƒƒãƒˆï¼ˆv2.1â†’v2.2ï¼‰
 Function defaultSSetUpdate22()
-	; debug.trace("# defaultSSetUpdate22ˆ—ŠJn")
-	int startset1 = IS_name.find("”Ä—p˜aŠ­’j—")
-	int startset4 = IS_name.find("šb‚¬—«ƒn[ƒh")
-	int startset6 = IS_name.find("ó‹µ•`ÊE——")
+	; debug.trace("# defaultSSetUpdate22å‡¦ç†é–‹å§‹")
+	int startset1 = IS_name.find("æ±ç”¨å’Œå§¦ç”·å¥³")
+	int startset4 = IS_name.find("å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰")
+	int startset6 = IS_name.find("çŠ¶æ³æå†™ãƒ»å¥³å¥³")
 
-	; ƒCƒ“ƒ|[ƒgŒ³‚Ìƒtƒ@ƒCƒ‹”Ô†
+	; ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒã®ãƒ•ã‚¡ã‚¤ãƒ«ç•ªå·
 	int startindex1
 	int startindex4
 	int startindex6
@@ -290,9 +293,9 @@ Function defaultSSetUpdate22()
 		startindex6 = IS_index[startset6]
 	endif
 
-	; debug.trace("# y”Ä—p˜aŠ­’j—z‚ÍimportSet" + startindex1)
-	; debug.trace("# yšb‚¬—«ƒn[ƒhz‚ÍimportSet" + startindex4)
-	; debug.trace("# yó‹µ•`ÊE——z‚ÍimportSet" + startindex6)
+	; debug.trace("# ã€æ±ç”¨å’Œå§¦ç”·å¥³ã€‘ã¯importSet" + startindex1)
+	; debug.trace("# ã€å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰ã€‘ã¯importSet" + startindex4)
+	; debug.trace("# ã€çŠ¶æ³æå†™ãƒ»å¥³å¥³ã€‘ã¯importSet" + startindex6)
 
 	If startset1 >= 0
 		string[] set1 = getSSetByIndex(startset1, 1)
@@ -302,7 +305,7 @@ Function defaultSSetUpdate22()
 		string[] set5 = getSSetByIndex(startset1, 5)
 		intoSSetToCS(14, set1, set2, set3, set4, set5)
 		intoCSindex(14, startindex1)
-		setNameCSname(14, "”Ä—p˜aŠ­’j—")
+		setNameCSname(14, "æ±ç”¨å’Œå§¦ç”·å¥³")
 	endif
 	If startset4 >= 0
 		string[] set1 = getSSetByIndex(startset4, 1)
@@ -312,7 +315,7 @@ Function defaultSSetUpdate22()
 		string[] set5 = getSSetByIndex(startset4, 5)
 		intoSSetToCS(13, set1, set2, set3, set4, set5)
 		intoCSindex(13, startindex4)
-		setNameCSname(13, "šb‚¬—«ƒn[ƒh")
+		setNameCSname(13, "å–˜ãå¥³æ€§ãƒãƒ¼ãƒ‰")
 	endif
 	If startset6 >= 0
 		string[] set1 = getSSetByIndex(startset6, 1)
@@ -332,17 +335,17 @@ Function defaultSSetUpdate22()
 		intoCSindex(18, startindex6)
 		intoCSindex(19, startindex6)
 		intoCSindex(20, startindex6)
-		setNameCSname(15, "ó‹µ•`ÊE——")
-		setNameCSname(16, "ó‹µ•`ÊE——")
-		setNameCSname(17, "ó‹µ•`ÊE——")
-		setNameCSname(18, "ó‹µ•`ÊE——")
-		setNameCSname(19, "ó‹µ•`ÊE——")
-		setNameCSname(20, "ó‹µ•`ÊE——")
+		setNameCSname(15, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(16, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(17, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(18, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(19, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
+		setNameCSname(20, "çŠ¶æ³æå†™ãƒ»å¥³å¥³")
 	endif
-	; Debug.Trace("# common_setname‚Í" + common_setname)
+	; Debug.Trace("# common_setnameã¯" + common_setname)
 EndFunction
 
-;”Ä—pš–‹ƒZƒbƒg‚ÌÄƒZƒbƒgiV‚µ‚­ƒCƒ“ƒ|[ƒg‚µ‚½š–‹ƒtƒ@ƒCƒ‹‚Ì“à—e‚ğXV‚·‚éj
+;æ±ç”¨å­—å¹•ã‚»ãƒƒãƒˆã®å†ã‚»ãƒƒãƒˆï¼ˆæ–°ã—ãã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ãŸå­—å¹•ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹ã‚’æ›´æ–°ã™ã‚‹ï¼‰
 Function CSetAgain()
 	int i = 0
 	while (i < 21)
@@ -358,13 +361,13 @@ Function CSetAgain()
 			intoCSindex(i, d_index)
 			common_setname[i] = getSetnameImportNum(d_index)
 		endif
-		; debug.trace("# " + d_situation + "‚Ìš–‹‚ÌƒCƒ“ƒ|[ƒgŒ³FimportSet" + d_index + "‚ğ" + common_setname[i] + "‚ÉXV‚µ‚Ü‚µ‚½")
+		; debug.trace("# " + d_situation + "ã®å­—å¹•ã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒï¼šimportSet" + d_index + "ã‚’" + common_setname[i] + "ã«æ›´æ–°ã—ã¾ã—ãŸ")
 		i += 1
 	endwhile
 EndFunction
 
 ;/===========================================================
-	y”Ä—pš–‹21ízv2.2
+	ã€æ±ç”¨å­—å¹•21ç¨®ã€‘v2.2
 
 	; 0 - creature
 	; 1 - arrok69
@@ -391,7 +394,7 @@ EndFunction
 	; 12 - missonary
 
 /;
-; ”Ä—pš–‹ƒZƒbƒg
+; æ±ç”¨å­—å¹•ã‚»ãƒƒãƒˆ
 	;v2.2 added
 	string[] common_agg_oral_s_1
 	string[] common_agg_oral_s_2
@@ -500,15 +503,15 @@ EndFunction
 	string[] common_missionary_4
 	string[] common_missionary_5
 
-; ”Ä—pš–‹‚ÌƒZƒbƒg‚ÌƒCƒ“ƒ|[ƒgŒ³‚ğ•ÛŠÇ‚·‚éiver2.1 ƒCƒ“ƒ|[ƒgXV—pj
+; æ±ç”¨å­—å¹•ã®ã‚»ãƒƒãƒˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒã‚’ä¿ç®¡ã™ã‚‹ï¼ˆver2.1 ã‚¤ãƒ³ãƒãƒ¼ãƒˆæ›´æ–°ç”¨ï¼‰
 Function intoCSindex(int csnum, int importnum)
-	; debug.trace("# intoCSindexˆ— - ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“" + csnum + "‚ÍimportSet" + importnum)
+	; debug.trace("# intoCSindexå‡¦ç† - ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³" + csnum + "ã¯importSet" + importnum)
 	CS_index[csnum] = importnum
 EndFunction
 
-; š–‹ƒZƒbƒg‚ğ”Ä—pƒZƒbƒg‚Ì˜g‚ÉƒZƒbƒg‚·‚éˆ—i5ƒXƒe[ƒW•ª‚Ü‚Æ‚ß‚Äj
+; å­—å¹•ã‚»ãƒƒãƒˆã‚’æ±ç”¨ã‚»ãƒƒãƒˆã®æ ã«ã‚»ãƒƒãƒˆã™ã‚‹å‡¦ç†ï¼ˆ5ã‚¹ãƒ†ãƒ¼ã‚¸åˆ†ã¾ã¨ã‚ã¦ï¼‰
 Function intoSSetToCS(int csnum, string[] set1, string[] set2, string[] set3, string[] set4, string[] set5)
-	; debug.trace("# intoSSetToCSŠJn")
+	; debug.trace("# intoSSetToCSé–‹å§‹")
 	If csnum == 0
 		common_creature_1 = set1
 		common_creature_2 = set2
@@ -636,27 +639,27 @@ Function intoSSetToCS(int csnum, string[] set1, string[] set2, string[] set3, st
 		common_missionary_s_4= set4
 		common_missionary_s_5= set5
 	else
-		debug.trace("@  intoCommonSetByNum - w’è‚Ì”Ä—pƒZƒbƒg–¼‚ª•s³‚Å‚·")
+		debug.trace("@  intoCommonSetByNum - æŒ‡å®šã®æ±ç”¨ã‚»ãƒƒãƒˆåãŒä¸æ­£ã§ã™")
 	endIf
 endfunction
 
-; uš–‹‚ğ•\¦‚µ‚È‚¢vİ’è‚É‚µ‚½ê‡AŠY“–‚Ì”Ä—pƒZƒbƒg‚ğ‹ó‚É‚·‚é
+; ã€Œå­—å¹•ã‚’è¡¨ç¤ºã—ãªã„ã€è¨­å®šã«ã—ãŸå ´åˆã€è©²å½“ã®æ±ç”¨ã‚»ãƒƒãƒˆã‚’ç©ºã«ã™ã‚‹
 Function intoCSempty(int csnum)
 	string[] empty
 	intoSSetToCS(csnum, empty, empty, empty, empty, empty)
 EndFunction
 
-;š–‹‚ÌƒZƒbƒg–¼‚ğ”Ä—pš–‹‚ÌƒZƒbƒg–¼”z—ñ‚ÉŠi”[‚·‚é
+;å­—å¹•ã®ã‚»ãƒƒãƒˆåã‚’æ±ç”¨å­—å¹•ã®ã‚»ãƒƒãƒˆåé…åˆ—ã«æ ¼ç´ã™ã‚‹
 Function setNameCSname(int situation, string name)
 	common_setname[situation] = name
 EndFunction
 
-;ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“”Ô†‚©‚çŒ»İ‚Ìš–‹ƒZƒbƒg–¼‚ğæ“¾‚·‚é
+;ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·ã‹ã‚‰ç¾åœ¨ã®å­—å¹•ã‚»ãƒƒãƒˆåã‚’å–å¾—ã™ã‚‹
 string Function getNameCSname(int situation)
 	return common_setname[situation]
 EndFunction
 
-;š–‹‚ª”ñ•\¦İ’è‚©‚Ç‚¤‚©‚ğ’²‚×‚é
+;å­—å¹•ãŒéè¡¨ç¤ºè¨­å®šã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹
 bool Function isCSdisable(int situation)
 	If common_setname[situation] == "$SMENU_disble"
 		return true
@@ -665,7 +668,7 @@ bool Function isCSdisable(int situation)
 	endIf
 EndFunction
 
-;ƒVƒ`ƒ…ƒG[ƒVƒ‡ƒ“”Ô†‚Æw’è‚ÌƒXƒe[ƒW”‚©‚ç“o˜^‚³‚ê‚Ä‚¢‚é”Ä—p‚Ìš–‹ƒZƒbƒg‚ğ•Ô‚·
+;ã‚·ãƒãƒ¥ã‚¨ãƒ¼ã‚·ãƒ§ãƒ³ç•ªå·ã¨æŒ‡å®šã®ã‚¹ãƒ†ãƒ¼ã‚¸æ•°ã‹ã‚‰ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹æ±ç”¨ã®å­—å¹•ã‚»ãƒƒãƒˆã‚’è¿”ã™
 string[] Function getCSsetBySituation(int situation, int stage)
 	If situation == 0
 		If stage == 1
@@ -920,15 +923,15 @@ string[] Function getCSsetBySituation(int situation, int stage)
 			return common_missionary_s_5
 		endIf
 	else
-		debug.trace("@  getCSsetBySituation - w’è‚Ì”Ä—pƒZƒbƒg–¼‚ª•s³‚Å‚·")
+		debug.trace("@  getCSsetBySituation - æŒ‡å®šã®æ±ç”¨ã‚»ãƒƒãƒˆåãŒä¸æ­£ã§ã™")
 	endIf
 EndFunction
 
 ;/===========================================================
-	yJSON‚©‚çš–‹ƒZƒbƒg‚ğæ“¾‚·‚éˆ—z
+	ã€JSONã‹ã‚‰å­—å¹•ã‚»ãƒƒãƒˆã‚’å–å¾—ã™ã‚‹å‡¦ç†ã€‘
 /;
 ;---------------------------------------------------------------------------
-; ƒtƒ@ƒCƒ‹ƒpƒXifilePathj‚Ì––”ö”šstartnum‚©‚çmaxnum‚Ìƒtƒ@ƒCƒ‹‚Ì—L–³‚ğ’²‚×‘”‚ğƒJƒEƒ“ƒg‚·‚é
+; ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ï¼ˆfilePathï¼‰ã®æœ«å°¾æ•°å­—startnumã‹ã‚‰maxnumã®ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ‰ç„¡ã‚’èª¿ã¹ç·æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹
 int Function importJSONfileCount(int startnum, int maxnum, string filePath)
 	int i = startnum
 	int count = 0
@@ -941,7 +944,7 @@ int Function importJSONfileCount(int startnum, int maxnum, string filePath)
 	endwhile
 	return count
 EndFunction
-;ƒtƒ@ƒCƒ‹ƒpƒXifilePathj‚Ì––”ö”šstartnum-maxnum‚Ìƒtƒ@ƒCƒ‹‚©‚çƒZƒbƒg–¼‚Æƒtƒ@ƒCƒ‹”Ô†‚ğw’è‚Ì”z—ñ‚Éæ“¾‚·‚é
+;ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ï¼ˆfilePathï¼‰ã®æœ«å°¾æ•°å­—startnum-maxnumã®ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã‚»ãƒƒãƒˆåã¨ãƒ•ã‚¡ã‚¤ãƒ«ç•ªå·ã‚’æŒ‡å®šã®é…åˆ—ã«å–å¾—ã™ã‚‹
 Function importSSetToNameAndIndex(int startnum, int maxnum, string filePath, string[] names, int[] ids)
 	int i = startnum
 	int r = 0
@@ -955,22 +958,22 @@ Function importSSetToNameAndIndex(int startnum, int maxnum, string filePath, str
 		i += 1
 	endwhile
 EndFunction
-;ƒCƒ“ƒ|[ƒgŒ³‚Ì”Ô†‚Ìš–‹ƒtƒ@ƒCƒ‹‚©‚çš–‹ƒZƒbƒg‚Ì–¼‘O‚ğˆø‚«o‚·iver2.1j
+;ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒã®ç•ªå·ã®å­—å¹•ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å­—å¹•ã‚»ãƒƒãƒˆã®åå‰ã‚’å¼•ãå‡ºã™ï¼ˆver2.1ï¼‰
 String Function getSetnameImportNum(int importnum)
 	If importnum == 0
 		return "$SMENU_disble"
 	else
 		int index = IS_index.find(importnum)
-		; debug.trace("# importSet" + importnum + "‚Ìindex‚Í" + index)
+		; debug.trace("# importSet" + importnum + "ã®indexã¯" + index)
 		If index >= 0
 			return IS_name[index]
 		else
-			; debug.trace("# w’è‚ÌƒCƒ“ƒ|[ƒg”Ô†‚ÌƒZƒbƒg–¼‚Í“o˜^‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ")
+			; debug.trace("# æŒ‡å®šã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆç•ªå·ã®ã‚»ãƒƒãƒˆåã¯ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“")
 			return "$SMENU_disble"
 		endif
 	endif
 EndFunction
-; ƒtƒ@ƒCƒ‹‚Ì—L–³‚ÉŠÖ‚í‚ç‚¸1-30”Ô‚Ü‚Å‚Ìƒtƒ@ƒCƒ‹‚Ìš–‹ƒZƒbƒg‚ğæ“¾‚·‚é
+; ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ‰ç„¡ã«é–¢ã‚ã‚‰ãš1-30ç•ªã¾ã§ã®ãƒ•ã‚¡ã‚¤ãƒ«ã®å­—å¹•ã‚»ãƒƒãƒˆã‚’å–å¾—ã™ã‚‹
 bool Function setImportSSet()
 	IS1_1 = importSSet(1,1)
 	IS1_2 = importSSet(1,2)
@@ -1124,7 +1127,7 @@ bool Function setImportSSet()
 	IS30_5 = importSSet(30,5)
 	return true
 EndFunction
-;w’è‚Ì”Ô†inumj‚Ìƒtƒ@ƒCƒ‹‚©‚çAw’èƒXƒe[ƒW‚Ìš–‹ƒeƒLƒXƒg‚ğ”z—ñ‚Æ‚µ‚Äæ“¾‚·‚é
+;æŒ‡å®šã®ç•ªå·ï¼ˆnumï¼‰ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ã€æŒ‡å®šã‚¹ãƒ†ãƒ¼ã‚¸ã®å­—å¹•ãƒ†ã‚­ã‚¹ãƒˆã‚’é…åˆ—ã¨ã—ã¦å–å¾—ã™ã‚‹
 string [] Function importSSet(int num, int stage)
 	return importSSetFromFile(num, stage, "../sexlabSubtitles/importSet")
 EndFunction
@@ -1136,20 +1139,20 @@ string [] Function importSSetFromFile(int num, int stage, string filePath)
 		If stage == 1
 			string stagekey = "import_stage1"
 			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "‚Ìstage1‚ÌƒZƒŠƒt‚Í" + len + "‚Å‚·")
-			string[] isset = PapyrusUtil.StringArray(len)
+			; debug.trace("# importSet" + num + "ã®stage1ã®ã‚»ãƒªãƒ•ã¯" + len + "ã§ã™")
+			string[] isset = Utility.CreateStringArray(len) ; v2.4 fix
 			int i = 0
 			while (i < len)
 				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
 				i += 1
 			endwhile
-			; debug.trace("# stage1‚Í" + isset)
+			; debug.trace("# stage1ã¯" + isset)
 			return isset
 		elseif stage == 2
 			string stagekey = "import_stage2"
 			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "‚Ìstage2‚ÌƒZƒŠƒt‚Í" + len + "‚Å‚·")
-			string[] isset = PapyrusUtil.StringArray(len)
+			; debug.trace("# importSet" + num + "ã®stage2ã®ã‚»ãƒªãƒ•ã¯" + len + "ã§ã™")
+			string[] isset = Utility.CreateStringArray(len) ; v2.4 fix
 			int i = 0
 			while (i < len)
 				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
@@ -1159,8 +1162,8 @@ string [] Function importSSetFromFile(int num, int stage, string filePath)
 		elseif stage == 3
 			string stagekey = "import_stage3"
 			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "‚Ìstage3‚ÌƒZƒŠƒt‚Í" + len + "‚Å‚·")
-			string[] isset = PapyrusUtil.StringArray(len)
+			; debug.trace("# importSet" + num + "ã®stage3ã®ã‚»ãƒªãƒ•ã¯" + len + "ã§ã™")
+			string[] isset = Utility.CreateStringArray(len); v2.4 fix
 			int i = 0
 			while (i < len)
 				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
@@ -1170,8 +1173,8 @@ string [] Function importSSetFromFile(int num, int stage, string filePath)
 		elseif stage == 4
 			string stagekey = "import_stage4"
 			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "‚Ìstage4‚ÌƒZƒŠƒt‚Í" + len + "‚Å‚·")
-			string[] isset = PapyrusUtil.StringArray(len)
+			; debug.trace("# importSet" + num + "ã®stage4ã®ã‚»ãƒªãƒ•ã¯" + len + "ã§ã™")
+			string[] isset = Utility.CreateStringArray(len); v2.4 fix
 			int i = 0
 			while (i < len)
 				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
@@ -1181,8 +1184,8 @@ string [] Function importSSetFromFile(int num, int stage, string filePath)
 		elseif stage == 5
 			string stagekey = "import_stage5"
 			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "‚Ìstage5‚ÌƒZƒŠƒt‚Í" + len + "‚Å‚·")
-			string[] isset = PapyrusUtil.StringArray(len)
+			; debug.trace("# importSet" + num + "ã®stage5ã®ã‚»ãƒªãƒ•ã¯" + len + "ã§ã™")
+			string[] isset = Utility.CreateStringArray(len); v2.4 fix
 			int i = 0
 			while (i < len)
 				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
@@ -1190,13 +1193,13 @@ string [] Function importSSetFromFile(int num, int stage, string filePath)
 			endwhile
 			return isset
 		else
-			debug.trace("@ [Sexlab Subtitles] - importSSet - stage‚Ìw’è‚ª•s³‚Å‚·")
+			debug.trace("@ [Sexlab Subtitles] - importSSet - stageã®æŒ‡å®šãŒä¸æ­£ã§ã™")
 		endif
-		; debug.trace("# importSet" + num + "‚ÌƒCƒ“ƒ|[ƒg‚ªŠ®—¹‚µ‚Ü‚µ‚½")
+		; debug.trace("# importSet" + num + "ã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆãŒå®Œäº†ã—ã¾ã—ãŸ")
 	endif
 EndFunction
 ;---------------------------------------------------------------------------
-; w’è‚ÌƒCƒ“ƒfƒbƒNƒX”Ô†inumj‚Ìw’èƒXƒe[ƒW‚Ìš–‹ƒZƒbƒg‚ğæ“¾‚·‚é
+; æŒ‡å®šã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ï¼ˆnumï¼‰ã®æŒ‡å®šã‚¹ãƒ†ãƒ¼ã‚¸ã®å­—å¹•ã‚»ãƒƒãƒˆã‚’å–å¾—ã™ã‚‹
 string[] Function getSSetByIndex(int num, int stage)
 	int index = IS_index[num]
 	If index == 1
@@ -1561,7 +1564,7 @@ string[] Function getSSetByIndex(int num, int stage)
 		endif
 	endif
 EndFunction
-; w’è‚ÌƒCƒ“ƒ|[ƒgŒ³iindexj‚Ìw’èƒXƒe[ƒW‚Ìš–‹ƒZƒbƒg‚ğæ“¾‚·‚é
+; æŒ‡å®šã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆå…ƒï¼ˆindexï¼‰ã®æŒ‡å®šã‚¹ãƒ†ãƒ¼ã‚¸ã®å­—å¹•ã‚»ãƒƒãƒˆã‚’å–å¾—ã™ã‚‹
 string[] Function getSSetByIndex2(int index, int stage)
 	If index == 1
 		If stage == 1
@@ -1927,7 +1930,7 @@ string[] Function getSSetByIndex2(int index, int stage)
 	endif
 EndFunction
 
-; ƒCƒ“ƒ|[ƒg—pš–‹ƒZƒbƒg
+; ã‚¤ãƒ³ãƒãƒ¼ãƒˆç”¨å­—å¹•ã‚»ãƒƒãƒˆ
 	string[] IS1_1
 	string[] IS1_2
 	string[] IS1_3
