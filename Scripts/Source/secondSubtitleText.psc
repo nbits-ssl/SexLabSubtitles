@@ -139,7 +139,6 @@ event startAnim(string eventName, string argString, float argNum, form sender)
 	sslThreadController controller = SexLab.HookController(argString)
 
 	If (SS.SMode && self._isPlayerNear(controller)) ; 汎用字幕システムが有効の場合
-		; isRunningSubtitle = true
 		_temp = 0 ; order subtitle's current number
 		situation = 12
 		sexlabID = argString
@@ -155,19 +154,26 @@ event startStage(string eventName, string argString, float argNum, form sender)
 
 	If (SS.SMode && self._isPlayerNear(controller))
 		; debug.trace("SexLabSubtitles: Stage start, success")
-		sexlabID = argString
-		currentStage = controller.Stage
-		sslBaseAnimation animation = controller.Animation
-		maxStage = animation.StageCount
+		isRunningSubtitle = true
 		
 		; セリフの表示番号をリセットするかどうかの判定
 		float now = utility.getcurrentrealtime()
-		If (now - stageChangeTime) < (SS.interval * 1.2)
+		If ((now - stageChangeTime) < (SS.interval * 1.2) && sexlabID == argString)
 			; debug.trace("# 前回から" + ((now - stageChangeTime) as int) + "秒しか経っていないためセリフをリセットしません")
 		else
 			_temp = 0
 		endIf
 		stageChangeTime = now ; 時刻の更新
+		
+		sexlabID = argString
+		currentStage = controller.Stage
+		sslBaseAnimation animation = controller.Animation
+		maxStage = animation.StageCount
+		
+		; for menu v2.3 Animation Info
+		SS.pr_currentAnimName = animation.name
+		SS.pr_stageInfo = currentStage + " / " + maxStage
+		SS.pr_tags = self._getTagInfo(animation)
 		
 		Actor[] member = controller.Positions
 		If (member.length == 1)
@@ -177,6 +183,10 @@ event startStage(string eventName, string argString, float argNum, form sender)
 			Uke = member[0]
 			Seme = member[1]
 		endIf
+		
+		; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
+		name_Uke = self._getDisplayName(Uke)
+		name_Seme = self._getDisplayName(Seme)
 		
 		string currentTag = self._getCurrentTag(animation)
 		bool isSameSex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
@@ -199,6 +209,7 @@ endEvent
 event endStage(string eventName, string argString, float argNum, form sender)
 	If (argString == sexlabID)
 		repeatUpdate = false
+		isRunningSubtitle = false
 	endif
 endEvent
 
@@ -211,9 +222,9 @@ event endAnim(string eventName, string argString, float argNum, form sender)
 		situation = 12
 		Uke = none
 		Seme = none
-		; name_Uke = ""
-		; name_Seme = ""
-		; isRunningSubtitle = false
+		isRunningSubtitle = false
+		name_Uke = ""
+		name_Seme = ""
 		; _samesex = false
 	endif
 endEvent
@@ -262,6 +273,23 @@ string Function _getCurrentTag(sslBaseAnimation animation)
 	endIf
 	
 	return ""
+EndFunction
+
+string Function _getTagInfo(sslBaseAnimation animation)
+	string [] tags = animation.getTags()
+	string tagInfo = ""
+	int clen = 0
+	while (clen < tags.length)
+		If !(tags[clen] == "")
+			tagInfo = tagInfo + tags[clen]
+			If !(clen == (tags.length - 1))
+				tagInfo += ", "
+			endIf
+		endIf
+		clen += 1
+	endwhile
+	
+	return tagInfo
 EndFunction
 
 ;/======================================================
@@ -365,12 +393,9 @@ Function ShowSubtitles(string[] subtitleSet)
 	
 	if !(Uke && Seme)
 		repeatUpdate = false
+		isRunningSubtitle = false
 		return ; the end, safe function
 	endif
-	
-	; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
-	name_Uke = self._getDisplayName(Uke)
-	name_Seme = self._getDisplayName(Seme)
 	
 	If repeatRandom ; ランダムモード
 		If len == 1
@@ -509,7 +534,7 @@ Function ShowSubtitles(string[] subtitleSet)
 			endIf
 		endif
 	else ; リピートモード
-		; debug.trace("# リピートモード 前回_tempは" + _temp)
+		; debug.trace("SexLabSubtitles: # リピートモード 前回_tempは" + _temp)
 		If temp >= subtitleSet.length ; 表示回数がセリフ数を越えたら0に戻す
 			_temp = 0
 		endif
