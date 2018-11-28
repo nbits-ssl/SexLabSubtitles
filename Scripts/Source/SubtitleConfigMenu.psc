@@ -30,19 +30,6 @@ endFunction
 
 Event OnVersionUpdate(int a_version)
 	debug.trace("# [SexLab Subtitles] - Update - ver." + CurrentVersion + " >> ver." + a_version)
-	If CurrentVersion > 0 && CurrentVersion < 20
-		; debug.trace("# ver1.1以下からのアップデート処理")
-		ModName = "$MCM_modName"
-		Pages     = new string[2]
-		Pages[0]  = "$MCM_page1_subtitleSetting"
-		Pages[1]  = "$MCM_page2_commonSubtitleSetting"
-	elseIf CurrentVersion == 20
-		; debug.trace("# ver2.0→ver2.1アップデート処理")
-		SSC.CommonSetInit()
-	elseIf CurrentVersion == 21
-		; debug.trace("# v2.1→v2.2アップデート処理")
-		SSC.CommonSetInitUpdate22()
-	endIf
 EndEvent
 
 ; ==============================================

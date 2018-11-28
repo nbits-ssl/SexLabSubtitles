@@ -86,18 +86,6 @@ Function CommonSetInit() ; 汎用字幕の準備（Mod導入初回＆更新時�
 	SS.SetMenuInit() ; HUDメニューの準備（セット名の登録）
 EndFunction
 
-Function CommonSetInitUpdate22() ; 汎用字幕の準備（v2.1→v2.2更新用）
-	SSetting.commonSetInitUpdate22() ; シチュエーションの追加
-	bool importOK = SSetting.importSubtitleSetInit() ; 字幕セットの準備とインポート
-	int i = 0
-	while !(importOK) && (i < 10)
-		utility.wait(0.1)
-		i += 1
-	endwhile
-	SSetting.defaultSSetUpdate22() ; v2.1→v2.2更新限定設定
-	SS.SetMenuInit() ; HUDメニューの準備（セット名の登録）
-EndFunction
-
 Function RegisterMenukey() ; 字幕メニューリスト呼び出しキーの登録
 	SS.Registerforkey(SS.menuKey)
 EndFunction

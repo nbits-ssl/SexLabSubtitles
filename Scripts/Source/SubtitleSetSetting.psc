@@ -9,40 +9,6 @@ int[] Property CS_index auto ; シチュエーションに適用されている�
 string[] Property IS_name auto ; インポートした字幕のセット名
 int[] Property IS_index auto ; インポートした字幕のファイル番号
 
-; 汎用字幕ファイルの初期化 for v2.2update 13種に8シチュ追加
-Function commonSetInitUpdate22()
-	string[] common_setname_add
-	string[] common_situation_add
-	common_setname_add = new string[8]
-	common_situation_add = new string[8]
-	common_situation_add[0] = "$CMODE_13"
-	common_situation_add[1] = "$CMODE_14"
-	common_situation_add[2] = "$CMODE_15"
-	common_situation_add[3] = "$CMODE_16"
-	common_situation_add[4] = "$CMODE_17"
-	common_situation_add[5] = "$CMODE_18"
-	common_situation_add[6] = "$CMODE_19"
-	common_situation_add[7] = "$CMODE_20"
-	int[] CS_index_add = new int[8]
-	int num = 0
-	while (num < 8)
-		common_setname_add[num] = "$SMENU_disble"
-		CS_index_add[num] = 0
-		num += 1
-	endwhile
-	common_setname = sslUtility.MergeStringArray(common_setname_add, common_setname)
-	common_situation = sslUtility.MergeStringArray(common_situation_add, common_situation)
-	CS_index = sslUtility.MergeIntArray(cs_index_add, CS_index)
-	int num2 = 13
-	while (num2 < 21)
-		intoCSempty(num)
-		num2 += 1
-	endwhile
-	; Debug.Trace("# common_setnameは" + common_setname)
-	; Debug.Trace("# common_situation" + common_situation)
-	; Debug.Trace("# CS_indexは" + CS_index.length)
-EndFunction
-
 ; 汎用字幕ファイルの初期化
 Function commonSetInit()
 	common_setname = sslUtility.EmptyStringArray()
@@ -264,85 +230,6 @@ Function defaultSSet()
 		setNameCSname(19, "状況描写・女女")
 		setNameCSname(20, "状況描写・女女")
 	endif
-EndFunction
-
-;デフォルト字幕のセット（v2.1→v2.2）
-Function defaultSSetUpdate22()
-	; debug.trace("# defaultSSetUpdate22処理開始")
-	int startset1 = IS_name.find("汎用和姦男女")
-	int startset4 = IS_name.find("喘ぎ女性ハード")
-	int startset6 = IS_name.find("状況描写・女女")
-
-	; インポート元のファイル番号
-	int startindex1
-	int startindex4
-	int startindex6
-	If startset1 < 0
-		startindex1 = 0
-	else
-		startindex1 = IS_index[startset1]
-	endif
-	If startset4 < 0
-		startindex4 = 0
-	else
-		startindex4 = IS_index[startset4]
-	endif
-	If startset6 < 0
-		startindex6 = 0
-	else
-		startindex6 = IS_index[startset6]
-	endif
-
-	; debug.trace("# 【汎用和姦男女】はimportSet" + startindex1)
-	; debug.trace("# 【喘ぎ女性ハード】はimportSet" + startindex4)
-	; debug.trace("# 【状況描写・女女】はimportSet" + startindex6)
-
-	If startset1 >= 0
-		string[] set1 = getSSetByIndex(startset1, 1)
-		string[] set2 = getSSetByIndex(startset1, 2)
-		string[] set3 = getSSetByIndex(startset1, 3)
-		string[] set4 = getSSetByIndex(startset1, 4)
-		string[] set5 = getSSetByIndex(startset1, 5)
-		intoSSetToCS(14, set1, set2, set3, set4, set5)
-		intoCSindex(14, startindex1)
-		setNameCSname(14, "汎用和姦男女")
-	endif
-	If startset4 >= 0
-		string[] set1 = getSSetByIndex(startset4, 1)
-		string[] set2 = getSSetByIndex(startset4, 2)
-		string[] set3 = getSSetByIndex(startset4, 3)
-		string[] set4 = getSSetByIndex(startset4, 4)
-		string[] set5 = getSSetByIndex(startset4, 5)
-		intoSSetToCS(13, set1, set2, set3, set4, set5)
-		intoCSindex(13, startindex4)
-		setNameCSname(13, "喘ぎ女性ハード")
-	endif
-	If startset6 >= 0
-		string[] set1 = getSSetByIndex(startset6, 1)
-		string[] set2 = getSSetByIndex(startset6, 2)
-		string[] set3 = getSSetByIndex(startset6, 3)
-		string[] set4 = getSSetByIndex(startset6, 4)
-		string[] set5 = getSSetByIndex(startset6, 5)
-		intoSSetToCS(15, set1, set2, set3, set4, set5)
-		intoSSetToCS(16, set1, set2, set3, set4, set5)
-		intoSSetToCS(17, set1, set2, set3, set4, set5)
-		intoSSetToCS(18, set1, set2, set3, set4, set5)
-		intoSSetToCS(19, set1, set2, set3, set4, set5)
-		intoSSetToCS(20, set1, set2, set3, set4, set5)
-		intoCSindex(15, startindex6)
-		intoCSindex(16, startindex6)
-		intoCSindex(17, startindex6)
-		intoCSindex(18, startindex6)
-		intoCSindex(19, startindex6)
-		intoCSindex(20, startindex6)
-		setNameCSname(15, "状況描写・女女")
-		setNameCSname(16, "状況描写・女女")
-		setNameCSname(17, "状況描写・女女")
-		setNameCSname(18, "状況描写・女女")
-		setNameCSname(19, "状況描写・女女")
-		setNameCSname(20, "状況描写・女女")
-	endif
-	; Debug.Trace("# common_setnameは" + common_setname)
 EndFunction
 
 ;汎用字幕セットの再セット（新しくインポートした字幕ファイルの内容を更新する）
