@@ -860,6 +860,7 @@ String Function getSetnameImportNum(int importnum)
 		endif
 	endif
 EndFunction
+
 ; ファイルの有無に関わらず1-30番までのファイルの字幕セットを取得する
 bool Function setImportSSet()
 	IS1_1 = importSSet(1,1)
@@ -1023,8 +1024,8 @@ string [] Function importSSetFromFile(int num, int stage, string filePath)
 	If !JsonUtil.Load(file)
 		return sslUtility.EmptyStringArray()
 	else
-		If stage == 1
-			string stagekey = "import_stage1"
+		if (0 < stage && stage <= 5)
+			string stagekey = "import_stage" + stage as string
 			int len = JsonUtil.StringListFind(file, stagekey, endcode)
 			; debug.trace("# importSet" + num + "のstage1のセリフは" + len + "です")
 			string[] isset = Utility.CreateStringArray(len) ; v2.4 fix
@@ -1034,50 +1035,6 @@ string [] Function importSSetFromFile(int num, int stage, string filePath)
 				i += 1
 			endwhile
 			; debug.trace("# stage1は" + isset)
-			return isset
-		elseif stage == 2
-			string stagekey = "import_stage2"
-			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "のstage2のセリフは" + len + "です")
-			string[] isset = Utility.CreateStringArray(len) ; v2.4 fix
-			int i = 0
-			while (i < len)
-				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
-				i += 1
-			endwhile
-			return isset
-		elseif stage == 3
-			string stagekey = "import_stage3"
-			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "のstage3のセリフは" + len + "です")
-			string[] isset = Utility.CreateStringArray(len); v2.4 fix
-			int i = 0
-			while (i < len)
-				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
-				i += 1
-			endwhile
-			return isset
-		elseif stage == 4
-			string stagekey = "import_stage4"
-			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "のstage4のセリフは" + len + "です")
-			string[] isset = Utility.CreateStringArray(len); v2.4 fix
-			int i = 0
-			while (i < len)
-				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
-				i += 1
-			endwhile
-			return isset
-		elseif stage == 5
-			string stagekey = "import_stage5"
-			int len = JsonUtil.StringListFind(file, stagekey, endcode)
-			; debug.trace("# importSet" + num + "のstage5のセリフは" + len + "です")
-			string[] isset = Utility.CreateStringArray(len); v2.4 fix
-			int i = 0
-			while (i < len)
-				isset[i] = JsonUtil.StringListGet(file, stagekey, i)
-				i += 1
-			endwhile
 			return isset
 		else
 			debug.trace("@ [Sexlab Subtitles] - importSSet - stageの指定が不正です")

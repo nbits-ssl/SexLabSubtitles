@@ -179,7 +179,8 @@ event startStage(string eventName, string argString, float argNum, form sender)
 		string currentTag = self._getCurrentTag(animation)
 		bool isSameSex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
 		
-		getSituation(animation.name, currentTag, controller.IsAggressive, animation.IsCreature, isSameSex)
+		; set Property 
+		situation = self._getSituation(animation.name, currentTag, controller.IsAggressive, animation.IsCreature, isSameSex)
 		
 		If SSetting.isCSdisable(situation) ; 字幕が非表示の場合
 			repeatUpdate = false
@@ -285,60 +286,60 @@ EndFunction
 /;
 
 ; アニメ名、タグ名からシチュエーション番号を割り出し、situationプロパティにセットする
-Function getSituation(string animname, string tagname, bool aggressivesex, bool creaturesex, bool isSameSex)
+int Function _getSituation(string animname, string tagname, bool aggressivesex, bool creaturesex, bool isSameSex)
 	If creaturesex
-		situation = 0
+		return 0
 	elseIf animname == "Arrok 69"
-		situation = 1
+		return 1
 	elseIf tagname == "Handjob"
-		situation = 2
+		return 2
 	elseIf tagname == "Footjob"
-		situation = 3
+		return 3
 	elseIf tagname == "Boobjob"
-		situation = 4
+		return 4
 	elseIf tagname == "Masturbation"
-		situation = 5
+		return 5
 	elseIf tagname == "Fisting"
-		situation = 6
+		return 6
 	elseIf tagname == "Cowgirl"
-		situation = 7
+		return 7
 	elseIf tagname == "Foreplay"
-		situation = 8
+		return 8
 	elseIf (tagname == "Oral") && (isSameSex)
 		If aggressivesex
-			situation = 15
+			return 15
 		else
-			situation = 16
+			return 16
 		endIf
 	elseIf tagname == "Oral"
 		If aggressivesex
-			situation = 9
+			return 9
 		else
-			situation = 10
+			return 10
 		endIf
 	elseIf (tagname == "Anal") && (isSameSex)
 		If aggressivesex
-			situation = 17
+			return 17
 		else
-			situation = 18
+			return 18
 		endIf
 	elseIf tagname == "Anal"
 		If aggressivesex
-			situation = 13
+			return 13
 		else
-			situation = 14
+			return 14
 		endIf
 	elseIf (isSameSex)
 		If aggressivesex
-			situation = 19
+			return 19
 		else
-			situation = 20
+			return 20
 		endif
 	else
 		If aggressivesex
-			situation = 11
+			return 11
 		else
-			situation = 12
+			return 12
 		endif
 	endif
 EndFunction
@@ -395,122 +396,8 @@ Function ShowSubtitles(string[] subtitleSet)
 		else
 			int choice = getRandomDifferent(0, (len - 1), _temp_r)
 			; Debug.Trace("# ランダムモード：前回は" +_temp_r + " 結果は" + choice)
-			If (choice == 0) && (subtitleSet.length > 0)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[0])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 1) && (subtitleSet.length > 1)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[1])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 2) && (subtitleSet.length > 2)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[2])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 3) && (subtitleSet.length > 3)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[3])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 4) && (subtitleSet.length > 4)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[4])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 5) && (subtitleSet.length > 5)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[5])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 6) && (subtitleSet.length > 6)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[6])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 7) && (subtitleSet.length > 7)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[7])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 8) && (subtitleSet.length > 8)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[8])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 9) && (subtitleSet.length > 9)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[9])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 10) && (subtitleSet.length > 10)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[10])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 11) && (subtitleSet.length > 11)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[11])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 12) && (subtitleSet.length > 12)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[12])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 13) && (subtitleSet.length > 13)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[13])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 14) && (subtitleSet.length > 14)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[14])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 15) && (subtitleSet.length > 15)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[15])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 16) && (subtitleSet.length > 16)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[16])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 17) && (subtitleSet.length > 17)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[17])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 18) && (subtitleSet.length > 18)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[18])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			elseIf (choice == 19) && (subtitleSet.length > 19)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[19])
+			If (choice < 20) && (subtitleSet.length > choice)
+				ShowSuper(name_Uke, name_Seme, subtitleSet[choice])
 				_temp_r = choice
 				If repeatUpdate
 					registerforsingleupdate(SS.interval)
@@ -526,46 +413,8 @@ Function ShowSubtitles(string[] subtitleSet)
 		If temp >= subtitleSet.length ; 表示回数がセリフ数を越えたら0に戻す
 			_temp = 0
 		endif
-		If (_temp == 0)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[0])
-		elseIf (_temp == 1)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[1])
-		elseIf (_temp == 2)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[2])
-		elseIf (_temp == 3)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[3])
-		elseIf (_temp == 4)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[4])
-		elseIf (_temp == 5)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[5])
-		elseIf (_temp == 6)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[6])
-		elseIf (_temp == 7)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[7])
-		elseIf (_temp == 8)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[8])
-		elseIf (_temp == 9)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[9])
-		elseIf (_temp == 10)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[10])
-		elseIf (_temp == 11)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[11])
-		elseIf (_temp == 12)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[12])
-		elseIf (_temp == 13)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[13])
-		elseIf (_temp == 14)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[14])
-		elseIf (_temp == 15)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[15])
-		elseIf (_temp == 16)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[16])
-		elseIf (_temp == 17)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[17])
-		elseIf (_temp == 18)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[18])
-		elseIf (_temp == 19)
-			ShowSuper(name_Uke, name_Seme, subtitleSet[19])
+		If (_temp < 20)
+			ShowSuper(name_Uke, name_Seme, subtitleSet[_temp])
 		endIf
 		_temp += 1
 		If repeatUpdate
