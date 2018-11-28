@@ -1,2 +1,4 @@
-# SexLabSubtitles
-SexLab用字幕Mod
+# SexLabSubtitles Forked
+
+Original mod by obachan.
+Thnak you!
