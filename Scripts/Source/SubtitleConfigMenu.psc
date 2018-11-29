@@ -349,11 +349,11 @@ EndEvent
 				string setname = SSetting.IS_name[choicemode] ;選択したセット名
 				int setindex = SSetting.IS_index[choicemode] ;選択したセットのインポート元（ver2.1）
 				;選択したセット
-				string[] set1 = SSetting.getSSetByIndex(choicemode, 1)
-				string[] set2 = SSetting.getSSetByIndex(choicemode, 2)
-				string[] set3 = SSetting.getSSetByIndex(choicemode, 3)
-				string[] set4 = SSetting.getSSetByIndex(choicemode, 4)
-				string[] set5 = SSetting.getSSetByIndex(choicemode, 5)
+				string[] set1 = SSetting.getSubtitles(choicemode, 1)
+				string[] set2 = SSetting.getSubtitles(choicemode, 2)
+				string[] set3 = SSetting.getSubtitles(choicemode, 3)
+				string[] set4 = SSetting.getSubtitles(choicemode, 4)
+				string[] set5 = SSetting.getSubtitles(choicemode, 5)
 				;選択したセットを全てのシチュエーションの汎用字幕としてセット
 				int num2 = 0
 				while (num2 < 21)
@@ -380,11 +380,11 @@ EndEvent
 			sname = SSetting.IS_name[choicemode] ;選択したセット名
 			int setindex = SSetting.IS_index[choicemode] ;選択したセットのインポート元（ver2.1）
 			;選択したセット
-			string[] set1 = SSetting.getSSetByIndex(choicemode, 1)
-			string[] set2 = SSetting.getSSetByIndex(choicemode, 2)
-			string[] set3 = SSetting.getSSetByIndex(choicemode, 3)
-			string[] set4 = SSetting.getSSetByIndex(choicemode, 4)
-			string[] set5 = SSetting.getSSetByIndex(choicemode, 5)
+			string[] set1 = SSetting.getSubtitles(choicemode, 1)
+			string[] set2 = SSetting.getSubtitles(choicemode, 2)
+			string[] set3 = SSetting.getSubtitles(choicemode, 3)
+			string[] set4 = SSetting.getSubtitles(choicemode, 4)
+			string[] set5 = SSetting.getSubtitles(choicemode, 5)
 			;選択したセットを現在のシチュエーションの汎用字幕としてセット
 			 SSetting.intoSSetToCS(cmode, set1, set2, set3, set4, set5)
 			 SSetting.intoCSindex(cmode, setindex)

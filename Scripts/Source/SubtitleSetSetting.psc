@@ -1,6 +1,8 @@
 ﻿Scriptname SubtitleSetSetting extends Quest
 {sexLab用 字幕セットのインポート・汎用字幕の設定}
 
+SubtitleStorage Property Storage auto
+
 string[] Property common_setname auto;シチュエーションに適用されているセット名
 string[] Property common_situation auto; シチュエーション名
 int[] Property CS_index auto ; シチュエーションに適用されているセットのインポート元番号
@@ -49,24 +51,21 @@ EndFunction
 
 ; 字幕セットの準備
 bool Function importSubtitleSetInit()
-	int filecount = importJSONfileCount(1, 30, "../sexlabSubtitles/importSet")
+	int filecount = Storage.fileCount(1, 30, "../sexlabSubtitles/importSet")
 	; debug.trace("# インポートするJSONファイルは合計" + filecount + "個存在しています")
 	IS_name = sslUtility.EmptyStringArray()
 	IS_index = sslUtility.EmptyIntArray()
+	
 	If filecount > 0
 		; IS_name =	PapyrusUtil.StringArray(filecount)
 		; IS_index =	PapyrusUtil.IntArray(filecount)
 		IS_name =	Utility.CreateStringArray(filecount)
 		IS_index =	Utility.CreateIntArray(filecount)
-
 	endif
-	importSSetToNameAndIndex(1, 30, "../sexlabSubtitles/importSet", IS_name, IS_index)
-	bool importFin = setImportSSet()
-	If importFin
-		return true
-	else
-		return false
-	endIf
+	
+	Storage.updateLists(1, 30, "../sexlabSubtitles/importSet", IS_name, IS_index)
+	
+	return Storage.importAll()
 EndFunction
 
 ;デフォルト字幕のセット（Mod導入初回時のみ）
@@ -125,11 +124,11 @@ Function defaultSSet()
 	; debug.trace("# 【状況描写・女女】はimportSet" + startindex6)
 
 	If startset1 >= 0
-		string[] set1 = getSSetByIndex(startset1, 1)
-		string[] set2 = getSSetByIndex(startset1, 2)
-		string[] set3 = getSSetByIndex(startset1, 3)
-		string[] set4 = getSSetByIndex(startset1, 4)
-		string[] set5 = getSSetByIndex(startset1, 5)
+		string[] set1 = self.getSubtitles(startset1, 1)
+		string[] set2 = self.getSubtitles(startset1, 2)
+		string[] set3 = self.getSubtitles(startset1, 3)
+		string[] set4 = self.getSubtitles(startset1, 4)
+		string[] set5 = self.getSubtitles(startset1, 5)
 		intoSSetToCS(12, set1, set2, set3, set4, set5)
 		intoCSindex(12, startindex1)
 		setNameCSname(12, "汎用和姦男女")
@@ -138,11 +137,11 @@ Function defaultSSet()
 		setNameCSname(14, "汎用和姦男女")
 	endif
 	If startset2 >= 0
-		string[] set1 = getSSetByIndex(startset2, 1)
-		string[] set2 = getSSetByIndex(startset2, 2)
-		string[] set3 = getSSetByIndex(startset2, 3)
-		string[] set4 = getSSetByIndex(startset2, 4)
-		string[] set5 = getSSetByIndex(startset2, 5)
+		string[] set1 = self.getSubtitles(startset2, 1)
+		string[] set2 = self.getSubtitles(startset2, 2)
+		string[] set3 = self.getSubtitles(startset2, 3)
+		string[] set4 = self.getSubtitles(startset2, 4)
+		string[] set5 = self.getSubtitles(startset2, 5)
 		intoSSetToCS(9, set1, set2, set3, set4, set5)
 		intoSSetToCS(10, set1, set2, set3, set4, set5)
 		intoCSindex(9, startindex2)
@@ -151,11 +150,11 @@ Function defaultSSet()
 		setNameCSname(10, "汎用オーラル受")
 	endif
 	If startset3 >= 0
-		string[] set1 = getSSetByIndex(startset3, 1)
-		string[] set2 = getSSetByIndex(startset3, 2)
-		string[] set3 = getSSetByIndex(startset3, 3)
-		string[] set4 = getSSetByIndex(startset3, 4)
-		string[] set5 = getSSetByIndex(startset3, 5)
+		string[] set1 = self.getSubtitles(startset3, 1)
+		string[] set2 = self.getSubtitles(startset3, 2)
+		string[] set3 = self.getSubtitles(startset3, 3)
+		string[] set4 = self.getSubtitles(startset3, 4)
+		string[] set5 = self.getSubtitles(startset3, 5)
 		intoSSetToCS(1, set1, set2, set3, set4, set5)
 		intoSSetToCS(5, set1, set2, set3, set4, set5)
 		intoCSindex(1, startindex3)
@@ -164,11 +163,11 @@ Function defaultSSet()
 		setNameCSname(5, "汎用喘ぎ女性のみ")
 	endif
 	If startset4 >= 0
-		string[] set1 = getSSetByIndex(startset4, 1)
-		string[] set2 = getSSetByIndex(startset4, 2)
-		string[] set3 = getSSetByIndex(startset4, 3)
-		string[] set4 = getSSetByIndex(startset4, 4)
-		string[] set5 = getSSetByIndex(startset4, 5)
+		string[] set1 = self.getSubtitles(startset4, 1)
+		string[] set2 = self.getSubtitles(startset4, 2)
+		string[] set3 = self.getSubtitles(startset4, 3)
+		string[] set4 = self.getSubtitles(startset4, 4)
+		string[] set5 = self.getSubtitles(startset4, 5)
 		intoSSetToCS(0, set1, set2, set3, set4, set5)
 		intoSSetToCS(6, set1, set2, set3, set4, set5)
 		intoSSetToCS(11, set1, set2, set3, set4, set5)
@@ -183,11 +182,11 @@ Function defaultSSet()
 		setNameCSname(13, "喘ぎ女性ハード")
 	endif
 	If startset5 >= 0
-		string[] set1 = getSSetByIndex(startset5, 1)
-		string[] set2 = getSSetByIndex(startset5, 2)
-		string[] set3 = getSSetByIndex(startset5, 3)
-		string[] set4 = getSSetByIndex(startset5, 4)
-		string[] set5 = getSSetByIndex(startset5, 5)
+		string[] set1 = self.getSubtitles(startset5, 1)
+		string[] set2 = self.getSubtitles(startset5, 2)
+		string[] set3 = self.getSubtitles(startset5, 3)
+		string[] set4 = self.getSubtitles(startset5, 4)
+		string[] set5 = self.getSubtitles(startset5, 5)
 		intoSSetToCS(2, set1, set2, set3, set4, set5)
 		intoSSetToCS(3, set1, set2, set3, set4, set5)
 		intoSSetToCS(4, set1, set2, set3, set4, set5)
@@ -205,11 +204,11 @@ Function defaultSSet()
 		setNameCSname(8, "男喘ぎ・女性積極的")
 	endif
 	If startset6 >= 0
-		string[] set1 = getSSetByIndex(startset6, 1)
-		string[] set2 = getSSetByIndex(startset6, 2)
-		string[] set3 = getSSetByIndex(startset6, 3)
-		string[] set4 = getSSetByIndex(startset6, 4)
-		string[] set5 = getSSetByIndex(startset6, 5)
+		string[] set1 = self.getSubtitles(startset6, 1)
+		string[] set2 = self.getSubtitles(startset6, 2)
+		string[] set3 = self.getSubtitles(startset6, 3)
+		string[] set4 = self.getSubtitles(startset6, 4)
+		string[] set5 = self.getSubtitles(startset6, 5)
 		intoSSetToCS(15, set1, set2, set3, set4, set5)
 		intoSSetToCS(16, set1, set2, set3, set4, set5)
 		intoSSetToCS(17, set1, set2, set3, set4, set5)
@@ -238,11 +237,11 @@ Function CSetAgain()
 		string d_situation = 	common_situation[i]
 		int d_index = CS_index[i]
 		If !(d_index == 0)
-			string[] set1 = getSSetByIndex2(d_index, 1)
-			string[] set2 = getSSetByIndex2(d_index, 2)
-			string[] set3 = getSSetByIndex2(d_index, 3)
-			string[] set4 = getSSetByIndex2(d_index, 4)
-			string[] set5 = getSSetByIndex2(d_index, 5)
+			string[] set1 = Storage.getSubtitles(d_index, 1)
+			string[] set2 = Storage.getSubtitles(d_index, 2)
+			string[] set3 = Storage.getSubtitles(d_index, 3)
+			string[] set4 = Storage.getSubtitles(d_index, 4)
+			string[] set5 = Storage.getSubtitles(d_index, 5)
 			intoSSetToCS(i, set1, set2, set3, set4, set5)
 			intoCSindex(i, d_index)
 			common_setname[i] = getSetnameImportNum(d_index)
@@ -815,14 +814,9 @@ EndFunction
 
 ;---------------------------------------------------------------------------
 ; 指定のインデックス番号（num）の指定ステージの字幕セットを取得する
-string[] Function getSSetByIndex(int num, int stage)
-	int index = IS_index[num]
-	
-	return self.getSSetByIndex2(index, stage)
-	
-;	int fListIndex = (index * 5) + stage - 1
-;	debug.trace("SexLabSubtitles: " + SubtitlesIS)
-;	debug.trace("SexLabSubtitles: indexeing " + SubtitlesIS.GetAt(fListIndex))
+; string[] Function getSSetByIndex(int num, int stage)
+string[] Function getSubtitles(int num, int stage)
+	return Storage.getSubtitles(IS_index[num], stage)
 EndFunction
 
 ;インポート元の番号の字幕ファイルから字幕セットの名前を引き出す（ver2.1）

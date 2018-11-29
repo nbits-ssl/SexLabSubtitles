@@ -76,11 +76,11 @@ Event OnKeyDown(Int KeyCode)
 				string setname = SSetting.IS_name[choice] ;選択したセット名
 				; debug.trace("# setnameは" + setname)
 				;選択したセット
-				string[] set1 = SSetting.getSSetByIndex(choice, 1)
-				string[] set2 = SSetting.getSSetByIndex(choice, 2)
-				string[] set3 = SSetting.getSSetByIndex(choice, 3)
-				string[] set4 = SSetting.getSSetByIndex(choice, 4)
-				string[] set5 = SSetting.getSSetByIndex(choice, 5)
+				string[] set1 = SSetting.getSubtitles(choice, 1)
+				string[] set2 = SSetting.getSubtitles(choice, 2)
+				string[] set3 = SSetting.getSubtitles(choice, 3)
+				string[] set4 = SSetting.getSubtitles(choice, 4)
+				string[] set5 = SSetting.getSubtitles(choice, 5)
 				;選択したセットを現在のシチュエーションの汎用字幕としてセット
 				 SSetting.intoSSetToCS(situation, set1, set2, set3, set4, set5)
 				;選択したセットのインポート元番号を保管（ver2.1）
