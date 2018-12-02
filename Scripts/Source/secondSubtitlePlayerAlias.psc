@@ -8,9 +8,6 @@ Event OnPlayerLoadGame()
 	SSC.Initialize()
 	SSC.RegisterMenukey()
 
-	; If !InitOnce
-	; endIf
-
 	If !(Init_v20_Once)
 		Init_v20_Once = true
 		SSC.CommonSetInit()

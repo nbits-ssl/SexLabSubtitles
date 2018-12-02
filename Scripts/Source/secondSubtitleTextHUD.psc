@@ -75,6 +75,7 @@ Event OnKeyDown(Int KeyCode)
 			else
 				choice = choice - 1 ; 実際の選択は非表示の選択肢の分を抜いた数になる
 				string setname = SSetting.IS_name[choice] ;選択したセット名
+				int setindex = SSetting.IS_index[choice] ;選択したセットのインポート元（ver2.1）
 				; debug.trace("# setnameは" + setname)
 				;選択したセット
 				string[] set1 = SSetting.getStorageSubtitles(choice, 1)
@@ -83,8 +84,8 @@ Event OnKeyDown(Int KeyCode)
 				string[] set4 = SSetting.getStorageSubtitles(choice, 4)
 				string[] set5 = SSetting.getStorageSubtitles(choice, 5)
 				;選択したセットを現在のシチュエーションの汎用字幕としてセット
-				 SSetting.updateSubtitles(situation, stype, SSC.isAggressive, setname, choice, set1, set2, set3, set4, set5)
-
+				 SSetting.updateSubtitles(situation, stype, SSC.isAggressive, setname, setindex, set1, set2, set3, set4, set5)
+				
 				 ;字幕表示の更新
 				string[] SSet = SSetting.getSubtitles(situation, stype, SSC.isAggressive, SSC.getSexLabStage())
 				SSC.SSet = SSet

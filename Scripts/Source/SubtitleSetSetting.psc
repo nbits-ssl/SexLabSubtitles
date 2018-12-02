@@ -5,7 +5,7 @@
 string[] Property common_situation auto; シチュエーション名
 
 string[] Property CS_type auto ; ["hetero", "homo", "creature"]
-int[] Property CS_index auto ; シチュエーションに適用されているセットのインポート元番号
+; int[] Property CS_index auto ; シチュエーションに適用されているセットのインポート元番号
 Quest[] Property CS_quest auto
 
 string[] Property IS_name auto ; インポートした字幕のセット名

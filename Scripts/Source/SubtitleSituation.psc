@@ -28,21 +28,21 @@ EndFunction
 int Function getSubtitlesStorage(string stype, bool aggressive = false)
 	if (stype == "hetero")
 		if (aggressive)
-			return HeteroStorageID
-		else
 			return HeteroAggrStorageID
+		else
+			return HeteroStorageID
 		endif
 	elseif (stype == "homo")
 		if (aggressive)
-			return HomoStorageID
-		else
 			return HomoAggrStorageID
+		else
+			return HomoStorageID
 		endif
 	elseif (stype == "creature")
 		if (aggressive)
-			return CreatureStorageID
-		else
 			return CreatureAggrStorageID
+		else
+			return CreatureStorageID
 		endif
 	endif
 EndFunction
@@ -51,21 +51,21 @@ EndFunction
 string Function getSubtitlesName(string stype, bool aggressive = false)
 	if (stype == "hetero")
 		if (aggressive)
-			return HeteroName
-		else
 			return HeteroAggrName
+		else
+			return HeteroName
 		endif
 	elseif (stype == "homo")
 		if (aggressive)
-			return HomoName
-		else
 			return HomoAggrName
+		else
+			return HomoName
 		endif
 	elseif (stype == "creature")
 		if (aggressive)
-			return CreatureName
-		else
 			return CreatureAggrName
+		else
+			return CreatureName
 		endif
 	endif
 EndFunction
@@ -94,7 +94,7 @@ EndFunction
 
 Function clearSubtitles(string stype, bool aggressive = false)
 	int iempty
-	string sempty
+	string sempty = "$SMENU_disble"
 	string[] empty
 	
 	if (stype == "hetero")
