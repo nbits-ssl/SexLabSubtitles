@@ -35,7 +35,7 @@ Function SetMenuInit() ; メニューリストの登録
 	If len > 0
 		int i = 1
 		while (i < (len + 1))
-			SetMenu[i] = SSetting.IS_name[ i - 1]
+			SetMenu[i] = SSetting.IS_name[i - 1]
 			; debug.trace("# SetMenu[" + i + "]は" + SetMenu[i] + "です")
 			i += 1
 		endwhile
@@ -49,7 +49,8 @@ Event OnKeyDown(Int KeyCode)
 ;		debug.trace("# Subtitle HUD - OnKeyDown - メニュー用のキーが押されました！")
 		If (!Utility.isinmenumode()) && SSC.isRunningSubtitle
 			int situation = SSC.situation ; 稼働中のSEXのシチュエーション
-			string currentsetname = SSetting.getNameCSname(situation) ; 現在適用されている字幕セット名
+			string stype = SSC.situationType
+			string currentsetname = SSetting.getCSName(situation, stype, SSC.isAggressive) ; 現在適用されている字幕セット名
 			int currentnum = SetMenu.find(currentsetname)
 			string currentSituation = SSetting.common_situation[situation] ; 現在のシチュエーションの汎用名
 			string title = "$SMENU_title"
@@ -68,30 +69,24 @@ Event OnKeyDown(Int KeyCode)
 				; 別modのカスタムメニューと同時に開くとキャンセル扱いになるため
 				; 字幕オフになるのではなく現状維持となるよう、処理を削除
 				; SSC.repeatUpdate = false
-				; SSetting.setNameCSname(situation, "$SMENU_disble")
-				; SSetting.intoCSempty(situation)
-				; SSetting.intoCSindex(situation, 0)
+				; SSetting.setName(situation, "$SMENU_disble")
+				;; SSetting.intoCSempty(situation)
+				; SSetting.updateIndex(situation, 0)
 			else
 				choice = choice - 1 ; 実際の選択は非表示の選択肢の分を抜いた数になる
 				string setname = SSetting.IS_name[choice] ;選択したセット名
 				; debug.trace("# setnameは" + setname)
 				;選択したセット
-				string[] set1 = SSetting.getSubtitles(choice, 1)
-				string[] set2 = SSetting.getSubtitles(choice, 2)
-				string[] set3 = SSetting.getSubtitles(choice, 3)
-				string[] set4 = SSetting.getSubtitles(choice, 4)
-				string[] set5 = SSetting.getSubtitles(choice, 5)
+				string[] set1 = SSetting.getStorageSubtitles(choice, 1)
+				string[] set2 = SSetting.getStorageSubtitles(choice, 2)
+				string[] set3 = SSetting.getStorageSubtitles(choice, 3)
+				string[] set4 = SSetting.getStorageSubtitles(choice, 4)
+				string[] set5 = SSetting.getStorageSubtitles(choice, 5)
 				;選択したセットを現在のシチュエーションの汎用字幕としてセット
-				 SSetting.intoSSetToCS(situation, set1, set2, set3, set4, set5)
-				;選択したセットのインポート元番号を保管（ver2.1）
-				 SSetting.intoCSindex(situation, SSetting.IS_index[choice])
-				 ; debug.trace("# " + SSetting.common_situation[situation] + "にimportSet" + SSetting.IS_index[choice] +"の" + setname +"をセットしました")
-				 ;選択したセットの名前を現在のシチュエーションの字幕名としてセット
-				 SSetting.setNameCSname(situation, setname)
+				 SSetting.updateSubtitles(situation, stype, SSC.isAggressive, setname, choice, set1, set2, set3, set4, set5)
 
 				 ;字幕表示の更新
-				int ssstage = SSC.getSubtitleStageNow()
-				string[] SSet = SSetting.getCSsetBySituation(situation, ssstage)
+				string[] SSet = SSetting.getSubtitles(situation, stype, SSC.isAggressive, SSC.getSexLabStage())
 				SSC.SSet = SSet
 				SSC.Temp = 0
 				SSC.repeatUpdate = true

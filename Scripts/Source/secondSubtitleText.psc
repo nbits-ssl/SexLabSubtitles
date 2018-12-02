@@ -9,17 +9,23 @@ SubtitleSetSetting Property SSetting auto ; 字幕セットのインポート、
 bool Property isRunningSubtitle auto; 字幕表示しているSexシーンが現在稼働中かどうか
 int Property currentStage auto; 現在稼働中のアニメーションのステージ
 int Property maxStage auto; 現在稼働中のアニメーションの総ステージ数
-int Property situation = 12 auto ; 現在のアニメーションの字幕のシチュエーション
+int Property situation = 10 auto ; 現在のアニメーションの字幕のシチュエーション
+string Property situationType = "hetero" auto
+bool Property isAggressive = false auto ; 強姦かどうか
+
+int defaultSituation = 10
+string defaultSituationType = "hetero"
 
 string sexlabID ; 現在稼働中のSexシーンのID
-bool IsAggressive ; 強姦かどうか
+bool isSameSex ; 受と攻が同性かどうか（v2.2）
+bool isCreature
 
 Actor Player ; プレイヤー
 Actor Uke ; 受役のアクター
 Actor Seme ; 攻役のアクター
 string name_Uke ; 受の名前
 string name_Seme ; 攻の名前
-bool _samesex ; 受と攻が同性かどうか（v2.2）
+; bool _samesex ; 受と攻が同性かどうか（v2.2）
 int _temp_r ; ランダム表示の再生番号（v2.2）
 
 int _temp = 0 ; 字幕表示の順番を記憶しておく
@@ -75,14 +81,16 @@ Function Initialize() ; ゲームがロードされるたびに呼び出し
 EndFunction
 
 Function CommonSetInit() ; 汎用字幕の準備（Mod導入初回＆更新時）
-	SSetting.commonSetInit() ; シチュエーションのセット
-	bool importOK = SSetting.importSubtitleSetInit() ; 字幕セットの準備とインポート
+	SSetting.init() ; シチュエーションのセット
+	bool importOK = SSetting.importAll() ; 字幕セットの準備とインポート
+	
 	int i = 0
 	while !(importOK) && (i < 10)
 		utility.wait(0.1)
 		i += 1
 	endwhile
-	SSetting.defaultSSet() ; 初回限定設定
+	
+	SSetting.defaultSet() ; 初回限定設定
 	SS.SetMenuInit() ; HUDメニューの準備（セット名の登録）
 EndFunction
 
@@ -128,7 +136,8 @@ event startAnim(string eventName, string argString, float argNum, form sender)
 
 	If (SS.SMode && self._isPlayerNear(controller)) ; 汎用字幕システムが有効の場合
 		_temp = 0 ; order subtitle's current number
-		situation = 12
+		situation = defaultSituation
+		situationType = defaultSituationType
 		sexlabID = argString
 		
 		; debug.trace("# SexLab Subtitles - アニメ開始 - スレッドID : " + sexlabID)
@@ -177,15 +186,19 @@ event startStage(string eventName, string argString, float argNum, form sender)
 		name_Seme = self._getDisplayName(Seme)
 		
 		string currentTag = self._getCurrentTag(animation)
-		bool isSameSex = (Uke.getactorbase().GetSex() == Seme.getactorbase().GetSex())
-		
+
 		; set Property 
-		situation = self._getSituation(animation.name, currentTag, controller.IsAggressive, animation.IsCreature, isSameSex)
+		isSameSex = (Uke.GetLeveledActorBase().GetSex() == Seme.GetLeveledActorBase().GetSex())
+		isCreature = animation.IsCreature
+		isAggressive = controller.IsAggressive
 		
-		If SSetting.isCSdisable(situation) ; 字幕が非表示の場合
+		situation = self._getSituation(animation.name, currentTag)
+		situationType = self._getSituationType()
+		
+		If SSetting.isDisable(situation, situationType, isAggressive) ; 字幕が非表示の場合
 			repeatUpdate = false
 		else
-			_sset = SSetting.getCSsetBySituation(situation, getSubtitleStageNow())
+			_sset = SSetting.getSubtitles(situation, situationType, isAggressive, self.getSexLabStage())
 			if !(repeatUpdate)
 				repeatUpdate = true
 				ShowSubtitlesAuto()
@@ -208,7 +221,8 @@ event endAnim(string eventName, string argString, float argNum, form sender)
 		repeatUpdate = false
 		_temp = 0
 		sexlabID = ""
-		situation = 12
+		situation = defaultSituation
+		situationType = defaultSituationType
 		Uke = none
 		Seme = none
 		isRunningSubtitle = false
@@ -285,67 +299,48 @@ EndFunction
 	字幕表示関連の処理
 /;
 
-; アニメ名、タグ名からシチュエーション番号を割り出し、situationプロパティにセットする
-int Function _getSituation(string animname, string tagname, bool aggressivesex, bool creaturesex, bool isSameSex)
-	If creaturesex
-		return 0
-	elseIf animname == "Arrok 69"
-		return 1
-	elseIf tagname == "Handjob"
-		return 2
-	elseIf tagname == "Footjob"
-		return 3
-	elseIf tagname == "Boobjob"
-		return 4
-	elseIf tagname == "Masturbation"
-		return 5
-	elseIf tagname == "Fisting"
-		return 6
-	elseIf tagname == "Cowgirl"
-		return 7
-	elseIf tagname == "Foreplay"
-		return 8
-	elseIf (tagname == "Oral") && (isSameSex)
-		If aggressivesex
-			return 15
-		else
-			return 16
-		endIf
-	elseIf tagname == "Oral"
-		If aggressivesex
-			return 9
-		else
-			return 10
-		endIf
-	elseIf (tagname == "Anal") && (isSameSex)
-		If aggressivesex
-			return 17
-		else
-			return 18
-		endIf
-	elseIf tagname == "Anal"
-		If aggressivesex
-			return 13
-		else
-			return 14
-		endIf
-	elseIf (isSameSex)
-		If aggressivesex
-			return 19
-		else
-			return 20
-		endif
+
+string Function _getSituationType()
+	if (isCreature)
+		return "creature"
+	elseif (isSameSex)
+		return "homo"
 	else
-		If aggressivesex
-			return 11
-		else
-			return 12
-		endif
+		return "hetero"
+	endIf
+EndFunction
+
+; アニメ名、タグ名からシチュエーション番号を割り出し、situationプロパティにセットする
+int Function _getSituation(string animname, string tagname)
+	If animname == "Arrok 69"
+		return 0
+	elseIf tagname == "Handjob"
+		return 1
+	elseIf tagname == "Footjob"
+		return 2
+	elseIf tagname == "Boobjob"
+		return 3
+	elseIf tagname == "Masturbation"
+		return 4
+	elseIf tagname == "Fisting"
+		return 5
+	elseIf tagname == "Cowgirl"
+		return 6
+	elseIf tagname == "Foreplay"
+		return 7
+	elseIf tagname == "Oral"
+		return 8
+	elseIf tagname == "Anal"
+		return 9
+	elseIf tagname == "VagiAnal"
+		return 10
+	else
+		return 11
 	endif
 EndFunction
 
 ; 現在のステージから適用する字幕のステージを返す（5ステージ以上あるアニメーション対応）
-int Function getSubtitleStageNow()
+int Function getSexLabStage()
 	If currentStage == 1
 		return 1
 	elseif currentStage == 2
@@ -426,7 +421,7 @@ EndFunction
 ; ランダムで同じ数を二回続けて出さないようにする
 int Function getRandomDifferent(int min, int max, int before)
 	int n = Utility.randomInt(min, max)
-	while ( n == before)
+	while (n == before)
 		n = Utility.randomInt(min, max)
 	endwhile
 	return n
