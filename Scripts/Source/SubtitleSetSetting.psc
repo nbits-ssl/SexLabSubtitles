@@ -14,12 +14,20 @@ int[] Property IS_index auto ; インポートした字幕のファイル番号
 int SituationLength = 12 ; but search this number in codes when you hope change
 
 ;/======================================
-             【汎用字幕12種】
+【汎用字幕12種】
 
-	0 69		1 Hand			2 Foot
-	3 Boob		4 Masturbation	5 Fist
-	6 Cowgirl	7 Foreplay		8 Oral
-	9 Anal		10 Vaginal		11 Etc
+0 69
+1 Hand
+2 Foot
+3 Boob
+4 Masturbation
+5 Fist
+6 Cowgirl
+7 Foreplay
+8 Oral
+9 Anal
+10 Vaginal
+11 Etc
 /;
 
 ; 汎用字幕ファイルの初期化
@@ -99,7 +107,15 @@ EndFunction
 ;デフォルト字幕のセット（Mod導入初回時のみ）
 ; Function defaultSSet()
 
-;/
+int Function _getDefaultSetStorageID(string title)
+	int startset = IS_name.find(title)
+	if (startset < 0)
+		return 0
+	else
+		return IS_index[startset]
+	endif
+EndFunction
+
 Function defaultSet()
 	; debug.trace("# defaultSSet開始")
 	int startset1 = IS_name.find("汎用和姦男女")
@@ -110,44 +126,13 @@ Function defaultSet()
 	int startset6 = IS_name.find("状況描写・女女")
 
 	; インポート元のファイル番号
-	int startindex1
-	int startindex2
-	int startindex3
-	int startindex4
-	int startindex5
-	int startindex6
+	int startindex1 = self._getDefaultSetStorageID(startset1)
+	int startindex2 = self._getDefaultSetStorageID(startset2)
+	int startindex3 = self._getDefaultSetStorageID(startset3)
+	int startindex4 = self._getDefaultSetStorageID(startset4)
+	int startindex5 = self._getDefaultSetStorageID(startset5)
+	int startindex6 = self._getDefaultSetStorageID(startset6)
 	
-	If startset1 < 0
-		startindex1 = 0
-	else
-		startindex1 = IS_index[startset1]
-	endif
-	If startset2 < 0
-		startindex2 = 0
-	else
-		startindex2 = IS_index[startset2]
-	endif
-	If startset3 < 0
-		startindex3 = 0
-	else
-		startindex3 = IS_index[startset3]
-	endif
-	If startset4 < 0
-		startindex4 = 0
-	else
-		startindex4 = IS_index[startset4]
-	endif
-	If startset5 < 0
-		startindex5 = 0
-	else
-		startindex5 = IS_index[startset5]
-	endif
-	If startset6 < 0
-		startindex6 = 0
-	else
-		startindex6 = IS_index[startset6]
-	endif
-
 	; debug.trace("# 【汎用和姦男女】はimportSet" + startindex1)
 	; debug.trace("# 【汎用オーラル受】はimportSet" + startindex2)
 	; debug.trace("# 【汎用喘ぎ女性のみ】はimportSet" + startindex3)
@@ -155,113 +140,81 @@ Function defaultSet()
 	; debug.trace("# 【男喘ぎ・女性積極的】はimportSet" + startindex5)
 	; debug.trace("# 【状況描写・女女】はimportSet" + startindex6)
 
+;	updateSubtitles(int situation, string stype, bool aggressive = false, string title, int sid, \
+;						 string[] set1, string[] set2, string[] set3, string[] set4, string[] set5)
+; hetero, homo, creature
+
 	If startset1 >= 0
+		string title = "汎用和姦男女"
 		string[] set1 = self.getStorageSubtitles(startset1, 1)
 		string[] set2 = self.getStorageSubtitles(startset1, 2)
 		string[] set3 = self.getStorageSubtitles(startset1, 3)
 		string[] set4 = self.getStorageSubtitles(startset1, 4)
 		string[] set5 = self.getStorageSubtitles(startset1, 5)
-		self.updateSubtitles(12, set1, set2, set3, set4, set5)
-		self.updateIndex(12, startindex1)
-		self.setCSName(12, "汎用和姦男女")
-		self.updateSubtitles(14, set1, set2, set3, set4, set5)
-		self.updateIndex(14, startindex1)
-		self.setCSName(14, "汎用和姦男女")
+		self.updateSubtitles(9, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(10, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
 	endif
 	If startset2 >= 0
+		string title = "汎用オーラル受"
 		string[] set1 = self.getStorageSubtitles(startset2, 1)
 		string[] set2 = self.getStorageSubtitles(startset2, 2)
 		string[] set3 = self.getStorageSubtitles(startset2, 3)
 		string[] set4 = self.getStorageSubtitles(startset2, 4)
 		string[] set5 = self.getStorageSubtitles(startset2, 5)
-		self.updateSubtitles(9, set1, set2, set3, set4, set5)
-		self.updateSubtitles(10, set1, set2, set3, set4, set5)
-		self.updateIndex(9, startindex2)
-		self.updateIndex(10, startindex2)
-		self.setCSName(9, "汎用オーラル受")
-		self.setCSName(10, "汎用オーラル受")
+		self.updateSubtitles(8, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(8, "hetero", true, title, startindex1, set1, set2, set3, set4, set5)
 	endif
 	If startset3 >= 0
+		string title = "汎用喘ぎ女性のみ"
 		string[] set1 = self.getStorageSubtitles(startset3, 1)
 		string[] set2 = self.getStorageSubtitles(startset3, 2)
 		string[] set3 = self.getStorageSubtitles(startset3, 3)
 		string[] set4 = self.getStorageSubtitles(startset3, 4)
 		string[] set5 = self.getStorageSubtitles(startset3, 5)
-		self.updateSubtitles(1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(5, set1, set2, set3, set4, set5)
-		self.updateIndex(1, startindex3)
-		self.updateIndex(5, startindex3)
-		self.setCSName(1, "汎用喘ぎ女性のみ")
-		self.setCSName(5, "汎用喘ぎ女性のみ")
+		self.updateSubtitles(0, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(4, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
 	endif
 	If startset4 >= 0
+		string title = "喘ぎ女性ハード"
 		string[] set1 = self.getStorageSubtitles(startset4, 1)
 		string[] set2 = self.getStorageSubtitles(startset4, 2)
 		string[] set3 = self.getStorageSubtitles(startset4, 3)
 		string[] set4 = self.getStorageSubtitles(startset4, 4)
 		string[] set5 = self.getStorageSubtitles(startset4, 5)
-		self.updateSubtitles(0, set1, set2, set3, set4, set5)
-		self.updateSubtitles(6, set1, set2, set3, set4, set5)
-		self.updateSubtitles(11, set1, set2, set3, set4, set5)
-		self.updateSubtitles(13, set1, set2, set3, set4, set5)
-		self.updateIndex(0, startindex4)
-		self.updateIndex(6, startindex4)
-		self.updateIndex(11, startindex4)
-		self.updateIndex(13, startindex4)
-		self.setCSName(0, "喘ぎ女性ハード")
-		self.setCSName(6, "喘ぎ女性ハード")
-		self.setCSName(11, "喘ぎ女性ハード")
-		self.setCSName(13, "喘ぎ女性ハード")
+		self.updateSubtitles(5, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(9, "hetero", true, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(10, "hetero", true, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(9, "creature", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(10, "creature", false, title, startindex1, set1, set2, set3, set4, set5)
 	endif
 	If startset5 >= 0
+		string title = "男喘ぎ・女性積極的"
 		string[] set1 = self.getStorageSubtitles(startset5, 1)
 		string[] set2 = self.getStorageSubtitles(startset5, 2)
 		string[] set3 = self.getStorageSubtitles(startset5, 3)
 		string[] set4 = self.getStorageSubtitles(startset5, 4)
 		string[] set5 = self.getStorageSubtitles(startset5, 5)
-		self.updateSubtitles(2, set1, set2, set3, set4, set5)
-		self.updateSubtitles(3, set1, set2, set3, set4, set5)
-		self.updateSubtitles(4, set1, set2, set3, set4, set5)
-		self.updateSubtitles(7, set1, set2, set3, set4, set5)
-		self.updateSubtitles(8, set1, set2, set3, set4, set5)
-		self.updateIndex(2, startindex5)
-		self.updateIndex(3, startindex5)
-		self.updateIndex(4, startindex5)
-		self.updateIndex(7, startindex5)
-		self.updateIndex(8, startindex5)
-		self.setCSName(2, "男喘ぎ・女性積極的")
-		self.setCSName(3, "男喘ぎ・女性積極的")
-		self.setCSName(4, "男喘ぎ・女性積極的")
-		self.setCSName(7, "男喘ぎ・女性積極的")
-		self.setCSName(8, "男喘ぎ・女性積極的")
+		self.updateSubtitles(1, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(2, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(3, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(6, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(7, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
 	endif
 	If startset6 >= 0
+		string title = "状況描写・女女"
 		string[] set1 = self.getStorageSubtitles(startset6, 1)
 		string[] set2 = self.getStorageSubtitles(startset6, 2)
 		string[] set3 = self.getStorageSubtitles(startset6, 3)
 		string[] set4 = self.getStorageSubtitles(startset6, 4)
 		string[] set5 = self.getStorageSubtitles(startset6, 5)
-		self.updateSubtitles(15, set1, set2, set3, set4, set5)
-		self.updateSubtitles(16, set1, set2, set3, set4, set5)
-		self.updateSubtitles(17, set1, set2, set3, set4, set5)
-		self.updateSubtitles(18, set1, set2, set3, set4, set5)
-		self.updateSubtitles(19, set1, set2, set3, set4, set5)
-		self.updateSubtitles(20, set1, set2, set3, set4, set5)
-		self.updateIndex(15, startindex6)
-		self.updateIndex(16, startindex6)
-		self.updateIndex(17, startindex6)
-		self.updateIndex(18, startindex6)
-		self.updateIndex(19, startindex6)
-		self.updateIndex(20, startindex6)
-		self.setCSName(15, "状況描写・女女")
-		self.setCSName(16, "状況描写・女女")
-		self.setCSName(17, "状況描写・女女")
-		self.setCSName(18, "状況描写・女女")
-		self.setCSName(19, "状況描写・女女")
-		self.setCSName(20, "状況描写・女女")
+		self.updateSubtitles(8, "homo", true, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(8, "homo", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(9, "homo", true, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(9, "homo", false, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(10, "homo", true, title, startindex1, set1, set2, set3, set4, set5)
+		self.updateSubtitles(10, "homo", false, title, startindex1, set1, set2, set3, set4, set5)
 	endif
 EndFunction
-/;
 
 ;汎用字幕セットの再セット（新しくインポートした字幕ファイルの内容を更新する）
 ; Function CSetAgain()
