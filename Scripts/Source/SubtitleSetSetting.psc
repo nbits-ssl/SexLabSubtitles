@@ -140,10 +140,6 @@ Function defaultSet()
 	; debug.trace("# 【男喘ぎ・女性積極的】はimportSet" + startindex5)
 	; debug.trace("# 【状況描写・女女】はimportSet" + startindex6)
 
-;	updateSubtitles(int situation, string stype, bool aggressive = false, string title, int sid, \
-;						 string[] set1, string[] set2, string[] set3, string[] set4, string[] set5)
-; hetero, homo, creature
-
 	If startset1 >= 0
 		string title = "汎用和姦男女"
 		string[] set1 = self.getStorageSubtitles(startset1, 1)
