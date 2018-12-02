@@ -299,7 +299,6 @@ EndFunction
 	字幕表示関連の処理
 /;
 
-
 string Function _getSituationType()
 	if (isCreature)
 		return "creature"

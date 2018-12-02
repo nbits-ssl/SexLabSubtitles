@@ -3,7 +3,6 @@
 string endcode = "#ssend" ; 終了タグ
 
 ; ファイルパス（filePath）の末尾数字startnumからmaxnumのファイルの有無を調べ総数をカウントする
-; int Function importJSONfileCount(int startnum, int maxnum, string filePath)
 int Function fileCount(int startnum, int maxnum, string filePath)
 	int i = startnum
 	int count = 0
@@ -18,7 +17,6 @@ int Function fileCount(int startnum, int maxnum, string filePath)
 EndFunction
 
 ;ファイルパス（filePath）の末尾数字startnum-maxnumのファイルからセット名とファイル番号を指定の配列に取得する
-; Function importSSetToNameAndIndex(int startnum, int maxnum, string filePath, string[] names, int[] ids)
 Function updateLists(int startnum, int maxnum, string filePath, string[] names, int[] ids)
 	int i = startnum
 	int r = 0
@@ -34,7 +32,6 @@ Function updateLists(int startnum, int maxnum, string filePath, string[] names, 
 EndFunction
 
 ; ファイルの有無に関わらず1-30番までのファイルの字幕セットを取得する
-; bool Function setImportSSet()
 bool Function importAll()
 	IS1_1 = self._importSSet(1,1)
 	IS1_2 = self._importSSet(1,2)
@@ -218,7 +215,6 @@ string [] Function _importSSetFromFile(int num, int stage, string filePath)
 EndFunction
 
 ; 指定のインポート元（index）の指定ステージの字幕セットを取得する
-; string[] Function getSSetByIndex2(int index, int stage)
 string[] Function getSubtitles(int index, int stage)
 	If index == 1
 		If stage == 1

@@ -1,11 +1,9 @@
 ﻿Scriptname SubtitleSetSetting extends Quest
 {sexLab用 字幕セットのインポート・汎用字幕の設定}
 
-; string[] Property common_setname auto;シチュエーションに適用されているセット名
 string[] Property common_situation auto; シチュエーション名
 
 string[] Property CS_type auto ; ["hetero", "homo", "creature"]
-; int[] Property CS_index auto ; シチュエーションに適用されているセットのインポート元番号
 Quest[] Property CS_quest auto
 
 string[] Property IS_name auto ; インポートした字幕のセット名
@@ -31,19 +29,7 @@ int SituationLength = 12 ; but search this number in codes when you hope change
 /;
 
 ; 汎用字幕ファイルの初期化
-; Function commonSetInit()
-
 Function init()
-	; why call EnmptyArray ?
-	;common_setname = Utility.CreateStringArray(0)
-	;common_setname = new string[12]
-	;common_situation = Utility.CreateStringArray(0)
-	;common_situation = new string[12]
-	;CS_index = Utility.CreateIntArray(0)
-	;CS_index = new int[12]
-	; CS_index = Utility.CreateIntArray(SituationLength * stypeLength)
-	; common_setname = Utility.CreateStringArray(SituationLength)
-	
 	common_situation = Utility.CreateStringArray(SituationLength)
 	common_situation[0] = "$CMODE_0"
 	common_situation[1] = "$CMODE_1"
@@ -85,8 +71,6 @@ Function init()
 EndFunction
 
 ; 字幕セットの準備
-; bool Function importSubtitleSetInit()
-
 bool Function importAll()
 	int filecount = Storage.fileCount(1, 30, "../sexlabSubtitles/importSet")
 	; debug.trace("# インポートするJSONファイルは合計" + filecount + "個存在しています")
@@ -105,8 +89,6 @@ bool Function importAll()
 EndFunction
 
 ;デフォルト字幕のセット（Mod導入初回時のみ）
-; Function defaultSSet()
-
 int Function _getDefaultSetStorageID(string title)
 	int startset = IS_name.find(title)
 	if (startset < 0)
@@ -213,8 +195,6 @@ Function defaultSet()
 EndFunction
 
 ;汎用字幕セットの再セット（新しくインポートした字幕ファイルの内容を更新する）
-; Function CSetAgain()
-
 Function refresh()
 	int i = 0
 	string stype
@@ -250,16 +230,7 @@ Function _refreshSituation(int situation, SubtitleSituation qstScript, string st
 	endif
 EndFunction
 
-; 汎用字幕のセットのインポート元を保管する（ver2.1 インポート更新用）
-; Function intoCSindex(int csnum, int importnum)
-; Function updateIndex(int csnum, int importnum)
-;	; debug.trace("# intoCSindex処理 - シチュエーション" + csnum + "はimportSet" + importnum)
-;	CS_index[csnum] = importnum
-; EndFunction
-
 ; 字幕セットを汎用セットの枠にセットする処理（5ステージ分まとめて）
-; Function intoSSetToCS(int csnum, string stype, bool aggressive = false, string[] set1, string[] set2, string[] set3, string[] set4, string[] set5)
-
 Function updateSubtitles(int situation, string stype, bool aggressive = false, string title, int sid, \
 						 string[] set1, string[] set2, string[] set3, string[] set4, string[] set5)
 	; debug.trace("# intoSSetToCS開始 " + stype)
@@ -269,50 +240,31 @@ Function updateSubtitles(int situation, string stype, bool aggressive = false, s
 endfunction
 
 ; 「字幕を表示しない」設定にした場合、該当の汎用セットを空にする
-; Function intoCSempty(int csnum)
-
 Function clearSubtitles(int situation, string stype, bool aggressive = false)
 	(CS_quest[situation] as SubtitleSituation).clearSubtitles(stype, aggressive)
 EndFunction
 
-;字幕のセット名を汎用字幕のセット名配列に格納する
-; Function setCSname(int situation, string name)
-; Function setCSName(int csnum, string stype, bool aggressive = false, string name)
-; 	common_setname[situation] = name
-; EndFunction
-; unused, now with updateSubtitles()
-
 ;シチュエーション番号から現在の字幕セット名を取得する
-; string Function getNameCSname(int situation)
-
 string Function getCSName(int situation, string stype, bool aggressive = false)
 	return (CS_quest[situation] as SubtitleSituation).getSubtitlesName(stype, aggressive)
 EndFunction
 
 ;字幕が非表示設定かどうかを調べる
-; bool Function isCSdisable(int situation)
-
 bool Function isDisable(int situation, string stype, bool aggressive = false)
 	return (CS_quest[situation] as SubtitleSituation).getSubtitlesName(stype, aggressive) == "$SMENU_disble"
 EndFunction
 
 ;シチュエーション番号と指定のステージ数から登録されている汎用の字幕セットを返す
-; string[] Function getCSsetBySituation(int situation, string stype, bool aggressive = false, int stage)
-
 string[] Function getSubtitles(int situation, string stype, bool aggressive = false, int stage)
 	(CS_quest[situation] as SubtitleSituation).getSubtitles(stype, aggressive, stage)
 EndFunction
 
 ; 指定のインデックス番号（num）の指定ステージの字幕セットを取得する
-; string[] Function getSSetByIndex(int num, int stage)
-
 string[] Function getStorageSubtitles(int num, int stage)
 	return Storage.getSubtitles(IS_index[num], stage)
 EndFunction
 
 ;インポート元の番号の字幕ファイルから字幕セットの名前を引き出す（ver2.1）
-; String Function getSetnameImportNum(int importnum)
-
 String Function _getSetName(int importnum)
 	If importnum == 0
 		return "$SMENU_disble"

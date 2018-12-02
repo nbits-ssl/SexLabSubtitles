@@ -85,7 +85,7 @@ event OnPageReset(string page)
 		SituationPageSettings(stypeID)
 	endif
 endEvent
-; ==============================================
+
 Event OnConfigOpen()
 endEvent
 Event OnConfigClose()
@@ -187,7 +187,6 @@ EndFunction
 	1ページ目の設定（字幕Mod全体の設定）
 /;
 
-; ----------------------------------------------------------------------
 ; 字幕セット変更メニューの呼び出しキー
 state keymap_menuKey
 	event OnHighlightST()
@@ -208,6 +207,7 @@ state keymap_menuKey
 		SetKeyMapOptionValueST(ssHUD.menuKey)
 	endEvent
 endState
+
 ; キーがカブった時の処理
 bool function KeyConflict(int newKeyCode, string conflictControl, string conflictName)
 	bool continue = true
@@ -222,13 +222,14 @@ bool function KeyConflict(int newKeyCode, string conflictControl, string conflic
 	endIf
 	return !continue
 endFunction
+
 ; 割り当てたキーをMCMに登録（競合メッセージ用）
 String Function GetCustomControl(int keyCode)
 	if(keyCode == ssHUD.menuKey)
 		return "$MCM_page1menukeyMessage"
 	endIf
 EndFunction
-; ----------------------------------------------------------------------
+
 ; 字幕表示の間隔の調整
 state slider_interval
 	event OnHighlightST()
@@ -249,7 +250,7 @@ state slider_interval
 		SetToggleOptionValueST(ssHUD.interval, "$MCM_Seconds")
 	endEvent
 endState
-; ----------------------------------------------------------------------
+
 ; 字幕機能全体のオン・オフ
 state toggle_smode
 	event OnHighlightST()
@@ -264,7 +265,7 @@ state toggle_smode
 		SetToggleOptionValueST(ssHUD.SMode)
 	endEvent
 endState
-; ----------------------------------------------------------------------
+
 ; 字幕ランダム表示のオン・オフ
 state toggle_randommode
 	event OnHighlightST()
@@ -279,7 +280,7 @@ state toggle_randommode
 		SetToggleOptionValueST(SSC.repeatRandom)
 	endEvent
 endState
-; ----------------------------------------------------------------------
+
 ; Modを外す場合
 state text_uninstall
 	event OnHighlightST()
@@ -290,7 +291,7 @@ state text_uninstall
 		ForcePageReset()
 	endEvent
 endState
-; ----------------------------------------------------------------------
+
 ; Modの手動リセット
 state text_reset
 	event OnHighlightST()
@@ -301,7 +302,7 @@ state text_reset
 		ForcePageReset()
 	endEvent
 endState
-; ----------------------------------------------------------------------
+
 ; 字幕のインポート
 state text_importAgain
 	event OnHighlightST()
@@ -321,11 +322,11 @@ state text_importAgain
 		ForcePageReset()
 	endEvent
 endState
+
 ;/---------------------------------------------------------------------------
-2ページ目の設定（汎用字幕の割り当て）
+	2ページ目の設定（汎用字幕の割り当て）
 /;
 
-; ----------------------------------------------------------------------
 ; デフォルトの字幕セットの設定
 state menu_cmode_default
 	event OnHighlightST()
@@ -354,7 +355,7 @@ state menu_cmode_default
 		SetMenuOptionValueST(ssHUD.SetMenu[_csdefault[stypeID]])
 	endEvent
 endState
-; ----------------------------------------------------------------------
+
 ; デフォルトの字幕を全てのシチュエーションに適用する
 state text_forcedAll
 	event OnHighlightST()
@@ -393,7 +394,7 @@ state text_forcedAll
 		ForcePageReset()
 	endEvent
 endState
-; ----------------------------------------------------------------------
+
 ; 選択した字幕に変更する処理（choiceは選択した字幕のメニュー順、cmodeは汎用字幕シチュエーション番号）
 Function changeCmode(int option, int choice, string stype, int cmode, bool aggressive)
 	; debug.trace("# メニューオプション" + ssHUD.SetMenu[choice] + "が選ばれました")
@@ -464,453 +465,3 @@ Event OnOptionMenuAccept(int option, int index)
 		endif
 	endif
 EndEvent
-
-; -----------------------------------------------------------------------------------------------------
-
-
-
-
-;/
-; ----------------------------------------------------------------------
-; cmode0 クリーチャー用
-state menu_cmode0
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode0_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(0))) ;現在の選択肢
-		SetMenuDialogDefaultIndex(_csdefault) ; デフォルトの選択肢の順番
-		SetMenuDialogOptions(ssHUD.SetMenu) ;表示する選択肢の配列
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-			changeCmode(_csdefault, 0)
-		else
-			changeCmode(i, 0)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 0) ; デフォルトを選んだ場合
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode1 シックスナイン
-state menu_cmode1
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode1_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(1)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 1)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 1)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode2 手で愛撫
-state menu_cmode2
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode2_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(2)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 2)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 2)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode3 足で愛撫
-state menu_cmode3
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode3_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(3)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 3)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 3)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode4 胸で愛撫
-state menu_cmode4
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode4_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(4)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 4)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 4)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode5 マスターベーション
-state menu_cmode5
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode5_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(5)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 5)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 5)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode6 フィストファック
-state menu_cmode6
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode6_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(6)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 6)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 6)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode7 騎乗位
-state menu_cmode7
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode7_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(7)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 7)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 7)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode8 前戯
-state menu_cmode8
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode8_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(8)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 8)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 8)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode9 強姦のフェラチオ
-state menu_cmode9
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode9_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(9)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 9)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 9)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode10 フェラチオ
-state menu_cmode10
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode10_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(10)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 10)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 10)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode11 強姦
-state menu_cmode11
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode11_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(11)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 11)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 11)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode12 一般
-state menu_cmode12
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode12_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(12)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 12)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 12)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode13 強姦アナル
-state menu_cmode13
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode13_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(13)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 13)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 13)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode14 アナル
-state menu_cmode14
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode14_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(14)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 14)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 14)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode15 同性-強姦オーラル
-state menu_cmode15
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode15_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(15)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 15)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 15)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode16 同性-オーラル
-state menu_cmode16
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode16_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(16)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 16)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 16)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode17 同性-強姦アナル
-state menu_cmode17
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode17_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(17)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 17)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 17)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode18 同性-アナル
-state menu_cmode18
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode18_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(18)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 18)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 18)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode19 同性-強姦
-state menu_cmode19
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode19_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(19)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 19)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 19)
-	endEvent
-endState
-; ----------------------------------------------------------------------
-; cmode20 同性-一般
-state menu_cmode20
-	event OnHighlightST()
-		SetInfoText("$MCM_cmode20_info")
-	endEvent
-	event OnMenuOpenST()
-		SetMenuDialogStartIndex(ssHUD.SetMenu.Find(SSetting.getCSName(20)))
-		SetMenuDialogDefaultIndex(_csdefault)
-		SetMenuDialogOptions(ssHUD.SetMenu)
-	endEvent
-	event OnMenuAcceptST(int i)
-		if i < 0
-		else
-			changeCmode(i, 20)
-		endIf
-	endEvent
-	event OnDefaultST()
-		changeCmode(_csdefault, 20)
-	endEvent
-endState
-/;

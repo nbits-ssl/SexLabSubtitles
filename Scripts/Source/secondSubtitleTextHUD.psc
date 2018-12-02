@@ -28,7 +28,6 @@ Function SetMenuInit() ; メニューリストの登録
 		len = (SSetting.IS_name).length
 		; debug.trace("# インポートした字幕ファイルの数は" + len)
 	endif
-	; SetMenu =	PapyrusUtil.StringArray(len + 1)
 	SetMenu =	Utility.CreateStringArray(len + 1) ; v2.4 fix
 
 	SetMenu[0]  = "$SMENU_disble" ; 字幕を表示しない
@@ -84,9 +83,9 @@ Event OnKeyDown(Int KeyCode)
 				string[] set4 = SSetting.getStorageSubtitles(choice, 4)
 				string[] set5 = SSetting.getStorageSubtitles(choice, 5)
 				;選択したセットを現在のシチュエーションの汎用字幕としてセット
-				 SSetting.updateSubtitles(situation, stype, SSC.isAggressive, setname, setindex, set1, set2, set3, set4, set5)
+				SSetting.updateSubtitles(situation, stype, SSC.isAggressive, setname, setindex, set1, set2, set3, set4, set5)
 				
-				 ;字幕表示の更新
+				;字幕表示の更新
 				string[] SSet = SSetting.getSubtitles(situation, stype, SSC.isAggressive, SSC.getSexLabStage())
 				SSC.SSet = SSet
 				SSC.Temp = 0
@@ -136,7 +135,7 @@ bool Property SMode
 	endFunction
 endProperty
 ; 字幕エリアの表示・非表示
-bool _visible	 = true
+bool _visible = true
 bool Property Visible
 	bool function get()
 		return _visible
