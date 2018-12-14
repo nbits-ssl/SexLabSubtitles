@@ -273,6 +273,8 @@ string Function _getCurrentTag(sslBaseAnimation animation)
 		return "Oral"
 	elseIf animation.HasTag("Anal")
 		return "Anal"
+	elseIf animation.HasTag("Vaginal")
+		return "Vaginal"
 	endIf
 	
 	return ""
@@ -331,7 +333,7 @@ int Function _getSituation(string animname, string tagname)
 		return 8
 	elseIf tagname == "Anal"
 		return 9
-	elseIf tagname == "VagiAnal"
+	elseIf tagname == "Vaginal"
 		return 10
 	else
 		return 11
