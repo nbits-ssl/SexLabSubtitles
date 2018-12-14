@@ -199,6 +199,7 @@ Function refresh()
 	int i = 0
 	string stype
 	string title
+	Quest qst
 	SubtitleSituation qstScript
 	
 	while (i < SituationLength)
@@ -207,7 +208,9 @@ Function refresh()
 		while stypeindex >= 0
 			stypeindex -= 1
 			stype = CS_type[stypeindex]
-			qstScript = CS_quest[i] as SubtitleSituation
+			qst = CS_quest[i]
+			; qst.Start()
+			qstScript = qst as SubtitleSituation
 			
 			self._refreshSituation(i, qstScript, stype, false)
 			self._refreshSituation(i, qstScript, stype, true)
@@ -256,7 +259,7 @@ EndFunction
 
 ;シチュエーション番号と指定のステージ数から登録されている汎用の字幕セットを返す
 string[] Function getSubtitles(int situation, string stype, bool aggressive = false, int stage)
-	(CS_quest[situation] as SubtitleSituation).getSubtitles(stype, aggressive, stage)
+	return (CS_quest[situation] as SubtitleSituation).getSubtitles(stype, aggressive, stage)
 EndFunction
 
 ; 指定のインデックス番号（num）の指定ステージの字幕セットを取得する
