@@ -38,7 +38,7 @@ int Function getSubtitlesStorage(string stype, bool aggressive = false)
 		else
 			return HomoStorageID
 		endif
-	elseif (stype == "creature")
+	elseif (stype == "creature" || stype == "Creature") ; why automatic upper at Property array ?
 		if (aggressive)
 			return CreatureAggrStorageID
 		else
@@ -61,7 +61,7 @@ string Function getSubtitlesName(string stype, bool aggressive = false)
 		else
 			return HomoName
 		endif
-	elseif (stype == "creature")
+	elseif (stype == "creature" || stype == "Creature")
 		if (aggressive)
 			return CreatureAggrName
 		else
@@ -77,7 +77,7 @@ Function updateSubtitles(string stype, bool aggressive, string title, int sid, \
 		self._updateHetero(aggressive, title, sid, set1, set2, set3, set4, set5)
 	elseif (stype == "homo")
 		self._updateHomo(aggressive, title, sid, set1, set2, set3, set4, set5)
-	elseif (stype == "creature")
+	elseif (stype == "creature" || stype == "Creature")
 		self._updateCreature(aggressive, title, sid, set1, set2, set3, set4, set5)
 	endif
 EndFunction
@@ -87,7 +87,7 @@ string[] Function getSubtitles(string stype, bool aggressive = false, int stage)
 		return self._getHetero(aggressive, stage)
 	elseif (stype == "homo")
 		return self._getHomo(aggressive, stage)
-	elseif (stype == "creature")
+	elseif (stype == "creature" || stype == "Creature")
 		return self._getCreature(aggressive, stage)
 	endif
 EndFunction
@@ -101,7 +101,7 @@ Function clearSubtitles(string stype, bool aggressive = false)
 		self._updateHetero(aggressive, sempty, iempty, empty, empty, empty, empty, empty)
 	elseif (stype == "homo")
 		self._updateHomo(aggressive, sempty, iempty, empty, empty, empty, empty, empty)
-	elseif (stype == "creature")
+	elseif (stype == "creature" || stype == "Creature")
 		self._updateCreature(aggressive, sempty, iempty, empty, empty, empty, empty, empty)
 	endif
 EndFunction
