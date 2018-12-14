@@ -31,7 +31,7 @@ Function updateLists(int startnum, int maxnum, string filePath, string[] names, 
 	endwhile
 EndFunction
 
-; ファイルの有無に関わらず1-30番までのファイルの字幕セットを取得する
+; ファイルの有無に関わらず1-50番までのファイルの字幕セットを取得する
 bool Function importAll()
 	IS1_1 = self._importSSet(1,1)
 	IS1_2 = self._importSSet(1,2)
@@ -183,6 +183,109 @@ bool Function importAll()
 	IS30_3 = self._importSSet(30,3)
 	IS30_4 = self._importSSet(30,4)
 	IS30_5 = self._importSSet(30,5)
+
+	IS31_1 = self._importSSet(31,1)
+	IS31_2 = self._importSSet(31,2)
+	IS31_3 = self._importSSet(31,3)
+	IS31_4 = self._importSSet(31,4)
+	IS31_5 = self._importSSet(31,5)
+	IS32_1 = self._importSSet(32,1)
+	IS32_2 = self._importSSet(32,2)
+	IS32_3 = self._importSSet(32,3)
+	IS32_4 = self._importSSet(32,4)
+	IS32_5 = self._importSSet(32,5)
+	IS33_1 = self._importSSet(33,1)
+	IS33_2 = self._importSSet(33,2)
+	IS33_3 = self._importSSet(33,3)
+	IS33_4 = self._importSSet(33,4)
+	IS33_5 = self._importSSet(33,5)
+	IS34_1 = self._importSSet(34,1)
+	IS34_2 = self._importSSet(34,2)
+	IS34_3 = self._importSSet(34,3)
+	IS34_4 = self._importSSet(34,4)
+	IS34_5 = self._importSSet(34,5)
+	IS35_1 = self._importSSet(35,1)
+	IS35_2 = self._importSSet(35,2)
+	IS35_3 = self._importSSet(35,3)
+	IS35_4 = self._importSSet(35,4)
+	IS35_5 = self._importSSet(35,5)
+	IS36_1 = self._importSSet(36,1)
+	IS36_2 = self._importSSet(36,2)
+	IS36_3 = self._importSSet(36,3)
+	IS36_4 = self._importSSet(36,4)
+	IS36_5 = self._importSSet(36,5)
+	IS37_1 = self._importSSet(37,1)
+	IS37_2 = self._importSSet(37,2)
+	IS37_3 = self._importSSet(37,3)
+	IS37_4 = self._importSSet(37,4)
+	IS37_5 = self._importSSet(37,5)
+	IS38_1 = self._importSSet(38,1)
+	IS38_2 = self._importSSet(38,2)
+	IS38_3 = self._importSSet(38,3)
+	IS38_4 = self._importSSet(38,4)
+	IS38_5 = self._importSSet(38,5)
+	IS39_1 = self._importSSet(39,1)
+	IS39_2 = self._importSSet(39,2)
+	IS39_3 = self._importSSet(39,3)
+	IS39_4 = self._importSSet(39,4)
+	IS39_5 = self._importSSet(39,5)
+	IS40_1 = self._importSSet(40,1)
+	IS40_2 = self._importSSet(40,2)
+	IS40_3 = self._importSSet(40,3)
+	IS40_4 = self._importSSet(40,4)
+	IS40_5 = self._importSSet(40,5)
+	
+	IS41_1 = self._importSSet(41,1)
+	IS41_2 = self._importSSet(41,2)
+	IS41_3 = self._importSSet(41,3)
+	IS41_4 = self._importSSet(41,4)
+	IS41_5 = self._importSSet(41,5)
+	IS42_1 = self._importSSet(42,1)
+	IS42_2 = self._importSSet(42,2)
+	IS42_3 = self._importSSet(42,3)
+	IS42_4 = self._importSSet(42,4)
+	IS42_5 = self._importSSet(42,5)
+	IS43_1 = self._importSSet(43,1)
+	IS43_2 = self._importSSet(43,2)
+	IS43_3 = self._importSSet(43,3)
+	IS43_4 = self._importSSet(43,4)
+	IS43_5 = self._importSSet(43,5)
+	IS44_1 = self._importSSet(44,1)
+	IS44_2 = self._importSSet(44,2)
+	IS44_3 = self._importSSet(44,3)
+	IS44_4 = self._importSSet(44,4)
+	IS44_5 = self._importSSet(44,5)
+	IS45_1 = self._importSSet(45,1)
+	IS45_2 = self._importSSet(45,2)
+	IS45_3 = self._importSSet(45,3)
+	IS45_4 = self._importSSet(45,4)
+	IS45_5 = self._importSSet(45,5)
+	IS46_1 = self._importSSet(46,1)
+	IS46_2 = self._importSSet(46,2)
+	IS46_3 = self._importSSet(46,3)
+	IS46_4 = self._importSSet(46,4)
+	IS46_5 = self._importSSet(46,5)
+	IS47_1 = self._importSSet(47,1)
+	IS47_2 = self._importSSet(47,2)
+	IS47_3 = self._importSSet(47,3)
+	IS47_4 = self._importSSet(47,4)
+	IS47_5 = self._importSSet(47,5)
+	IS48_1 = self._importSSet(48,1)
+	IS48_2 = self._importSSet(48,2)
+	IS48_3 = self._importSSet(48,3)
+	IS48_4 = self._importSSet(48,4)
+	IS48_5 = self._importSSet(48,5)
+	IS49_1 = self._importSSet(49,1)
+	IS49_2 = self._importSSet(49,2)
+	IS49_3 = self._importSSet(49,3)
+	IS49_4 = self._importSSet(49,4)
+	IS49_5 = self._importSSet(49,5)
+	IS50_1 = self._importSSet(50,1)
+	IS50_2 = self._importSSet(50,2)
+	IS50_3 = self._importSSet(50,3)
+	IS50_4 = self._importSSet(50,4)
+	IS50_5 = self._importSSet(50,5)
+
 	return true
 EndFunction
 
@@ -336,6 +439,7 @@ string[] Function getSubtitles(int index, int stage)
 		elseif stage == 5
 			return IS10_5
 		endif
+		;--------------------------------------------------------
 	elseif index == 11
 		If stage == 1
 			return IS11_1
@@ -456,6 +560,7 @@ string[] Function getSubtitles(int index, int stage)
 		elseif stage == 5
 			return IS20_5
 		endif
+		;--------------------------------------------------------
 	elseif index == 21
 		If stage == 1
 			return IS21_1
@@ -576,6 +681,248 @@ string[] Function getSubtitles(int index, int stage)
 		elseif stage == 5
 			return IS30_5
 		endif
+		;--------------------------------------------------------
+	elseif index == 31
+		If stage == 1
+			return IS31_1
+		elseif stage == 2
+			return IS31_2
+		elseif stage == 3
+			return IS31_3
+		elseif stage == 4
+			return IS31_4
+		elseif stage == 5
+			return IS31_5
+		endif
+	elseif index == 32
+		If stage == 1
+			return IS32_1
+		elseif stage == 2
+			return IS32_2
+		elseif stage == 3
+			return IS32_3
+		elseif stage == 4
+			return IS32_4
+		elseif stage == 5
+			return IS32_5
+		endif
+	elseif index == 33
+		If stage == 1
+			return IS33_1
+		elseif stage == 2
+			return IS33_2
+		elseif stage == 3
+			return IS33_3
+		elseif stage == 4
+			return IS33_4
+		elseif stage == 5
+			return IS33_5
+		endif
+	elseif index == 34
+		If stage == 1
+			return IS34_1
+		elseif stage == 2
+			return IS34_2
+		elseif stage == 3
+			return IS34_3
+		elseif stage == 4
+			return IS34_4
+		elseif stage == 5
+			return IS34_5
+		endif
+	elseif index == 35
+		If stage == 1
+			return IS35_1
+		elseif stage == 2
+			return IS35_2
+		elseif stage == 3
+			return IS35_3
+		elseif stage == 4
+			return IS35_4
+		elseif stage == 5
+			return IS35_5
+		endif
+	elseif index == 36
+		If stage == 1
+			return IS36_1
+		elseif stage == 2
+			return IS36_2
+		elseif stage == 3
+			return IS36_3
+		elseif stage == 4
+			return IS36_4
+		elseif stage == 5
+			return IS36_5
+		endif
+	elseif index == 37
+		If stage == 1
+			return IS37_1
+		elseif stage == 2
+			return IS37_2
+		elseif stage == 3
+			return IS37_3
+		elseif stage == 4
+			return IS37_4
+		elseif stage == 5
+			return IS37_5
+		endif
+	elseif index == 38
+		If stage == 1
+			return IS38_1
+		elseif stage == 2
+			return IS38_2
+		elseif stage == 3
+			return IS38_3
+		elseif stage == 4
+			return IS38_4
+		elseif stage == 5
+			return IS38_5
+		endif
+	elseif index == 39
+		If stage == 1
+			return IS39_1
+		elseif stage == 2
+			return IS39_2
+		elseif stage == 3
+			return IS39_3
+		elseif stage == 4
+			return IS39_4
+		elseif stage == 5
+			return IS39_5
+		endif
+	elseif index == 40
+		If stage == 1
+			return IS40_1
+		elseif stage == 2
+			return IS40_2
+		elseif stage == 3
+			return IS40_3
+		elseif stage == 4
+			return IS40_4
+		elseif stage == 5
+			return IS40_5
+		endif
+		;--------------------------------------------------------
+	elseif index == 41
+		If stage == 1
+			return IS41_1
+		elseif stage == 2
+			return IS41_2
+		elseif stage == 3
+			return IS41_3
+		elseif stage == 4
+			return IS41_4
+		elseif stage == 5
+			return IS41_5
+		endif
+	elseif index == 42
+		If stage == 1
+			return IS42_1
+		elseif stage == 2
+			return IS42_2
+		elseif stage == 3
+			return IS42_3
+		elseif stage == 4
+			return IS42_4
+		elseif stage == 5
+			return IS42_5
+		endif
+	elseif index == 43
+		If stage == 1
+			return IS43_1
+		elseif stage == 2
+			return IS43_2
+		elseif stage == 3
+			return IS43_3
+		elseif stage == 4
+			return IS43_4
+		elseif stage == 5
+			return IS43_5
+		endif
+	elseif index == 44
+		If stage == 1
+			return IS44_1
+		elseif stage == 2
+			return IS44_2
+		elseif stage == 3
+			return IS44_3
+		elseif stage == 4
+			return IS44_4
+		elseif stage == 5
+			return IS44_5
+		endif
+	elseif index == 45
+		If stage == 1
+			return IS45_1
+		elseif stage == 2
+			return IS45_2
+		elseif stage == 3
+			return IS45_3
+		elseif stage == 4
+			return IS45_4
+		elseif stage == 5
+			return IS45_5
+		endif
+	elseif index == 46
+		If stage == 1
+			return IS46_1
+		elseif stage == 2
+			return IS46_2
+		elseif stage == 3
+			return IS46_3
+		elseif stage == 4
+			return IS46_4
+		elseif stage == 5
+			return IS46_5
+		endif
+	elseif index == 47
+		If stage == 1
+			return IS47_1
+		elseif stage == 2
+			return IS47_2
+		elseif stage == 3
+			return IS47_3
+		elseif stage == 4
+			return IS47_4
+		elseif stage == 5
+			return IS47_5
+		endif
+	elseif index == 48
+		If stage == 1
+			return IS48_1
+		elseif stage == 2
+			return IS48_2
+		elseif stage == 3
+			return IS48_3
+		elseif stage == 4
+			return IS48_4
+		elseif stage == 5
+			return IS48_5
+		endif
+	elseif index == 49
+		If stage == 1
+			return IS49_1
+		elseif stage == 2
+			return IS49_2
+		elseif stage == 3
+			return IS49_3
+		elseif stage == 4
+			return IS49_4
+		elseif stage == 5
+			return IS49_5
+		endif
+	elseif index == 50
+		If stage == 1
+			return IS50_1
+		elseif stage == 2
+			return IS50_2
+		elseif stage == 3
+			return IS50_3
+		elseif stage == 4
+			return IS50_4
+		elseif stage == 5
+			return IS50_5
+		endif
 
 	endif
 EndFunction
@@ -631,6 +978,7 @@ EndFunction
 	string[] IS10_3
 	string[] IS10_4
 	string[] IS10_5
+	
 	string[] IS11_1
 	string[] IS11_2
 	string[] IS11_3
@@ -681,6 +1029,7 @@ EndFunction
 	string[] IS20_3
 	string[] IS20_4
 	string[] IS20_5
+	
 	string[] IS21_1
 	string[] IS21_2
 	string[] IS21_3
@@ -731,3 +1080,105 @@ EndFunction
 	string[] IS30_3
 	string[] IS30_4
 	string[] IS30_5
+
+	string[] IS31_1
+	string[] IS31_2
+	string[] IS31_3
+	string[] IS31_4
+	string[] IS31_5
+	string[] IS32_1
+	string[] IS32_2
+	string[] IS32_3
+	string[] IS32_4
+	string[] IS32_5
+	string[] IS33_1
+	string[] IS33_2
+	string[] IS33_3
+	string[] IS33_4
+	string[] IS33_5
+	string[] IS34_1
+	string[] IS34_2
+	string[] IS34_3
+	string[] IS34_4
+	string[] IS34_5
+	string[] IS35_1
+	string[] IS35_2
+	string[] IS35_3
+	string[] IS35_4
+	string[] IS35_5
+	string[] IS36_1
+	string[] IS36_2
+	string[] IS36_3
+	string[] IS36_4
+	string[] IS36_5
+	string[] IS37_1
+	string[] IS37_2
+	string[] IS37_3
+	string[] IS37_4
+	string[] IS37_5
+	string[] IS38_1
+	string[] IS38_2
+	string[] IS38_3
+	string[] IS38_4
+	string[] IS38_5
+	string[] IS39_1
+	string[] IS39_2
+	string[] IS39_3
+	string[] IS39_4
+	string[] IS39_5
+	string[] IS40_1
+	string[] IS40_2
+	string[] IS40_3
+	string[] IS40_4
+	string[] IS40_5
+
+	string[] IS41_1
+	string[] IS41_2
+	string[] IS41_3
+	string[] IS41_4
+	string[] IS41_5
+	string[] IS42_1
+	string[] IS42_2
+	string[] IS42_3
+	string[] IS42_4
+	string[] IS42_5
+	string[] IS43_1
+	string[] IS43_2
+	string[] IS43_3
+	string[] IS43_4
+	string[] IS43_5
+	string[] IS44_1
+	string[] IS44_2
+	string[] IS44_3
+	string[] IS44_4
+	string[] IS44_5
+	string[] IS45_1
+	string[] IS45_2
+	string[] IS45_3
+	string[] IS45_4
+	string[] IS45_5
+	string[] IS46_1
+	string[] IS46_2
+	string[] IS46_3
+	string[] IS46_4
+	string[] IS46_5
+	string[] IS47_1
+	string[] IS47_2
+	string[] IS47_3
+	string[] IS47_4
+	string[] IS47_5
+	string[] IS48_1
+	string[] IS48_2
+	string[] IS48_3
+	string[] IS48_4
+	string[] IS48_5
+	string[] IS49_1
+	string[] IS49_2
+	string[] IS49_3
+	string[] IS49_4
+	string[] IS49_5
+	string[] IS50_1
+	string[] IS50_2
+	string[] IS50_3
+	string[] IS50_4
+	string[] IS50_5

@@ -72,7 +72,7 @@ EndFunction
 
 ; 字幕セットの準備
 bool Function importAll()
-	int filecount = Storage.fileCount(1, 30, "../sexlabSubtitles/importSet")
+	int filecount = Storage.fileCount(1, 50, "../sexlabSubtitles/importSet")
 	; debug.trace("# インポートするJSONファイルは合計" + filecount + "個存在しています")
 	
 	IS_name = Utility.CreateStringArray(0)
@@ -84,7 +84,7 @@ bool Function importAll()
 		IS_index = Utility.CreateIntArray(filecount * stypeLength)
 	endif
 	
-	Storage.updateLists(1, 30, "../sexlabSubtitles/importSet", IS_name, IS_index)
+	Storage.updateLists(1, 50, "../sexlabSubtitles/importSet", IS_name, IS_index)
 	return Storage.importAll()
 EndFunction
 
