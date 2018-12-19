@@ -211,14 +211,14 @@ event startStage(string eventName, string argString, float argNum, form sender)
 		name_Uke = self._getDisplayName(Uke)
 		name_Seme = self._getDisplayName(Seme)
 		
-		string currentTag = self._getCurrentTag(animation)
+		; string currentTag = self._getCurrentTag(animation)
 
 		; set Property 
 		isSameSex = (Uke.GetLeveledActorBase().GetSex() == Seme.GetLeveledActorBase().GetSex())
 		isCreature = animation.IsCreature
 		isAggressive = controller.IsAggressive
 		
-		situation = self._getSituation(animation.name, currentTag)
+		situation = self._getSituation(animation)
 		situationType = self._getSituationType()
 		
 		If SSetting.isDisable(situation, situationType, isAggressive) ; 字幕が非表示の場合
@@ -283,31 +283,33 @@ string Function _getDisplayName(Actor act)
 	endif
 EndFunction
 
+;/
 string Function _getCurrentTag(sslBaseAnimation animation)
 	If animation.HasTag("Handjob")
 		return "Handjob"
-	elseIf animation.HasTag("Footjob")
+	elseif animation.HasTag("Footjob")
 		return "Footjob"
-	elseIf animation.HasTag("Boobjob")
+	elseif animation.HasTag("Boobjob")
 		return "Boobjob"
-	elseIf animation.HasTag("Masturbation")
+	elseif animation.HasTag("Masturbation")
 		return "Masturbation"
-	elseIf animation.HasTag("Fisting")
+	elseif animation.HasTag("Fisting")
 		return "Fisting"
-	elseIf animation.HasTag("Cowgirl")
+	elseif animation.HasTag("Cowgirl")
 		return "Cowgirl"
-	elseIf animation.HasTag("Foreplay")
+	elseif animation.HasTag("Foreplay")
 		return "Foreplay"
-	elseIf animation.HasTag("Oral")
+	elseif animation.HasTag("Oral")
 		return "Oral"
-	elseIf animation.HasTag("Anal")
+	elseif animation.HasTag("Anal")
 		return "Anal"
-	elseIf animation.HasTag("Vaginal")
+	elseif animation.HasTag("Vaginal")
 		return "Vaginal"
 	endIf
 	
 	return ""
 EndFunction
+/;
 
 string Function _getTagInfo(sslBaseAnimation animation)
 	string [] tags = animation.getTags()
@@ -341,28 +343,28 @@ string Function _getSituationType()
 EndFunction
 
 ; アニメ名、タグ名からシチュエーション番号を割り出し、situationプロパティにセットする
-int Function _getSituation(string animname, string tagname)
-	If animname == "Arrok 69"
+int Function _getSituation(sslBaseAnimation animation)
+	If (animation.name == "Arrok 69" || animation.HasTag("69"))
 		return 0
-	elseIf tagname == "Handjob"
+	elseif (animation.HasTag("Handjob"))
 		return 1
-	elseIf tagname == "Footjob"
+	elseif (animation.HasTag("Footjob"))
 		return 2
-	elseIf tagname == "Boobjob"
+	elseif (animation.HasTag("Boobjob"))
 		return 3
-	elseIf tagname == "Masturbation"
+	elseif (animation.HasTag("Masturbation"))
 		return 4
-	elseIf tagname == "Fisting"
+	elseif (animation.HasTag("Fisting"))
 		return 5
-	elseIf tagname == "Cowgirl"
+	elseif (animation.HasTag("Cowgirl"))
 		return 6
-	elseIf tagname == "Foreplay"
+	elseif (animation.HasTag("Foreplay"))
 		return 7
-	elseIf tagname == "Oral"
+	elseif (animation.HasTag("Oral"))
 		return 8
-	elseIf tagname == "Anal"
+	elseif (animation.HasTag("Anal"))
 		return 9
-	elseIf tagname == "Vaginal"
+	elseif (animation.HasTag("Vaginal"))
 		return 10
 	else
 		return 11
