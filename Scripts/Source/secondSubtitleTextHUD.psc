@@ -62,7 +62,7 @@ Event OnKeyDown(Int KeyCode)
 			string pr_headTag = "$menu_headTag"
 
 			int choice = ShowMenuList(info, title, shead, currentSituation, chead, SetMenu, currentnum, 0, pr_animTitle, pr_headAnim, pr_currentAnimName, pr_headStage, pr_stageInfo, pr_headTag, pr_tags)
-			; debug.trace("# choiceは" + choice)
+			debug.trace("SexLabSubtitles: choiceは " + choice)
 			If choice == 0
 				; 2016/1fix =====================================
 				; 別modのカスタムメニューと同時に開くとキャンセル扱いになるため
@@ -86,11 +86,8 @@ Event OnKeyDown(Int KeyCode)
 				SSetting.updateSubtitles(situation, stype, SSC.isAggressive, setname, setindex, set1, set2, set3, set4, set5)
 				
 				;字幕表示の更新
-				string[] SSet = SSetting.getSubtitles(situation, stype, SSC.isAggressive, SSC.getSexLabStage())
-				SSC.SSet = SSet
 				SSC.Temp = 0
-				SSC.repeatUpdate = true
-				SSC.ShowSubtitlesAuto()
+				SSC.resetSubtitleSet(situation, stype, SSC.hasPlayer())
 			endIf
 		endif
 	EndIf

@@ -130,10 +130,7 @@ bool Function _isPlayerNear(sslThreadController controller)
 	return (controller.Positions[0].GetDistance(Player) < RegistDistance)
 EndFunction
 
-string[] Function _cleanSubtitles(string[] stsets, sslThreadController controller)
-	bool _hasPlayer = controller.HasPlayer
-	bool _hasCreature = controller.HasCreature
-	
+string[] Function _cleanSubtitles(string[] stsets, bool _hasPlayer)
 	int len = stsets.length
 	string[] _stsets = Utility.CreateStringArray(len)
 	string line
@@ -144,7 +141,7 @@ string[] Function _cleanSubtitles(string[] stsets, sslThreadController controlle
 		line = stsets[len]
 		char2 = StringUtil.Substring(line, 0, 2)
 		
-		if (_hasCreature && char2 == "s#")
+		if (isCreature && char2 == "s#")
 			; pass
 		elseif (!_hasPlayer && char2 != "s#" && char2 != "u#")
 			; pass
@@ -213,7 +210,7 @@ event startStage(string eventName, string argString, float argNum, form sender)
 		
 		; string currentTag = self._getCurrentTag(animation)
 
-		; set Property 
+		; set variable 
 		isSameSex = (Uke.GetLeveledActorBase().GetSex() == Seme.GetLeveledActorBase().GetSex())
 		isCreature = animation.IsCreature
 		isAggressive = controller.IsAggressive
@@ -224,17 +221,25 @@ event startStage(string eventName, string argString, float argNum, form sender)
 		If SSetting.isDisable(situation, situationType, isAggressive) ; 字幕が非表示の場合
 			repeatUpdate = false
 		else
-			_sset = SSetting.getSubtitles(situation, situationType, isAggressive, self.getSexLabStage())
-			if (!controller.HasPlayer || controller.HasCreature)
-				_sset = self._cleanSubtitles(_sset, controller)
-			endif
-			if !(repeatUpdate)
-				repeatUpdate = true
-				ShowSubtitlesAuto()
-			endif
+			self.resetSubtitleSet(situation, situationType, controller.HasPlayer)
 		endif
 	endIf
 endEvent
+
+bool Function hasPlayer()
+	return (Uke == Player || Seme == Player)
+EndFunction
+
+Function resetSubtitleSet(int situation, string stype, bool _isPlayer)
+	_sset = SSetting.getSubtitles(situation, stype, isAggressive, self.getSexLabStage())
+	if (!_isPlayer || isCreature)
+		_sset = self._cleanSubtitles(_sset, _isPlayer)
+	endif
+	if !(repeatUpdate)
+		repeatUpdate = true
+		ShowSubtitlesAuto()
+	endif
+EndFunction
 
 ; ステージ終了時の処理
 event endStage(string eventName, string argString, float argNum, form sender)
