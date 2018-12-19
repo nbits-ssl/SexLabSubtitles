@@ -205,7 +205,7 @@ Function refresh()
 	while (i < SituationLength)
 		int stypeindex = CS_type.length
 		
-		while stypeindex >= 0
+		while stypeindex > 0
 			stypeindex -= 1
 			stype = CS_type[stypeindex]
 			qst = CS_quest[i]
