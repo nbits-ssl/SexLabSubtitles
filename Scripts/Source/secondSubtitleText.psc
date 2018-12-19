@@ -130,6 +130,32 @@ bool Function _isPlayerNear(sslThreadController controller)
 	return (controller.Positions[0].GetDistance(Player) < RegistDistance)
 EndFunction
 
+string[] Function _cleanSubtitles(string[] stsets, sslThreadController controller)
+	bool _hasPlayer = controller.HasPlayer
+	bool _hasCreature = controller.HasCreature
+	
+	int len = stsets.length
+	string[] _stsets = Utility.CreateStringArray(len)
+	string line
+	string char2
+	
+	while len > 0
+		len -= 1
+		line = stsets[len]
+		char2 = StringUtil.Substring(line, 0, 2)
+		
+		if (_hasCreature && char2 == "s#")
+			; pass
+		elseif (!_hasPlayer && char2 != "s#" && char2 != "u#")
+			; pass
+		else
+			_stsets[len] = line
+		endif
+	endwhile
+	
+	return PapyrusUtil.ClearEmpty(_stsets)
+EndFunction
+
 ;SexLabアニメ開始時の処理 -------------------------------------
 event startAnim(string eventName, string argString, float argNum, form sender)
 	sslThreadController controller = SexLab.HookController(argString)
@@ -199,6 +225,9 @@ event startStage(string eventName, string argString, float argNum, form sender)
 			repeatUpdate = false
 		else
 			_sset = SSetting.getSubtitles(situation, situationType, isAggressive, self.getSexLabStage())
+			if (!controller.HasPlayer || controller.HasCreature)
+				_sset = self._cleanSubtitles(_sset, controller)
+			endif
 			if !(repeatUpdate)
 				repeatUpdate = true
 				ShowSubtitlesAuto()
@@ -383,27 +412,20 @@ Function ShowSubtitles(string[] subtitleSet)
 	endif
 	
 	If repeatRandom ; ランダムモード
-		If len == 1
-			ShowSuper(name_Uke, name_Seme, subtitleSet[0])
-			_temp_r = 0
+		int choice = getRandomDifferent(0, (len - 1), _temp_r)
+		; Debug.Trace("# ランダムモード：前回は" +_temp_r + " 結果は" + choice)
+		
+		If ((choice < 20) && (choice < subtitleSet.length))
+			ShowSuper(name_Uke, name_Seme, subtitleSet[choice])
+			_temp_r = choice
 			If repeatUpdate
 				registerforsingleupdate(SS.interval)
 			endIf
-		else
-			int choice = getRandomDifferent(0, (len - 1), _temp_r)
-			; Debug.Trace("# ランダムモード：前回は" +_temp_r + " 結果は" + choice)
-			If (choice < 20) && (subtitleSet.length > choice)
-				ShowSuper(name_Uke, name_Seme, subtitleSet[choice])
-				_temp_r = choice
-				If repeatUpdate
-					registerforsingleupdate(SS.interval)
-				endIf
-			else	 ; ランダムの結果と字幕の個数が一致しない場合
-				If repeatUpdate
-					registerforsingleupdate(0.1)
-				endIf
+		else	 ; ランダムの結果と字幕の個数が一致しない場合
+			If repeatUpdate
+				registerforsingleupdate(0.1)
 			endIf
-		endif
+		endIf
 	else ; リピートモード
 		; debug.trace("SexLabSubtitles: # リピートモード 前回_tempは" + _temp)
 		If temp >= subtitleSet.length ; 表示回数がセリフ数を越えたら0に戻す
@@ -421,6 +443,10 @@ EndFunction
 
 ; ランダムで同じ数を二回続けて出さないようにする
 int Function getRandomDifferent(int min, int max, int before)
+	if (min == max) ; 0
+		return min
+	endif
+	
 	int n = Utility.randomInt(min, max)
 	while (n == before)
 		n = Utility.randomInt(min, max)
