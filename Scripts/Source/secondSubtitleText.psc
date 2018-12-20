@@ -5,6 +5,9 @@ SexLabFramework Property SexLab auto ; SexLab様
 secondSubtitleTextHUD Property SS auto ; 字幕HUD
 SubtitleSetSetting Property SSetting auto ; 字幕セットのインポート、汎用字幕の設定など
 
+int Property HomoSSGender = 1 Auto
+int Property CreatureSSGender = 1 Auto
+
 ; 汎用字幕表示の状態プロパティ（外部からのアクセス用）
 bool Property isRunningSubtitle auto; 字幕表示しているSexシーンが現在稼働中かどうか
 int Property currentStage auto; 現在稼働中のアニメーションのステージ
@@ -108,7 +111,7 @@ EndFunction
 /;
 
 Function registerEvent()
-	RegisterForModEvent("AnimationStart", "startAnim")
+;	RegisterForModEvent("AnimationStart", "startAnim")
 	RegisterForModEvent("AnimationEnd", "endAnim")
 	RegisterForModEvent("StageStart", "startStage")
 	RegisterForModEvent("AnimationChange", "startStage")
@@ -117,7 +120,7 @@ Function registerEvent()
 	RegisterForModEvent("OrgasmEnd", "endStage")
 EndFunction
 Function unregisterEvent()
-	UnregisterForModEvent("AnimationStart")
+;	UnregisterForModEvent("AnimationStart")
 	UnregisterForModEvent("AnimationChange")
 	UnregisterForModEvent("AnimationEnd")
 	UnregisterForModEvent("StageStart")
@@ -128,6 +131,21 @@ EndFunction
 
 bool Function _isPlayerNear(sslThreadController controller)
 	return (controller.Positions[0].GetDistance(Player) < RegistDistance)
+EndFunction
+
+bool Function _validateGender(sslThreadController controller)
+	Actor[] member = controller.Positions
+	int gender = member[0].GetLeveledActorBase().GetSex()
+	
+	if (controller.Animation.IsCreature && gender != CreatureSSGender)
+		return false
+	elseif (member.length == 1) ; Masturbation
+		return true
+	elseif (gender == member[1].GetLeveledActorBase().GetSex() && gender != HomoSSGender)
+		return false
+	endIf
+	
+	return true
 EndFunction
 
 string[] Function _cleanSubtitles(string[] stsets, bool _hasPlayer)
@@ -154,6 +172,7 @@ string[] Function _cleanSubtitles(string[] stsets, bool _hasPlayer)
 EndFunction
 
 ;SexLabアニメ開始時の処理 -------------------------------------
+;/
 event startAnim(string eventName, string argString, float argNum, form sender)
 	sslThreadController controller = SexLab.HookController(argString)
 
@@ -166,13 +185,14 @@ event startAnim(string eventName, string argString, float argNum, form sender)
 		; debug.trace("# SexLab Subtitles - アニメ開始 - スレッドID : " + sexlabID)
 	endif
 endEvent
+/;
 
 ; ステージ毎の開始時の処理
 event startStage(string eventName, string argString, float argNum, form sender)
 	sslThreadController controller = SexLab.HookController(argString)
 	; debug.trace("SexLabSubtitles: Stage start")
 
-	If (SS.SMode && self._isPlayerNear(controller))
+	If (SS.SMode && self._isPlayerNear(controller) && self._validateGender(controller))
 		; debug.trace("SexLabSubtitles: Stage start, success")
 		isRunningSubtitle = true
 		

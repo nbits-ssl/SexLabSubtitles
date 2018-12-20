@@ -11,6 +11,8 @@ int stypeID
 int[] SubtitleIDS
 string[] CModeInfo
 
+string[] GenderSettingOptions
+
 Event OnConfigInit()
 	ModName = "$MCM_modName"
 	
@@ -36,6 +38,10 @@ Event OnConfigInit()
 	CModeInfo[9] = "$MCM_cmode9_info"
 	CModeInfo[10] = "$MCM_cmode10_info"
 	CModeInfo[11] = "$MCM_cmode11_info"
+	
+	GenderSettingOptions = new string[2]
+	GenderSettingOptions[0] = "$MCM_GenderMale"
+	GenderSettingOptions[1] = "$MCM_GenderFemale"
 	
 	_csdefault = new int[3]
 	_csdefault[0] = 0
@@ -88,6 +94,7 @@ endEvent
 
 Event OnConfigOpen()
 endEvent
+
 Event OnConfigClose()
 	; 字幕SEXが稼働中なら字幕を更新する
 	If SSC.isRunningSubtitle ;字幕sex稼働中の場合
@@ -142,6 +149,11 @@ Function Page1Settings()
 	endIf
 
 	SetCursorPosition(1)
+	AddHeaderOption("$MCM_page1head4")
+	AddMenuOptionST("gender_setting_homo", "$MCM_page1genderHomo", GenderSettingOptions[SSC.HomoSSGender], flags)
+	AddMenuOptionST("gender_setting_creature", "$MCM_page1genderCreature", GenderSettingOptions[SSC.CreatureSSGender], flags)
+	AddEmptyOption()
+	AddEmptyOption()
 
 	AddHeaderOption("$MCM_page1head_version")
 	AddTextOption("$ModVersion", SSC.ModVersion)
@@ -158,7 +170,7 @@ Function SituationPageSettings(int _stypeID)
 		flags = OPTION_FLAG_NONE
 	endIf
 	SetCursorFillMode(LEFT_TO_RIGHT)
-
+	
 	AddMenuOptionST("menu_cmode_default", "$CMODE_default", ssHUD.SetMenu[_csdefault[stypeID]], flags)
 	AddTextOptionST("text_forcedAll", "$CMODE_forcedall", "$CMODE_forcedall_btn", flags)
 	
@@ -182,6 +194,38 @@ Function SituationPageSettings(int _stypeID)
 		i += 1
 	endwhile
 EndFunction
+
+; AddMenuOptionST("gender_setting_homo", "$MCM_page1genderHomo", GenderSettingOptions[SSC.HomoSSGender], flags)
+;
+; added from forked
+
+state gender_setting_homo
+	event OnHighlightST()
+		SetInfoText("$MCM_page1genderHomoInfo")
+	endEvent
+	event OnMenuOpenST()
+		SetMenuDialogStartIndex(SSC.HomoSSGender)
+		SetMenuDialogOptions(GenderSettingOptions)
+	endEvent
+	event OnMenuAcceptST(int i)
+		SetMenuOptionValueST(GenderSettingOptions[i])
+		SSC.HomoSSGender = i
+	endEvent
+endState
+
+state gender_setting_creature
+	event OnHighlightST()
+		SetInfoText("$MCM_page1genderCreatureInfo")
+	endEvent
+	event OnMenuOpenST()
+		SetMenuDialogStartIndex(SSC.CreatureSSGender)
+		SetMenuDialogOptions(GenderSettingOptions)
+	endEvent
+	event OnMenuAcceptST(int i)
+		SetMenuOptionValueST(GenderSettingOptions[i])
+		SSC.CreatureSSGender = i
+	endEvent
+endState
 
 ;/---------------------------------------------------------------------------
 	1ページ目の設定（字幕Mod全体の設定）
