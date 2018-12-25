@@ -393,7 +393,8 @@ state text_importAgain
 			i += 1
 		endwhile
 		ssHUD.SetMenuInit() ; HUDメニューの準備（セット名の登録）
-		int len = (SSetting.IS_name).length
+		int len = PapyrusUtil.ClearEmpty(SSetting.IS_name).length
+		; debug.trace("SexLabSubtitles: " + SSetting.IS_name)
 		ShowMessage("$MCM_page1importMessage{" + len + "}", false, "$Yes")
 		SSetting.refresh()
 		ForcePageReset()
