@@ -62,7 +62,7 @@ Event OnKeyDown(Int KeyCode)
 			string pr_headTag = "$menu_headTag"
 
 			int choice = ShowMenuList(info, title, shead, currentSituation, chead, SetMenu, currentnum, 0, pr_animTitle, pr_headAnim, pr_currentAnimName, pr_headStage, pr_stageInfo, pr_headTag, pr_tags)
-			debug.trace("SexLabSubtitles: choiceは " + choice)
+			; debug.trace("SexLabSubtitles: choiceは " + choice)
 			If choice == 0
 				; 2016/1fix =====================================
 				; 別modのカスタムメニューと同時に開くとキャンセル扱いになるため

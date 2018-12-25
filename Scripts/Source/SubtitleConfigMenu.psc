@@ -80,6 +80,9 @@ event OnPageReset(string page)
 	; 1ページ目
 	if page == "$MCM_page1_subtitleSetting"
 		Page1Settings()
+	elseif page == "$MCM_page2_masturbation"
+		stypeID = 1 ; used by OnMenuAccept & Masturbation is always SameSex
+		MasturbationPageSettings()
 	elseif page == "$MCM_page2_stype1"
 		stypeID = 0
 		SituationPageSettings(stypeID)
@@ -160,6 +163,36 @@ Function Page1Settings()
 	AddTextOption("$HUDVersion", SSC.HUDstringVersion)
 	AddEmptyOption()
 	AddTextOption("$SSLVersion", SSC.SSLversion)
+EndFunction
+
+Function MasturbationPageSettings()
+	int flags
+	if ssHUD.isControlFin
+		flags = OPTION_FLAG_DISABLED
+	else
+		flags = OPTION_FLAG_NONE
+	endIf
+	SetCursorFillMode(LEFT_TO_RIGHT)
+	
+	AddHeaderOption("$MCM_page2masturbationMale")
+	AddHeaderOption("$MCM_page2masturbationFemale")
+	
+	string stype = SSetting.CS_type[0]
+	string[] common_situation = SSetting.common_situation
+	int situationLength = common_situation.length
+
+	int i = 4
+	int stdidx
+	int aggridx ;  female subtitle == aggressive subtitle
+	;while (i < situationLength)
+	;	if (i != 4) ; masturbation
+			stdidx = i * 2
+			aggridx = stdidx + 1
+			SubtitleIDS[stdidx]  = AddMenuOption(common_situation[i], SSetting.getCSName(i, stype, false), flags)
+			SubtitleIDS[aggridx] = AddMenuOption(common_situation[i], SSetting.getCSName(i, stype, true), flags)
+	;	endif
+	;	i += 1
+	;endwhile
 EndFunction
 
 Function SituationPageSettings(int _stypeID)

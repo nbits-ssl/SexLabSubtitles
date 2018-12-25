@@ -230,13 +230,23 @@ event startStage(string eventName, string argString, float argNum, form sender)
 		
 		; string currentTag = self._getCurrentTag(animation)
 
-		; set variable 
-		isSameSex = (Uke.GetLeveledActorBase().GetSex() == Seme.GetLeveledActorBase().GetSex())
+		; set variable
+		int UkeSex = Uke.GetLeveledActorBase().GetSex()
+		isSameSex = (UkeSex == Seme.GetLeveledActorBase().GetSex())
 		isCreature = animation.IsCreature
-		isAggressive = controller.IsAggressive
 		
-		situation = self._getSituation(animation)
+		if (member.length == 1)
+			situation = 4 ; masturbation
+		else
+			situation = self._getSituation(animation)
+		endif
 		situationType = self._getSituationType()
+		
+		if (situation == 4 && UkeSex == 1) ; female masturbation
+			isAggressive = true
+		else
+			isAggressive = controller.IsAggressive
+		endif
 		
 		If SSetting.isDisable(situation, situationType, isAggressive) ; 字幕が非表示の場合
 			repeatUpdate = false
@@ -307,34 +317,6 @@ string Function _getDisplayName(Actor act)
 		endif
 	endif
 EndFunction
-
-;/
-string Function _getCurrentTag(sslBaseAnimation animation)
-	If animation.HasTag("Handjob")
-		return "Handjob"
-	elseif animation.HasTag("Footjob")
-		return "Footjob"
-	elseif animation.HasTag("Boobjob")
-		return "Boobjob"
-	elseif animation.HasTag("Masturbation")
-		return "Masturbation"
-	elseif animation.HasTag("Fisting")
-		return "Fisting"
-	elseif animation.HasTag("Cowgirl")
-		return "Cowgirl"
-	elseif animation.HasTag("Foreplay")
-		return "Foreplay"
-	elseif animation.HasTag("Oral")
-		return "Oral"
-	elseif animation.HasTag("Anal")
-		return "Anal"
-	elseif animation.HasTag("Vaginal")
-		return "Vaginal"
-	endIf
-	
-	return ""
-EndFunction
-/;
 
 string Function _getTagInfo(sslBaseAnimation animation)
 	string [] tags = animation.getTags()
