@@ -82,7 +82,7 @@ event OnPageReset(string page)
 		Page1Settings()
 	elseif page == "$MCM_page2_masturbation"
 		stypeID = 1 ; used by OnMenuAccept & Masturbation is always SameSex
-		MasturbationPageSettings()
+		MasturbationPageSettings(stypeID)
 	elseif page == "$MCM_page2_stype1"
 		stypeID = 0
 		SituationPageSettings(stypeID)
@@ -165,7 +165,7 @@ Function Page1Settings()
 	AddTextOption("$SSLVersion", SSC.SSLversion)
 EndFunction
 
-Function MasturbationPageSettings()
+Function MasturbationPageSettings(int _stypeID)
 	int flags
 	if ssHUD.isControlFin
 		flags = OPTION_FLAG_DISABLED
@@ -177,7 +177,7 @@ Function MasturbationPageSettings()
 	AddHeaderOption("$MCM_page2masturbationMale")
 	AddHeaderOption("$MCM_page2masturbationFemale")
 	
-	string stype = SSetting.CS_type[0]
+	string stype = SSetting.CS_type[_stypeID]
 	string[] common_situation = SSetting.common_situation
 	int situationLength = common_situation.length
 

@@ -98,100 +98,90 @@ int Function _getDefaultSetStorageID(string title)
 	endif
 EndFunction
 
+Function _setDefault(string title, int sid, string stype, bool aggressive)
+	int setid = IS_name.Find(title)
+	int strageid = self._getDefaultSetStorageID(setid)
+	
+	If setid >= 0
+		string[] set1 = self.getStorageSubtitles(setid, 1)
+		string[] set2 = self.getStorageSubtitles(setid, 2)
+		string[] set3 = self.getStorageSubtitles(setid, 3)
+		string[] set4 = self.getStorageSubtitles(setid, 4)
+		string[] set5 = self.getStorageSubtitles(setid, 5)
+		self.updateSubtitles(sid, stype, aggressive, title, strageid, set1, set2, set3, set4, set5)
+	endif
+EndFunction
+
 Function defaultSet()
 	; debug.trace("# defaultSSet開始")
-	int startset1 = IS_name.find("汎用和姦男女")
-	int startset2 = IS_name.find("汎用オーラル受")
-	int startset3 = IS_name.find("汎用喘ぎ女性のみ")
-	int startset4 = IS_name.find("喘ぎ女性ハード")
-	int startset5 = IS_name.find("男喘ぎ・女性積極的")
-	int startset6 = IS_name.find("状況描写・女女")
+	self._setDefault("#和姦 男女・膣", 10, "hetero", false)
+	self._setDefault("#和姦 男女・アナル", 9, "hetero", false)
+	self._setDefault("#和姦 男女・オーラル", 8, "hetero", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 7, "hetero", false)
+	self._setDefault("#和姦 男女・騎乗位", 6, "hetero", false)
+	self._setDefault("#和姦 男女・女受け汎用", 5, "hetero", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 3, "hetero", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 2, "hetero", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 1, "hetero", false)
+	self._setDefault("#和姦 男女・オーラル", 0, "hetero", false)
 
-	; インポート元のファイル番号
-	int startindex1 = self._getDefaultSetStorageID(startset1)
-	int startindex2 = self._getDefaultSetStorageID(startset2)
-	int startindex3 = self._getDefaultSetStorageID(startset3)
-	int startindex4 = self._getDefaultSetStorageID(startset4)
-	int startindex5 = self._getDefaultSetStorageID(startset5)
-	int startindex6 = self._getDefaultSetStorageID(startset6)
+	self._setDefault("#レイプ 男女・挿入", 10, "hetero", true)
+	self._setDefault("#レイプ 男女・挿入", 9, "hetero", true)
+	self._setDefault("#レイプ 男女・オーラル", 8, "hetero", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 7, "hetero", true)
+	self._setDefault("#レイプ 男女・挿入", 6, "hetero", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 5, "hetero", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 3, "hetero", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 2, "hetero", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 1, "hetero", true)
+	self._setDefault("#レイプ 男女・オーラル", 0, "hetero", true)
+
+	self._setDefault("#和姦 女女・挿入", 10, "homo", false)
+	self._setDefault("#和姦 女女・挿入", 9, "homo", false)
+	self._setDefault("#和姦 女女・オーラル", 8, "homo", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 7, "homo", false)
+	self._setDefault("#和姦 女女・騎乗位", 6, "homo", false)
+	self._setDefault("#和姦 女女・女受け汎用", 5, "homo", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 3, "homo", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 2, "homo", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 1, "homo", false)
+	self._setDefault("#和姦 女女・オーラル", 0, "homo", false)
+
+	self._setDefault("#レイプ 女女・挿入", 10, "homo", true)
+	self._setDefault("#レイプ 女女・挿入", 9, "homo", true)
+	self._setDefault("#レイプ 女女・オーラル", 8, "homo", true)
+	self._setDefault("#レイプ 女女・汎用喘ぎ", 7, "homo", true)
+	self._setDefault("#レイプ 女女・挿入", 6, "homo", true)
+	self._setDefault("#レイプ 女女・汎用喘ぎ", 5, "homo", true)
+	self._setDefault("#レイプ 女女・汎用喘ぎ", 3, "homo", true)
+	self._setDefault("#レイプ 女女・汎用喘ぎ", 2, "homo", true)
+	self._setDefault("#レイプ 女女・汎用喘ぎ", 1, "homo", true)
+	self._setDefault("#レイプ 女女・オーラル", 0, "homo", true)
+
+	self._setDefault("#和姦 男女・膣", 10, "creature", false)
+	self._setDefault("#和姦 男女・アナル", 9, "creature", false)
+	self._setDefault("#和姦 男女・オーラル", 8, "creature", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 7, "creature", false)
+	self._setDefault("#和姦 男女・騎乗位", 6, "creature", false)
+	self._setDefault("#和姦 男女・女受け汎用", 5, "creature", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 3, "creature", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 2, "creature", false)
+	self._setDefault("#和姦 両女・女攻め汎用", 1, "creature", false)
+	self._setDefault("#和姦 男女・オーラル", 0, "creature", false)
+
+	self._setDefault("#レイプ 男女・挿入", 10, "creature", true)
+	self._setDefault("#レイプ 男女・挿入", 9, "creature", true)
+	self._setDefault("#レイプ 男女・オーラル", 8, "creature", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 7, "creature", true)
+	self._setDefault("#レイプ 男女・挿入", 6, "creature", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 5, "creature", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 3, "creature", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 2, "creature", true)
+	self._setDefault("#レイプ 男女・汎用喘ぎ", 1, "creature", true)
+	self._setDefault("#レイプ 男女・オーラル", 0, "creature", true)
+
+	self._setDefault("#自慰 女", 4, "homo", true)
 	
-	; debug.trace("# 【汎用和姦男女】はimportSet" + startindex1)
-	; debug.trace("# 【汎用オーラル受】はimportSet" + startindex2)
-	; debug.trace("# 【汎用喘ぎ女性のみ】はimportSet" + startindex3)
-	; debug.trace("# 【喘ぎ女性ハード】はimportSet" + startindex4)
-	; debug.trace("# 【男喘ぎ・女性積極的】はimportSet" + startindex5)
-	; debug.trace("# 【状況描写・女女】はimportSet" + startindex6)
-
-	If startset1 >= 0
-		string title = "汎用和姦男女"
-		string[] set1 = self.getStorageSubtitles(startset1, 1)
-		string[] set2 = self.getStorageSubtitles(startset1, 2)
-		string[] set3 = self.getStorageSubtitles(startset1, 3)
-		string[] set4 = self.getStorageSubtitles(startset1, 4)
-		string[] set5 = self.getStorageSubtitles(startset1, 5)
-		self.updateSubtitles(9, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(10, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-	endif
-	If startset2 >= 0
-		string title = "汎用オーラル受"
-		string[] set1 = self.getStorageSubtitles(startset2, 1)
-		string[] set2 = self.getStorageSubtitles(startset2, 2)
-		string[] set3 = self.getStorageSubtitles(startset2, 3)
-		string[] set4 = self.getStorageSubtitles(startset2, 4)
-		string[] set5 = self.getStorageSubtitles(startset2, 5)
-		self.updateSubtitles(8, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(8, "hetero", true, title, startindex1, set1, set2, set3, set4, set5)
-	endif
-	If startset3 >= 0
-		string title = "汎用喘ぎ女性のみ"
-		string[] set1 = self.getStorageSubtitles(startset3, 1)
-		string[] set2 = self.getStorageSubtitles(startset3, 2)
-		string[] set3 = self.getStorageSubtitles(startset3, 3)
-		string[] set4 = self.getStorageSubtitles(startset3, 4)
-		string[] set5 = self.getStorageSubtitles(startset3, 5)
-		self.updateSubtitles(0, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(4, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-	endif
-	If startset4 >= 0
-		string title = "喘ぎ女性ハード"
-		string[] set1 = self.getStorageSubtitles(startset4, 1)
-		string[] set2 = self.getStorageSubtitles(startset4, 2)
-		string[] set3 = self.getStorageSubtitles(startset4, 3)
-		string[] set4 = self.getStorageSubtitles(startset4, 4)
-		string[] set5 = self.getStorageSubtitles(startset4, 5)
-		self.updateSubtitles(5, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(9, "hetero", true, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(10, "hetero", true, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(9, "creature", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(10, "creature", false, title, startindex1, set1, set2, set3, set4, set5)
-	endif
-	If startset5 >= 0
-		string title = "男喘ぎ・女性積極的"
-		string[] set1 = self.getStorageSubtitles(startset5, 1)
-		string[] set2 = self.getStorageSubtitles(startset5, 2)
-		string[] set3 = self.getStorageSubtitles(startset5, 3)
-		string[] set4 = self.getStorageSubtitles(startset5, 4)
-		string[] set5 = self.getStorageSubtitles(startset5, 5)
-		self.updateSubtitles(1, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(2, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(3, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(6, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(7, "hetero", false, title, startindex1, set1, set2, set3, set4, set5)
-	endif
-	If startset6 >= 0
-		string title = "状況描写・女女"
-		string[] set1 = self.getStorageSubtitles(startset6, 1)
-		string[] set2 = self.getStorageSubtitles(startset6, 2)
-		string[] set3 = self.getStorageSubtitles(startset6, 3)
-		string[] set4 = self.getStorageSubtitles(startset6, 4)
-		string[] set5 = self.getStorageSubtitles(startset6, 5)
-		self.updateSubtitles(8, "homo", true, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(8, "homo", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(9, "homo", true, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(9, "homo", false, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(10, "homo", true, title, startindex1, set1, set2, set3, set4, set5)
-		self.updateSubtitles(10, "homo", false, title, startindex1, set1, set2, set3, set4, set5)
-	endif
 EndFunction
 
 ;汎用字幕セットの再セット（新しくインポートした字幕ファイルの内容を更新する）
