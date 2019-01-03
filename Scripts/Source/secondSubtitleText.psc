@@ -63,7 +63,7 @@ int Property HUDversion auto
 string Property HUDstringVersion auto
 
 ; forked
-int RegistDistance = 1750
+int RegistDistance = 1750 ; not use from p2
 
 ;/======================================================/;
 
@@ -130,7 +130,7 @@ Function unregisterEvent()
 EndFunction
 
 bool Function _isPlayerNear(sslThreadController controller)
-	return (controller.Positions[0].GetDistance(Player) < RegistDistance)
+	return (controller.Positions[0].GetDistance(Player) < SSLSubtitlesRegistDistance.GetValue())
 EndFunction
 
 bool Function _validateGender(sslThreadController controller)
@@ -353,7 +353,7 @@ EndFunction
 int Function _getSituation(sslBaseAnimation animation)
 	If (animation.name == "Arrok 69" || animation.HasTag("69"))
 		return 0
-	elseif (animation.HasTag("Handjob"))
+	elseif (animation.HasTag("Handjob")) 
 		return 1
 	elseif (animation.HasTag("Footjob"))
 		return 2
@@ -462,3 +462,5 @@ int Function getRandomDifferent(int min, int max, int before)
 	endwhile
 	return n
 EndFunction
+
+GlobalVariable Property SSLSubtitlesRegistDistance  Auto  
