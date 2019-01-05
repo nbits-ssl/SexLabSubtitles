@@ -411,8 +411,8 @@ Function ShowSubtitlesAuto()
 EndFunction
 
 Function ShowSubtitles(string[] subtitleSet)
-	; debug.trace("# ShowSubtitles処理開始")
 	int len = subtitleSet.length
+	; debug.trace("SexLabSubtitles: # ShowSubtitles処理開始 " + len)
 	
 	if !(Uke && Seme)
 		repeatUpdate = false
@@ -424,7 +424,8 @@ Function ShowSubtitles(string[] subtitleSet)
 		int choice = getRandomDifferent(0, (len - 1), _temp_r)
 		; Debug.Trace("# ランダムモード：前回は" +_temp_r + " 結果は" + choice)
 		
-		If ((choice < 20) && (choice < subtitleSet.length))
+		; If ((choice < 20) && (choice < subtitleSet.length))
+		If (choice < subtitleSet.length)
 			ShowSuper(name_Uke, name_Seme, subtitleSet[choice])
 			_temp_r = choice
 			If repeatUpdate
@@ -440,9 +441,9 @@ Function ShowSubtitles(string[] subtitleSet)
 		If temp >= subtitleSet.length ; 表示回数がセリフ数を越えたら0に戻す
 			_temp = 0
 		endif
-		If (_temp < 20)
+		;If (_temp < 20)
 			ShowSuper(name_Uke, name_Seme, subtitleSet[_temp])
-		endIf
+		;endIf
 		_temp += 1
 		If repeatUpdate
 			registerforsingleupdate(SS.interval)
