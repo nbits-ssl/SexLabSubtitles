@@ -282,38 +282,50 @@ endEvent
 ;SexLabアニメ全体完了時の処理
 event endAnim(string eventName, string argString, float argNum, form sender)
 	If (argString == sexlabID)
-		repeatUpdate = false
-		_temp = 0
-		sexlabID = ""
-		situation = defaultSituation
-		situationType = defaultSituationType
-		Uke = none
-		Seme = none
-		isRunningSubtitle = false
-		name_Uke = ""
-		name_Seme = ""
-		; _samesex = false
+		self._endShowSubtitles()
 	endif
 endEvent
 
 
+Function _endShowSubtitles()
+	repeatUpdate = false
+	_temp = 0
+	sexlabID = ""
+	situation = defaultSituation
+	situationType = defaultSituationType
+	Uke = none
+	Seme = none
+	isRunningSubtitle = false
+	name_Uke = ""
+	name_Seme = ""
+	; _samesex = false
+EndFunction
+
 string Function _getDisplayName(Actor act)
 	string dn_act = ""
 	string n_act = ""
+	string ret_act
 	
 	If act == Player
 		return act.getactorbase().getName()
 	else
 		dn_act = (act as objectreference).GetDisplayName()
 		n_act = act.getactorbase().getName()
-		If !(dn_act == "")
-			return dn_act
+		if !(dn_act == "")
+			ret_act = dn_act
 		else
-			If !(n_act == "")
-				return n_act
+			if (n_act != "")
+				ret_act = n_act
 			else
 				return "$unknown"
 			endIf
+		endif
+		
+		int idx = StringUtil.Find(n_act, "・")
+		if (idx != -1)
+			return StringUtil.Substring(n_act, 0, idx)
+		else
+			return ret_act
 		endif
 	endif
 EndFunction
@@ -415,8 +427,11 @@ Function ShowSubtitles(string[] subtitleSet)
 	; debug.trace("SexLabSubtitles: # ShowSubtitles処理開始 " + len)
 	
 	if !(Uke && Seme)
-		repeatUpdate = false
-		isRunningSubtitle = false
+		self._endShowSubtitles()
+		return ; the end, safe function
+	endif
+	if (sexlabID == "" || !SexLab.GetController(sexlabID as int))
+		self._endShowSubtitles()
 		return ; the end, safe function
 	endif
 	
