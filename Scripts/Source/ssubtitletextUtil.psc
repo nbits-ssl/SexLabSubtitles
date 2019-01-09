@@ -2,7 +2,7 @@
 { 外部のModから字幕やメニューリストを使うためのユーティリティ }
 
 int function GetVersion() global
-	return 28
+	return 30
 	; return 25 ; 2016.1.31 ver 2.5
 	; return 24 ; 2015.8.25 ver 2.4
 	; return 23 ; 2015.1.11 ver 2.3
@@ -14,7 +14,7 @@ int function GetVersion() global
 endFunction
 
 string function GetVersionString() global
-	return "v2.5p3 (forked)"
+	return "v2.5p5 (forked)"
 endFunction
 
 bool function IsActiveSubtitle() global

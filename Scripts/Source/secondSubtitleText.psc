@@ -22,6 +22,7 @@ string defaultSituationType = "hetero"
 string sexlabID ; 現在稼働中のSexシーンのID
 bool isSameSex ; 受と攻が同性かどうか（v2.2）
 bool isCreature
+Cell currentCell
 
 Actor Player ; プレイヤー
 Actor Uke ; 受役のアクター
@@ -63,13 +64,14 @@ int Property HUDversion auto
 string Property HUDstringVersion auto
 
 ; forked
-int RegistDistance = 1750 ; not use from p2
+; int RegistDistance = 1500 ; not use from p2
 
 ;/======================================================/;
 
 Function Initialize() ; ゲームがロードされるたびに呼び出し
 	sexlabID = ""
 	Player = Game.GetPlayer()
+	currentCell = Player.GetParentCell()
 	SSetting = (self as Quest) as SubtitleSetSetting
 	registerEvent()
 	ModVersion = ssubtitletextUtil.GetVersionString()
@@ -111,7 +113,7 @@ EndFunction
 /;
 
 Function registerEvent()
-;	RegisterForModEvent("AnimationStart", "startAnim")
+	RegisterForModEvent("AnimationStart", "startAnim")
 	RegisterForModEvent("AnimationEnd", "endAnim")
 	RegisterForModEvent("StageStart", "startStage")
 	RegisterForModEvent("AnimationChange", "startStage")
@@ -120,7 +122,7 @@ Function registerEvent()
 	RegisterForModEvent("OrgasmEnd", "endStage")
 EndFunction
 Function unregisterEvent()
-;	UnregisterForModEvent("AnimationStart")
+	UnregisterForModEvent("AnimationStart")
 	UnregisterForModEvent("AnimationChange")
 	UnregisterForModEvent("AnimationEnd")
 	UnregisterForModEvent("StageStart")
@@ -172,20 +174,9 @@ string[] Function _cleanSubtitles(string[] stsets, bool _hasPlayer)
 EndFunction
 
 ;SexLabアニメ開始時の処理 -------------------------------------
-;/
 event startAnim(string eventName, string argString, float argNum, form sender)
-	sslThreadController controller = SexLab.HookController(argString)
-
-	If (SS.SMode && self._isPlayerNear(controller)) ; 汎用字幕システムが有効の場合
-		_temp = 0 ; order subtitle's current number
-		situation = defaultSituation
-		situationType = defaultSituationType
-		sexlabID = argString
-		
-		; debug.trace("# SexLab Subtitles - アニメ開始 - スレッドID : " + sexlabID)
-	endif
+	currentCell = Player.GetParentCell()
 endEvent
-/;
 
 ; ステージ毎の開始時の処理
 event startStage(string eventName, string argString, float argNum, form sender)
@@ -194,6 +185,25 @@ event startStage(string eventName, string argString, float argNum, form sender)
 
 	If (SS.SMode && self._isPlayerNear(controller) && self._validateGender(controller))
 		; debug.trace("SexLabSubtitles: Stage start, success")
+		Actor[] member = controller.Positions
+		If (member.length == 1)
+			Uke = member[0]
+			Seme = member[0]
+		else
+			Uke = member[0]
+			Seme = member[1]
+		endIf
+		if !(Uke && Seme)
+			return
+		endif
+		
+		int UkeSex = Uke.GetLeveledActorBase().GetSex()
+		isSameSex = (UkeSex == Seme.GetLeveledActorBase().GetSex())
+		
+		; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
+		name_Uke = self._getDisplayName(Uke)
+		name_Seme = self._getDisplayName(Seme)
+		
 		isRunningSubtitle = true
 		
 		; セリフの表示番号をリセットするかどうかの判定
@@ -215,26 +225,7 @@ event startStage(string eventName, string argString, float argNum, form sender)
 		SS.pr_stageInfo = currentStage + " / " + maxStage
 		SS.pr_tags = self._getTagInfo(animation)
 		
-		Actor[] member = controller.Positions
-		If (member.length == 1)
-			Uke = member[0]
-			Seme = member[0]
-		else
-			Uke = member[0]
-			Seme = member[1]
-		endIf
-		
-		; ver2.2 ディスプレイネームを優先的に取得（NPCのみ）
-		name_Uke = self._getDisplayName(Uke)
-		name_Seme = self._getDisplayName(Seme)
-		
-		; string currentTag = self._getCurrentTag(animation)
-
-		; set variable
-		int UkeSex = Uke.GetLeveledActorBase().GetSex()
-		isSameSex = (UkeSex == Seme.GetLeveledActorBase().GetSex())
 		isCreature = animation.IsCreature
-		
 		if (member.length == 1)
 			situation = 4 ; masturbation
 		else
@@ -298,7 +289,6 @@ Function _endShowSubtitles()
 	isRunningSubtitle = false
 	name_Uke = ""
 	name_Seme = ""
-	; _samesex = false
 EndFunction
 
 string Function _getDisplayName(Actor act)
@@ -309,7 +299,7 @@ string Function _getDisplayName(Actor act)
 	If act == Player
 		return act.getactorbase().getName()
 	else
-		dn_act = (act as objectreference).GetDisplayName()
+		dn_act = (act as ObjectReference).GetDisplayName()
 		n_act = act.getactorbase().getName()
 		if !(dn_act == "")
 			ret_act = dn_act
@@ -432,7 +422,15 @@ Function ShowSubtitles(string[] subtitleSet)
 	endif
 	if (sexlabID == "" || !SexLab.GetController(sexlabID as int))
 		self._endShowSubtitles()
-		return ; the end, safe function
+		return ; the end
+	endif
+	
+	Cell _currentCell = Player.GetParentCell()
+	; debug.trace("SexLabSubtitles: #  " + _currentCell)
+	; debug.trace("SexLabSubtitles: #  " + currentCell)
+	if (currentCell != _currentCell)
+		self._endShowSubtitles()
+		return ; the end
 	endif
 	
 	If repeatRandom ; ランダムモード
